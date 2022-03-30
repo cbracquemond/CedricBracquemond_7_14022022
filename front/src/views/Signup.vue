@@ -1,5 +1,6 @@
 <script>
 import BaseButtonVue from "../components/BaseButton.vue"
+import axios from "../config/axiosConfig"
 export default {
 	name: "Signup",
 	components: {
@@ -7,8 +8,8 @@ export default {
 	},
 	data() {
 		return {
-			first_name: "",
-			last_name: "",
+			firstName: "",
+			lastName: "",
 			username: "",
 			email: "",
 			password: "",
@@ -16,16 +17,25 @@ export default {
 		}
 	},
 	methods: {
-		handleValidation() {}
+		async handleValidation() {
+			const response = await axios.post("users", {
+				first_name: this.firstName,
+				last_name: this.lastName,
+				username: this.username,
+				email: this.email,
+				password: this.password
+			})
+			console.log(response)
+		}
 	}
 }
 </script>
 <template>
 	<form class="signup_form" @submit.prevent="handleValidation">
 		<label>First name</label>
-		<input type="text" required v-model="first_name" />
+		<input type="text" required v-model="firstName" />
 		<label>Last name</label>
-		<input type="text" required v-model="last_name" />
+		<input type="text" required v-model="lastName" />
 		<label>Username</label>
 		<input type="text" required v-model="username" />
 		<label>Email</label>
