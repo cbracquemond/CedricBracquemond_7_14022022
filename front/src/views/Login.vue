@@ -1,0 +1,35 @@
+<script>
+import BaseButtonVue from "../components/BaseButton.vue"
+import axios from "../config/axiosConfig"
+export default {
+	name: "Login",
+	components: {
+		BaseButtonVue
+	},
+	data() {
+		return {
+			email: "",
+			password: ""
+		}
+	},
+	methods: {
+		async handleSubmit() {
+			const response = await axios.post("", {
+				email: this.email,
+				password: this.password
+			})
+			console.log(response)
+		}
+	}
+}
+</script>
+<template>
+	<form class="login_form" @submit.prevent="handleSubmit">
+		<label>Email</label>
+		<input type="email" required v-model="email" />
+		<label>Password</label>
+		<input type="password" required v-model="password" />
+		<BaseButtonVue text="Se connecter" />
+	</form>
+</template>
+<style></style>

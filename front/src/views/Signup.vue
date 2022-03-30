@@ -17,21 +17,33 @@ export default {
 		}
 	},
 	methods: {
-		async handleValidation() {
-			const response = await axios.post("users", {
+		checkPassword() {
+			if (this.password != this.passwordCheck) {
+				const warningParent = document.querySelector("#warningParent")
+				const warning = document.createElement("p")
+				warning.innerText = "Password does not match"
+				warning.classList.add("warning")
+				warningParent.appendChild(warning)
+				throw Error("Password does not match")
+			}
+		},
+		async handleSubmit() {
+			const body = {
 				first_name: this.firstName,
 				last_name: this.lastName,
 				username: this.username,
 				email: this.email,
 				password: this.password
-			})
+			}
+			this.checkPassword()
+			const response = await axios.post("users", body)
 			console.log(response)
 		}
 	}
 }
 </script>
 <template>
-	<form class="signup_form" @submit.prevent="handleValidation">
+	<form class="signup_form" @submit.prevent="handleSubmit">
 		<label>First name</label>
 		<input type="text" required v-model="firstName" />
 		<label>Last name</label>
@@ -42,7 +54,7 @@ export default {
 		<input type="email" required v-model="email" />
 		<label>Password</label>
 		<input type="password" required v-model="password" />
-		<label>Password confirmation</label>
+		<label id="warningParent">Password confirmation</label>
 		<input type="password" required v-model="passwordCheck" />
 		<BaseButtonVue text="Validation" />
 	</form>
