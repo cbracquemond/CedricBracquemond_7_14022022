@@ -28,16 +28,15 @@ export default {
 			}
 		},
 		async handleSubmit() {
-			const body = {
+			this.checkPassword()
+			await axios.post("users", {
 				first_name: this.firstName,
 				last_name: this.lastName,
 				username: this.username,
 				email: this.email,
 				password: this.password
-			}
-			this.checkPassword()
-			const response = await axios.post("users", body)
-			console.log(response)
+			})
+			this.$router.push("/login")
 		}
 	}
 }

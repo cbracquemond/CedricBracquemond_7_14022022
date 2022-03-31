@@ -74,10 +74,7 @@ exports.login = async function (user) {
 		queryResult.password
 	)
 	if (!passwordCheck) return false
-	return (credential = {
-		userId: queryResult.id,
-		token: jwt.sign({ userId: queryResult.id }, secretKey, {
-			expiresIn: "24h"
-		})
-	})
+	return (token = jwt.sign({ userId: queryResult.id }, secretKey, {
+		expiresIn: "24h"
+	}))
 }

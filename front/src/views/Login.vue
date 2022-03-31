@@ -14,11 +14,16 @@ export default {
 	},
 	methods: {
 		async handleSubmit() {
-			const response = await axios.post("", {
-				email: this.email,
-				password: this.password
-			})
-			console.log(response)
+			try {
+				const response = await axios.post("users/login", {
+					email: this.email,
+					password: this.password
+				})
+				localStorage.setItem("token", response.data.token)
+				this.$router.push("/home")
+			} catch (error) {
+				console.log(error.message)
+			}
 		}
 	}
 }

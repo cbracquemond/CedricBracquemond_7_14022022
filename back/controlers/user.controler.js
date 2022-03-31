@@ -14,14 +14,11 @@ exports.createUser = async (req, res) => {
 
 exports.login = async (req, res) => {
 	try {
-		const userChecked = await userService.login(req.body)
-		if (!userChecked)
-			return res
-				.status(401)
-				.json({ status: 401, message: "Mot de passe incorrect !" })
+		const token = await userService.login(req.body)
+		if (!token) return res.status(401).json({ err })
 		return res.status(200).json({
 			status: 200,
-			data: userChecked,
+			token,
 			message: "User Succesfully Logged In"
 		})
 	} catch (err) {
