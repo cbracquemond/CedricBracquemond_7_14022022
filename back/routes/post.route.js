@@ -7,6 +7,7 @@ const router = express.Router()
 //routes:
 router.get("/", postCtrl.getAllPosts)
 router.post("/", postCtrl.createPost)
+router.delete("/:id", postCtrl.deletePost)
 // router.post("/login", userCtrl.login)
 // router.get("/", userCtrl.getAllUsers)
 // router.get("/:id", userCtrl.getOneUser)

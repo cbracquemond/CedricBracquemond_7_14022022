@@ -1,6 +1,12 @@
 const pool = require("../middlewares/mysql")
 
-async function createSqlParams(post, id = null) {
+function checkIfPostExist(queryResult) {
+	if (queryResult.length === 0 || queryResult.affectedRows === 0) {
+		throw Error("This post doesn't exist")
+	}
+}
+
+async function makeQueryParams(post, id = null) {
 	const keys = Object.entries(post)
 	const params = {
 		sql: [],
@@ -24,12 +30,18 @@ async function makeDbQueries(sql, params = null) {
 }
 
 exports.getAllPosts = async function () {
-	sql = "SELECT * FROM posts"
+	const sql = "SELECT * FROM posts"
 	return await makeDbQueries(sql)
 }
 
 exports.createPost = async function (post) {
-	const params = await createSqlParams(post)
+	const params = await makeQueryParams(post)
 	const sql = "INSERT INTO posts SET " + params.sql
 	await makeDbQueries(sql, params.arg)
+}
+
+exports.deletePost = async function (id) {
+	const sql = "DELETE FROM posts WHERE id = ?"
+	const queryResult = await makeDbQueries(sql, [id])
+	checkIfPostExist(queryResult)
 }

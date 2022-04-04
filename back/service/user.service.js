@@ -18,7 +18,7 @@ function checkIfAccountExist(queryResult) {
 	}
 }
 
-async function createSqlParams(user, id = null) {
+async function makeQueryParams(user, id = null) {
 	if (user.password) user.password = await bcrypt.hash(user.password, 10)
 	const keys = Object.entries(user)
 	const params = {
@@ -53,13 +53,13 @@ exports.deleteUser = async function (id) {
 }
 
 exports.createUser = async function (user) {
-	const params = await createSqlParams(user)
+	const params = await makeQueryParams(user)
 	const sql = "INSERT INTO users SET " + params.sql
 	await makeDbQueries(sql, params.arg)
 }
 
 exports.updateUser = async function (user, id) {
-	const params = await createSqlParams(user, id)
+	const params = await makeQueryParams(user, id)
 	const sql = "UPDATE users SET " + params.sql + " WHERE id = " + params.id
 	const queryResult = await makeDbQueries(sql, params.arg)
 	checkIfAccountExist(queryResult)
