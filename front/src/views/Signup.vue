@@ -55,7 +55,7 @@ export default {
 		<input type="password" required v-model="password" />
 		<label id="warningParent">Password confirmation</label>
 		<input type="password" required v-model="passwordCheck" />
-		<BaseButtonVue text="Validation" />
+		<base-button-vue text="Validation" />
 	</form>
 </template>
 

@@ -34,7 +34,7 @@ export default {
 		<input type="email" required v-model="email" />
 		<label>Password</label>
 		<input type="password" required v-model="password" />
-		<BaseButtonVue text="Se connecter" />
+		<base-button-vue text="Se connecter" />
 	</form>
 </template>
 <style></style>

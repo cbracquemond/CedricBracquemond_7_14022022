@@ -4,7 +4,6 @@ exports.createUser = async (req, res) => {
 	try {
 		await userService.createUser(req.body)
 		return res.status(201).json({
-			status: 201,
 			message: "User Succesfully Created"
 		})
 	} catch (err) {
@@ -17,7 +16,6 @@ exports.login = async (req, res) => {
 		const token = await userService.login(req.body)
 		if (!token) return res.status(401).json({ err })
 		return res.status(200).json({
-			status: 200,
 			token,
 			message: "User Succesfully Logged In"
 		})
