@@ -1,8 +1,13 @@
-<script></script>
+<script>
+import NavBarVue from "./components/NavBar.vue"
+export default {
+	components: {
+		NavBarVue
+	}
+}
+</script>
 <template>
-	<div id="nav">
-		<router-link to="/">Home</router-link>
-	</div>
+	<nav-bar-vue />
 	<router-view />
 </template>
 

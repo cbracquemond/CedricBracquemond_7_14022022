@@ -26,9 +26,10 @@ export default {
 			.get("posts")
 			.then((response) => {
 				this.posts = response.data.posts
-				console.log(this.posts)
 			})
-			.catch()
+			.catch((err) => {
+				throw err
+			})
 	}
 }
 </script>
@@ -40,6 +41,6 @@ export default {
 		:title="post.title"
 		:date="createDateString(post.post_time)"
 		:content="post.content"
-		:user="post.user"
+		:user="post.username"
 	/>
 </template>

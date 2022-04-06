@@ -4,23 +4,19 @@ export default {
 	props: {
 		title: {
 			type: String,
-			required: true,
-			default: "Title"
+			required: true
 		},
 		date: {
 			type: String,
-			required: true,
-			default: "01 / 01 / 2022"
+			required: true
 		},
 		user: {
 			type: String,
-			required: true,
-			default: "User"
+			required: true
 		},
 		content: {
 			type: String,
-			required: true,
-			default: "Text"
+			required: true
 		}
 	}
 }
