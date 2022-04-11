@@ -1,6 +1,8 @@
 <script>
 import BaseButtonVue from "../components/BaseButton.vue"
 import axios from "../config/axiosConfig"
+import store from "../store/store"
+import { mapGetters } from "vuex"
 export default {
 	name: "Login",
 	components: {
@@ -12,6 +14,9 @@ export default {
 			password: ""
 		}
 	},
+	computed: {
+		...mapGetters(["setToken", "setUser"])
+	},
 	methods: {
 		async handleSubmit() {
 			try {
@@ -19,8 +24,10 @@ export default {
 					email: this.email,
 					password: this.password
 				})
-				localStorage.setItem("token", response.data.token)
-				this.$router.push("/home")
+				this.setToken(response.token)
+				this.setUser(response.user)
+				console.log(store.state.token)
+				this.$router.push("/")
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -30,10 +37,8 @@ export default {
 </script>
 <template>
 	<form class="login_form" @submit.prevent="handleSubmit">
-		<label>Email</label>
-		<input type="email" required v-model="email" />
-		<label>Password</label>
-		<input type="password" required v-model="password" />
+		<input placeholder="email" type="email" required v-model="email" />
+		<input placeholder="password" type="password" required v-model="password" />
 		<base-button-vue text="Se connecter" />
 	</form>
 </template>

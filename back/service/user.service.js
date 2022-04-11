@@ -55,7 +55,7 @@ exports.deleteUser = async function (id) {
 exports.createUser = async function (user) {
 	const params = await makeQueryParams(user)
 	const sql = "INSERT INTO users SET " + params.sql
-	await makeDbQueries(sql, params.arg)
+	return await makeDbQueries(sql, params.arg)
 }
 
 exports.updateUser = async function (user, id) {
@@ -74,7 +74,8 @@ exports.login = async function (user) {
 		queryResult.password
 	)
 	if (!passwordCheck) return false
-	return (token = jwt.sign({ userId: queryResult.id }, secretKey, {
-		expiresIn: "24h"
-	}))
+	return {
+		queryResult,
+		token: jwt.sign({ userId: queryResult.id }, secretKey, { expiresIn: "24h" })
+	}
 }

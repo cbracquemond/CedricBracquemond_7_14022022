@@ -3,37 +3,51 @@ export default {
 	name: "NavBar"
 }
 </script>
+
 <template>
 	<div class="nav">
 		<ul>
-			<router-link to="/" class="nav-link"><li>Home</li></router-link>
-			<router-link to="/signup" class="nav-link"><li>Sign-up</li></router-link>
-			<router-link to="/login" class="nav-link"><li>Login</li></router-link>
-			<li><a href="#" class="nav-link">Contact Us</a></li>
+			<router-link to="/" class="nav-link">
+				<li>Home</li>
+			</router-link>
+			<div>
+				<router-link to="/signup" class="nav-link"
+					><li>Sign-up</li>
+				</router-link>
+				<router-link to="/login" class="nav-link">
+					<li>Login</li>
+				</router-link>
+			</div>
 		</ul>
 	</div>
 </template>
-<style scoped>
+
+<style lang="scss" scoped>
 .nav {
-	background: #000;
+	background: #fff;
 	height: 60px;
-}
 
-.nav li {
-	display: inline-block;
-	list-style: none;
-	height: 60px;
-	line-height: 60px;
-	padding: 0 40px;
-}
+	& ul {
+		display: flex;
+		justify-content: space-between;
+	}
 
-.nav li:hover {
-	background: red;
-	transition: background 0.3s;
-}
+	& li {
+		display: inline-block;
+		list-style: none;
+		height: 60px;
+		line-height: 60px;
+		padding: 0 40px;
 
-.nav-link {
-	color: #fff;
-	text-decoration: none;
+		&.nav-link {
+			color: #000;
+			text-decoration: none;
+		}
+
+		&:hover {
+			background: red;
+			transition: background 0.3s;
+		}
+	}
 }
 </style>
