@@ -2,15 +2,22 @@ import { createStore } from "vuex"
 
 export default createStore({
 	state: {
+		identified: false,
 		user: null,
-		tokenx: null
+		token: null
 	},
 	mutations: {
-		setUser(state, user) {
-			state.user = user
+		login(state, response) {
+			if (response) {
+				state.user = response.user
+				state.token = response.token
+				state.identified = true
+			}
 		},
-		setToken(state, token) {
-			state.token = token
+		logout(state) {
+			state.user = null
+			state.token = null
+			state.identified = false
 		}
 	},
 	actions: {},

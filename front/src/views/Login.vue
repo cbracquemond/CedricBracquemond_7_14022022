@@ -1,8 +1,7 @@
 <script>
 import BaseButtonVue from "../components/BaseButton.vue"
 import axios from "../config/axiosConfig"
-import store from "../store/store"
-import { mapGetters } from "vuex"
+import { mapMutations } from "vuex"
 export default {
 	name: "Login",
 	components: {
@@ -14,19 +13,15 @@ export default {
 			password: ""
 		}
 	},
-	computed: {
-		...mapGetters(["setToken", "setUser"])
-	},
 	methods: {
+		...mapMutations(["login"]),
 		async handleSubmit() {
 			try {
 				const response = await axios.post("users/login", {
 					email: this.email,
 					password: this.password
 				})
-				this.setToken(response.token)
-				this.setUser(response.user)
-				console.log(store.state.token)
+				this.login(response.data)
 				this.$router.push("/")
 			} catch (error) {
 				console.log(error.message)

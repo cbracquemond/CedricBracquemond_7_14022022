@@ -1,4 +1,5 @@
 import axios from "axios"
+import store from "../store/store"
 
 const instance = axios.create({
 	baseURL: "http://127.0.0.1:3000/api/"
@@ -6,7 +7,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
 	(config) => {
-		config.headers["Authorization"] = "toto"
+		config.headers["Authorization"] = store.state.token
 		return config
 	},
 	(error) => {

@@ -75,7 +75,13 @@ exports.login = async function (user) {
 	)
 	if (!passwordCheck) return false
 	return {
-		queryResult,
+		user: {
+			email: queryResult.email,
+			firstName: queryResult.first_name,
+			lastName: queryResult.last_name,
+			id: queryResult.id,
+			username: queryResult.username
+		},
 		token: jwt.sign({ userId: queryResult.id }, secretKey, { expiresIn: "24h" })
 	}
 }
