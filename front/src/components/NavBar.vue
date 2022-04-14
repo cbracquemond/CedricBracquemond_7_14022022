@@ -3,7 +3,8 @@ export default {
 	name: "NavBar",
 	data() {
 		return {
-			user: this.$store.state.user
+			user: this.$store.state.user,
+			userIsIdentified: this.$store.state.identified
 		}
 	}
 }
@@ -22,16 +23,16 @@ export default {
 				<router-link to="/login" class="nav-link">
 					<li>Login</li>
 				</router-link>
-				<!-- <router-link
+				<router-link
 					:to="{
-						name: 'account',
+						name: 'Account',
 						params: {
-							id: this.user
+							id: this.user.id
 						}
 					}"
 					class="nav-link"
 					><li>Account</li>
-				</router-link> -->
+				</router-link>
 			</div>
 		</ul>
 	</div>
