@@ -34,7 +34,8 @@ export default {
 	<form class="login_form" @submit.prevent="handleSubmit">
 		<input placeholder="email" type="email" required v-model="email" />
 		<input placeholder="password" type="password" required v-model="password" />
-		<base-button-vue text="Se connecter" />
+		<base-button-vue text="Log-in" />
 	</form>
+	<router-link to="/signup" class="nav-link">Sign-up </router-link>
 </template>
 <style></style>

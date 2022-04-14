@@ -1,13 +1,17 @@
 <script>
 import NavBarVue from "./components/NavBar.vue"
+import { mapState } from "vuex"
 export default {
 	components: {
 		NavBarVue
-	}
+	},
+	computed: mapState({
+		userIsIdentified: (state) => state.identified
+	})
 }
 </script>
 <template>
-	<nav-bar-vue />
+	<nav-bar-vue v-if="userIsIdentified === true" />
 	<router-view />
 </template>
 

@@ -1,4 +1,4 @@
-const pool = require("../middlewares/mysql")
+const pool = require("../config/mysql")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const secretKey = process.env.SECRET_KEY

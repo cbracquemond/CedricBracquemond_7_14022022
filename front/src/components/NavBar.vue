@@ -1,6 +1,11 @@
 <script>
 export default {
-	name: "NavBar"
+	name: "NavBar",
+	data() {
+		return {
+			user: this.$store.state.user
+		}
+	}
 }
 </script>
 
@@ -17,6 +22,16 @@ export default {
 				<router-link to="/login" class="nav-link">
 					<li>Login</li>
 				</router-link>
+				<!-- <router-link
+					:to="{
+						name: 'account',
+						params: {
+							id: this.user
+						}
+					}"
+					class="nav-link"
+					><li>Account</li>
+				</router-link> -->
 			</div>
 		</ul>
 	</div>

@@ -7,7 +7,7 @@ const postRoute = require("./routes/post.route")
 const app = express()
 
 //Middlewares:
-require("./middlewares/mysql")
+require("./config/mysql")
 app.use(cors())
 app.use(express.json())
 

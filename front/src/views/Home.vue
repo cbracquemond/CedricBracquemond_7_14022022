@@ -35,12 +35,15 @@ export default {
 </script>
 
 <template>
-	<post-cards-vue
-		v-for="post in posts"
-		:key="post.id"
-		:title="post.title"
-		:date="createDateString(post.post_time)"
-		:content="post.content"
-		:user="post.username"
-	/>
+	<router-link to>
+		<post-cards-vue
+			v-for="post in posts"
+			:key="post.id"
+			:title="post.title"
+			:date="createDateString(post.post_time)"
+			:content="post.content"
+			:user="post.username"
+		/>
+	</router-link>
 </template>
+<style></style>

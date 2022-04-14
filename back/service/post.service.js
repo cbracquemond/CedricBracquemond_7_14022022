@@ -1,4 +1,4 @@
-const pool = require("../middlewares/mysql")
+const pool = require("../config/mysql")
 
 function checkIfPostExist(queryResult) {
 	if (queryResult.length === 0 || queryResult.affectedRows === 0) {
@@ -30,7 +30,8 @@ async function makeDbQueries(sql, params = null) {
 }
 
 exports.getAllPosts = async function () {
-	const sql = "SELECT * FROM posts"
+	const sql =
+		"SELECT p.id, p.post_time, p.title, p.content, p.likes, p.dislikes, u.username FROM posts p LEFT JOIN users u ON p.user_id = u.id "
 	return await makeDbQueries(sql)
 }
 

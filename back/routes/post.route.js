@@ -5,9 +5,9 @@ const postCtrl = require("../controlers/post.controler")
 const router = express.Router()
 
 //routes:
-router.get("/", postCtrl.getAllPosts)
-router.post("/", postCtrl.createPost)
-router.delete("/:id", postCtrl.deletePost)
+router.get("/", auth, postCtrl.getAllPosts)
+router.post("/", auth, postCtrl.createPost)
+router.delete("/:id", auth, postCtrl.deletePost)
 // router.post("/login", userCtrl.login)
 // router.get("/", userCtrl.getAllUsers)
 // router.get("/:id", userCtrl.getOneUser)
