@@ -34,7 +34,7 @@ const routes = [
 		}
 	},
 	{
-		path: "/account/:id",
+		path: "/account",
 		name: "Account",
 		component: Account,
 		meta: {

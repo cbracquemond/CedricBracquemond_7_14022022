@@ -63,6 +63,7 @@ exports.updateUser = async function (user, id) {
 	const sql = "UPDATE users SET " + params.sql + " WHERE id = " + params.id
 	const queryResult = await makeDbQueries(sql, params.arg)
 	checkIfAccountExist(queryResult)
+	console.log(sql)
 }
 
 exports.login = async function (user) {

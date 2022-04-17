@@ -23,14 +23,7 @@ export default {
 				<router-link to="/login" class="nav-link">
 					<li>Login</li>
 				</router-link>
-				<router-link
-					:to="{
-						name: 'Account',
-						params: {
-							id: this.user.id
-						}
-					}"
-					class="nav-link"
+				<router-link to="/account" class="nav-link"
 					><li>Account</li>
 				</router-link>
 			</div>

@@ -29,8 +29,7 @@ exports.getAllUsers = async (req, res) => {
 	try {
 		const users = await userService.getAllUsers()
 		return res.status(200).json({
-			status: 200,
-			data: users,
+			users,
 			message: "Users Succesfully Retrieved"
 		})
 	} catch (err) {
@@ -42,8 +41,7 @@ exports.getOneUser = async (req, res) => {
 	try {
 		const user = await userService.getOneUser(req.params.id)
 		return res.status(200).json({
-			status: 200,
-			data: user,
+			user,
 			message: "User Succesfully Retrieved"
 		})
 	} catch (err) {
