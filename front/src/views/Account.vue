@@ -9,18 +9,12 @@ export default {
 	data() {
 		return {
 			user: this.$store.state.user,
-			username: "",
-			firstName: "",
-			lastName: "",
-			email: "",
-			newPassword: "",
-			passwordCheck: "",
-			oldPassword: ""
+			passwordCheck: ""
 		}
 	},
 	methods: {
-		checkPassword() {
-			if (this.password != this.passwordCheck) {
+		confirmNewPassword(newPassword) {
+			if (newPassword != this.passwordCheck) {
 				const warningParent = document.querySelector("#warningParent")
 				const warning = document.createElement("p")
 				warning.innerText = "Password does not match"
@@ -29,9 +23,10 @@ export default {
 				throw Error("Password does not match")
 			}
 		},
+
 		async handleSubmit(input, param) {
 			try {
-				// const paramKey = param
+				this.confirmNewPassword(input)
 				await axios.put("users/" + this.user.id, {
 					[param]: input
 				})
@@ -45,34 +40,35 @@ export default {
 
 <template>
 	<account-input-vue
-		:text="this.$store.state.user.username"
+		:text="'Userame: ' + this.user.username"
 		@updateChange="handleSubmit($event, 'username')"
 	/>
-	<!-- <span>{{ user.firstName }}</span>
-	</account-input-vue> -->
-	<!-- <form class="accountInput" @submit.prevent="handleSubmit">
-		<label>User name</label>
-		<input :placeholder="this.user.username" type="text" v-model="username" />
-		<label>First name</label>
-		<input :placeholder="this.user.firstName" type="text" v-model="firstName" />
-		<label>Last name</label>
-		<input :placeholder="this.user.lastName" type="text" v-model="lastName" />
-		<label>Email</label>
-		<input :placeholder="this.user.email" type="email" v-model="email" />
-		<label>Password Change</label>
-		<input placeholder="password" type="password" v-model="password" />
-		<label>Confirm Password Change</label>
-		<input
-			placeholder="password"
-			id="warningParent"
-			type="password"
-			v-model="passwordCheck"
-		/>
-		<label>Old Password</label>
-		<input placeholder="password" type="password" v-model="oldPassword" />
-
-		<base-button-vue text="Update" />
-	</form> -->
+	<account-input-vue
+		:text="'First name: ' + this.user.firstName"
+		@updateChange="handleSubmit($event, 'first_name')"
+	/>
+	<account-input-vue
+		:text="'Last name: ' + this.user.lastName"
+		@updateChange="handleSubmit($event, 'last_name')"
+	/>
+	<account-input-vue
+		:text="'Email: ' + this.user.email"
+		type="email"
+		@updateChange="handleSubmit($event, 'email')"
+	/>
+	<account-input-vue
+		text="Change password:"
+		type="password"
+		@updateChange="handleSubmit($event, 'password')"
+	>
+		<template v-slot:label>
+			<p>New password</p>
+		</template>
+		<template v-slot:password-check>
+			<p id="warningParent">Confirm password</p>
+			<input type="password" v-model="passwordCheck" />
+		</template>
+	</account-input-vue>
 </template>
 
 <style lang="scss" scoped>

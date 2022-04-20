@@ -1,4 +1,5 @@
 <script>
+import { mapMutations } from "vuex"
 export default {
 	name: "NavBar",
 	data() {
@@ -6,6 +7,9 @@ export default {
 			user: this.$store.state.user,
 			userIsIdentified: this.$store.state.identified
 		}
+	},
+	methods: {
+		...mapMutations(["logout"])
 	}
 }
 </script>
@@ -13,18 +17,15 @@ export default {
 <template>
 	<div class="nav">
 		<ul>
-			<router-link to="/" class="nav-link">
+			<router-link to="/" class="nav__link">
 				<li>Home</li>
 			</router-link>
 			<div>
-				<router-link to="/signup" class="nav-link"
-					><li>Sign-up</li>
-				</router-link>
-				<router-link to="/login" class="nav-link">
-					<li>Login</li>
-				</router-link>
-				<router-link to="/account" class="nav-link"
+				<router-link to="/account" class="nav__link"
 					><li>Account</li>
+				</router-link>
+				<router-link to="/login" @click="logout" class="nav__link">
+					<li>Log Out</li>
 				</router-link>
 			</div>
 		</ul>
@@ -35,6 +36,11 @@ export default {
 .nav {
 	background: #fff;
 	height: 60px;
+
+	&__link {
+		color: #000;
+		text-decoration: none;
+	}
 
 	& ul {
 		display: flex;
@@ -47,11 +53,6 @@ export default {
 		height: 60px;
 		line-height: 60px;
 		padding: 0 40px;
-
-		&.nav-link {
-			color: #000;
-			text-decoration: none;
-		}
 
 		&:hover {
 			background: red;

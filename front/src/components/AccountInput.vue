@@ -1,5 +1,4 @@
 <script>
-import axios from "../config/axiosConfig"
 import BaseButtonVue from "./BaseButton.vue"
 export default {
 	name: "AccountInput",
@@ -18,23 +17,12 @@ export default {
 	emits: ["updateChange"],
 	data() {
 		return {
-			userId: this.$store.state.user.id,
 			input: ""
 		}
 	},
 	methods: {
 		sendData() {
 			this.$emit("updateChange", this.input)
-		},
-		async handleSubmit(param) {
-			try {
-				const paramKey = param
-				await axios.put("users/" + this.userId, {
-					[paramKey]: this.input
-				})
-			} catch (error) {
-				console.log(error.message)
-			}
 		}
 	}
 }
@@ -43,8 +31,10 @@ export default {
 	<div>
 		<span>{{ text }}</span>
 		<base-button-vue type="button" text="Update" />
-		<form class="accountInput" @submit="sendData">
+		<form class="accountInput" @submit.prevent="sendData">
+			<slot name="label"></slot>
 			<input :type="type" v-model="input" />
+			<slot name="password-check"></slot>
 			<base-button-vue text="Apply" />
 		</form>
 	</div>
