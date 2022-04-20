@@ -21,13 +21,13 @@ exports.getOnePost = async (req, res) => {
 			message: "Post Succesfully Retrieved"
 		})
 	} catch (err) {
-		return res.status(400).json({ status: 400, message: err.message })
+		return res.status(400).json({ message: err.message })
 	}
 }
 
 exports.createPost = async (req, res) => {
 	try {
-		await postService.createPost(req.body)
+		await postService.createPost(req.body, res.locals.userId)
 		return res.status(201).json({
 			message: "Post Succesfully Created"
 		})
@@ -63,3 +63,16 @@ exports.editPost = async (req, res) => {
 		})
 	}
 }
+
+// exports.likePost = async (req, res) => {
+// 	try {
+// 		await postService.likePost(req.body, req.params.id, res.locals.userId)
+// 		return res.status(200).json({
+// 			message: "Vote Successfully Submited"
+// 		})
+// 	} catch (err) {
+// 		return res.status(400).json({
+// 			message: err.message
+// 		})
+// 	}
+// }
