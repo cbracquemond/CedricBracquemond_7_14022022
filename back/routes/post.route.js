@@ -8,10 +8,7 @@ const router = express.Router()
 router.get("/", auth, postCtrl.getAllPosts)
 router.post("/", auth, postCtrl.createPost)
 router.delete("/:id", auth, postCtrl.deletePost)
-// router.post("/login", userCtrl.login)
-// router.get("/", userCtrl.getAllUsers)
-// router.get("/:id", userCtrl.getOneUser)
-// router.put("/:id", userCtrl.updateUser)
-// router.delete("/:id", userCtrl.deleteUser)
+router.get("/:id", auth, postCtrl.getOnePost)
+router.put("/:id", auth, postCtrl.editPost)
 
 module.exports = router

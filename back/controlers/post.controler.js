@@ -13,6 +13,18 @@ exports.getAllPosts = async (req, res) => {
 	}
 }
 
+exports.getOnePost = async (req, res) => {
+	try {
+		const post = await postService.getOnePost(req.params.id)
+		return res.status(200).json({
+			post,
+			message: "Post Succesfully Retrieved"
+		})
+	} catch (err) {
+		return res.status(400).json({ status: 400, message: err.message })
+	}
+}
+
 exports.createPost = async (req, res) => {
 	try {
 		await postService.createPost(req.body)
@@ -28,9 +40,22 @@ exports.createPost = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
 	try {
-		await postService.deletePost(req.params.id)
+		await postService.deletePost(req.params.id, res.locals.userId)
 		return res.status(200).json({
 			message: "Post Successfully Deleted"
+		})
+	} catch (err) {
+		return res.status(400).json({
+			message: err.message
+		})
+	}
+}
+
+exports.editPost = async (req, res) => {
+	try {
+		await postService.editPost(req.body, req.params.id, res.locals.userId)
+		return res.status(200).json({
+			message: "Post Successfully Edited"
 		})
 	} catch (err) {
 		return res.status(400).json({
