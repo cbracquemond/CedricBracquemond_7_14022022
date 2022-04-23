@@ -64,15 +64,15 @@ exports.editPost = async (req, res) => {
 	}
 }
 
-// exports.likePost = async (req, res) => {
-// 	try {
-// 		await postService.likePost(req.body, req.params.id, res.locals.userId)
-// 		return res.status(200).json({
-// 			message: "Vote Successfully Submited"
-// 		})
-// 	} catch (err) {
-// 		return res.status(400).json({
-// 			message: err.message
-// 		})
-// 	}
-// }
+exports.likePost = async (req, res) => {
+	try {
+		await postService.likePost(req.body, req.params.id, res.locals.userId)
+		return res.status(200).json({
+			message: "Vote Successfully Submited"
+		})
+	} catch (err) {
+		return res.status(400).json({
+			message: err.message
+		})
+	}
+}
