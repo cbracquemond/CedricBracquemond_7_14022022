@@ -1,4 +1,3 @@
-const pool = require("../config/mysql")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const secretKey = process.env.SECRET_KEY
@@ -25,7 +24,7 @@ exports.getAllUsers = async function () {
 }
 
 exports.getOneUser = async function (id) {
-	await utils.checkIfAccountExist(id)
+	await utils.checkIfExist(id, "users")
 	const sql =
 		"SELECT id, username, first_name, last_name, email FROM users WHERE id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
@@ -33,7 +32,7 @@ exports.getOneUser = async function (id) {
 }
 
 exports.deleteUser = async function (id) {
-	await utils.checkIfAccountExist(id)
+	await utils.checkIfExist(id, "users")
 	const sql = "DELETE FROM users WHERE id = ?"
 	await utils.makeDbQueries(sql, [id])
 }
@@ -44,15 +43,20 @@ exports.createUser = async function (user) {
 	return await utils.makeDbQueries(sql, params.arg)
 }
 
-exports.updateUser = async function (user, id) {
-	await utils.checkIfAccountExist(id)
-	const params = await makeQueryParams(user, id)
+exports.updateUser = async function (newProfile, accountId, userId) {
+	await utils.checkIfExist(accountId, "users")
+	await utils.checkIfOwner(accountId, userId, "users")
+	const params = await makeQueryParams(newProfile, accountId)
 	const sql = "UPDATE users SET " + params.sql + " WHERE id = " + params.id
 	await utils.makeDbQueries(sql, params.arg)
 }
 
 exports.login = async function (user) {
-	await utils.checkIfAccountExist(user.id)
+	const userId = await utils.makeDbQueries(
+		"SELECT id FROM users WHERE email = ?",
+		[user.email]
+	)
+	await utils.checkIfExist(userId[0].id, "users")
 	const sql = "SELECT * FROM users WHERE email = ?"
 	const queryResult = (await utils.makeDbQueries(sql, [user.email]))[0]
 	const passwordCheck = await bcrypt.compare(

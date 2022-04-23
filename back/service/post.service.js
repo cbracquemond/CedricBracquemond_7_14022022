@@ -1,4 +1,3 @@
-const pool = require("../config/mysql")
 const utils = require("../utils/utils")
 
 function makeQueryParams(post, id = null) {
@@ -22,7 +21,7 @@ exports.getAllPosts = async function () {
 }
 
 exports.getOnePost = async function (id) {
-	await utils.checkIfPostExist(id)
+	await utils.checkIfExist(id, "posts")
 	const sql =
 		"SELECT p.id, p.post_time, p.title, p.content, p.likes, p.dislikes, u.username FROM posts p LEFT JOIN users u ON p.user_id = u.id WHERE p.id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
@@ -36,15 +35,15 @@ exports.createPost = async function (post, userId) {
 }
 
 exports.deletePost = async function (postId, userId) {
-	await utils.checkIfPostExist(postId)
-	await utils.checkIfOwner(postId, userId)
+	await utils.checkIfExist(postId, "posts")
+	await utils.checkIfOwner(postId, userId, "posts")
 	const sql = "DELETE FROM posts WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
 }
 
 exports.editPost = async function (req, postId, userId) {
-	await utils.checkIfPostExist(postId)
-	await utils.checkIfOwner(postId, userId)
+	await utils.checkIfExist(postId, "posts")
+	await utils.checkIfOwner(postId, userId, "posts")
 	const sql = "UPDATE posts SET content = '" + req.content + "' WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
 }

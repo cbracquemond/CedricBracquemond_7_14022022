@@ -51,7 +51,7 @@ exports.getOneUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
 	try {
-		await userService.updateUser(req.body, req.params.id)
+		await userService.updateUser(req.body, req.params.id, res.locals.userId)
 		return res.status(200).json({
 			status: 200,
 			message: "User Succesfully Updated"

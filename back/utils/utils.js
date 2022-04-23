@@ -8,17 +8,19 @@ exports.checkIfPostExist = async function (postId) {
 	}
 }
 
-exports.checkIfAccountExist = async function (userId) {
-	const sql = "SELECT * FROM users WHERE id = " + userId
+exports.checkIfExist = async function (id, table) {
+	const sql = "SELECT * FROM " + table + " WHERE id = " + id
 	const queryResult = await exports.makeDbQueries(sql)
 	if (queryResult.length === 0 || queryResult.affectedRows === 0) {
-		throw Error("This user doesn't exist")
+		throw Error("This " + table.slice(0, -1) + " doesn't exist")
 	}
 }
 
-exports.checkIfOwner = async function (postId, userId) {
-	const sql = "SELECT user_id FROM posts WHERE id = ?"
-	const owner = await exports.makeDbQueries(sql, [postId])
+exports.checkIfOwner = async function (ownerId, userId, table) {
+	table === "users"
+		? (sql = "SELECT id FROM " + table + " WHERE id = ?")
+		: (sql = "SELECT user_id FROM " + table + " WHERE id = ?")
+	const owner = await exports.makeDbQueries(sql, [ownerId])
 	if (owner[0].user_id != userId) throw Error("Can't touch this")
 }
 
