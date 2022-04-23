@@ -17,14 +17,47 @@ exports.createComment = async (req, res) => {
 	}
 }
 
-exports.getAllCommmentsFromPost = async (req, res) => {
+exports.getAllCommentsFromPost = async (req, res) => {
 	try {
-		const comments = await commentService.getAllCommmentsFromPost(req.params.id)
+		const comments = await commentService.getAllCommentsFromPost(req.params.id)
 		return res
 			.status(200)
 			.json({ comments, message: "Comments Succesfully Retrieved" })
 	} catch (err) {
-		return res.status(500).json({
+		return res.status(400).json({
+			message: err.message
+		})
+	}
+}
+
+exports.editComment = async (req, res) => {
+	try {
+		const comments = await commentService.editComment(
+			req.body.content,
+			req.params.id,
+			res.locals.userId
+		)
+		return res
+			.status(200)
+			.json({ comments, message: "Comments Succesfully edited" })
+	} catch (err) {
+		return res.status(400).json({
+			message: err.message
+		})
+	}
+}
+
+exports.deleteComment = async (req, res) => {
+	try {
+		const comments = await commentService.deleteComment(
+			req.params.id,
+			res.locals.userId
+		)
+		return res
+			.status(200)
+			.json({ comments, message: "Comments Succesfully deleted" })
+	} catch (err) {
+		return res.status(400).json({
 			message: err.message
 		})
 	}

@@ -31,10 +31,11 @@ exports.getOneUser = async function (id) {
 	return queryResult
 }
 
-exports.deleteUser = async function (id) {
-	await utils.checkIfExist(id, "users")
+exports.deleteUser = async function (accountId, userId) {
+	await utils.checkIfExist(accountId, "users")
+	await utils.checkIfOwner(accountId, userId, "users")
 	const sql = "DELETE FROM users WHERE id = ?"
-	await utils.makeDbQueries(sql, [id])
+	await utils.makeDbQueries(sql, [accountId])
 }
 
 exports.createUser = async function (user) {
@@ -52,11 +53,7 @@ exports.updateUser = async function (newProfile, accountId, userId) {
 }
 
 exports.login = async function (user) {
-	const userId = await utils.makeDbQueries(
-		"SELECT id FROM users WHERE email = ?",
-		[user.email]
-	)
-	await utils.checkIfExist(userId[0].id, "users")
+	await utils.checkIfExist(user.email, "users")
 	const sql = "SELECT * FROM users WHERE email = ?"
 	const queryResult = (await utils.makeDbQueries(sql, [user.email]))[0]
 	const passwordCheck = await bcrypt.compare(

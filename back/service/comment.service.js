@@ -5,14 +5,22 @@ exports.createComment = async function (comment, postId, userId) {
 	await utils.makeDbQueries(sql, [comment, postId, userId])
 }
 
-exports.getAllCommmentsFromPost = async function (post_id) {
+exports.getAllCommentsFromPost = async function (postId) {
+	await utils.checkIfExist(postId, "posts")
 	const sql = "SELECT * from comments where post_id = ?"
-	return await utils.makeDbQueries(sql, [post_id])
+	return await utils.makeDbQueries(sql, [postId])
 }
 
-exports.editComment = async function (req, commentId, userId) {
+exports.editComment = async function (content, commentId, userId) {
 	await utils.checkIfExist(commentId, "comments")
-	await utils.checkIfOwner(commentId, userId)
-	const sql = "UPDATE posts SET content = '" + req.content + "' WHERE id = ?"
+	await utils.checkIfOwner(commentId, userId, "comments")
+	const sql = "UPDATE comments SET content = '" + content + "' WHERE id = ?"
+	await utils.makeDbQueries(sql, [commentId])
+}
+
+exports.deleteComment = async function (commentId, userId) {
+	await utils.checkIfExist(commentId, "comments")
+	await utils.checkIfOwner(commentId, userId, "comments")
+	const sql = "DELETE FROM comments WHERE id = ?"
 	await utils.makeDbQueries(sql, [commentId])
 }
