@@ -1,7 +1,7 @@
 <script>
 import BaseButtonVue from "./BaseButton.vue"
 export default {
-	name: "AccountInput",
+	name: "BaseInput",
 	components: {
 		BaseButtonVue
 	},
@@ -31,10 +31,8 @@ export default {
 	<div>
 		<span>{{ text }}</span>
 		<base-button-vue type="button" text="Update" />
-		<form class="accountInput" @submit.prevent="sendData">
-			<slot name="label"></slot>
+		<form class="baseInput" @submit.prevent="sendEvent">
 			<input :type="type" v-model="input" />
-			<slot name="password-check"></slot>
 			<base-button-vue text="Apply" />
 		</form>
 	</div>

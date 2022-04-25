@@ -10,7 +10,7 @@ export default createStore({
 		login(state, response) {
 			if (response) {
 				state.user = response.user
-				state.token = "bearer " + response.token
+				state.token = "Bearer " + response.token
 				state.identified = true
 			}
 		},

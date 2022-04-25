@@ -64,6 +64,6 @@ exports.login = async function (userData) {
 	const user = await utils.comparePassword(userData.email, userData.password)
 	return {
 		user,
-		token: jwt.sign({ userId: userData.id }, secretKey, { expiresIn: "24h" })
+		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "24h" })
 	}
 }

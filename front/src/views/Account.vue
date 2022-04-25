@@ -1,34 +1,23 @@
 <script>
 import axios from "../config/axiosConfig"
-import AccountInputVue from "../components/AccountInput.vue"
+import BaseInputVue from "../components/BaseInput.vue"
 import BaseButtonVue from "../components/BaseButton.vue"
+import PasswordInputVue from "../components/PasswordInput.vue"
 export default {
 	name: "Account",
 	components: {
-		AccountInputVue,
-		BaseButtonVue
+		BaseInputVue,
+		BaseButtonVue,
+		PasswordInputVue
 	},
 	data() {
 		return {
-			user: this.$store.state.user,
-			passwordCheck: ""
+			user: this.$store.state.user
 		}
 	},
 	methods: {
-		confirmNewPassword(newPassword) {
-			if (newPassword != this.passwordCheck) {
-				const warningParent = document.querySelector("#warningParent")
-				const warning = document.createElement("p")
-				warning.innerText = "Password does not match"
-				warning.classList.add("warning")
-				warningParent.appendChild(warning)
-				throw Error("Password does not match")
-			}
-		},
-
 		async handleSubmit(input, param) {
 			try {
-				this.confirmNewPassword(input)
 				await axios.put("users/" + this.user.id, {
 					[param]: input
 				})
@@ -43,36 +32,28 @@ export default {
 </script>
 
 <template>
-	<account-input-vue
+	<base-input-vue
 		:text="'Userame: ' + this.user.username"
 		@sendFormInput="handleSubmit($event, 'username')"
 	/>
-	<account-input-vue
+	<base-input-vue
 		:text="'First name: ' + this.user.firstName"
 		@sendFormInput="handleSubmit($event, 'first_name')"
 	/>
-	<account-input-vue
+	<base-input-vue
 		:text="'Last name: ' + this.user.lastName"
 		@sendFormInput="handleSubmit($event, 'last_name')"
 	/>
-	<account-input-vue
+	<base-input-vue
 		:text="'Email: ' + this.user.email"
 		type="email"
 		@sendFormInput="handleSubmit($event, 'email')"
 	/>
-	<account-input-vue
+	<password-input-vue
 		text="Change password:"
 		type="password"
 		@sendFormInput="handleSubmit($event, 'password')"
-	>
-		<template v-slot:label>
-			<p>New password</p>
-		</template>
-		<template v-slot:password-check>
-			<p id="warningParent">Confirm password</p>
-			<input type="password" v-model="passwordCheck" />
-		</template>
-	</account-input-vue>
+	/>
 	<base-button-vue text="Delete account" />
 </template>
 
