@@ -52,23 +52,18 @@ exports.updateUser = async function (newProfile, accountId, userId) {
 	await utils.makeDbQueries(sql, params.arg)
 }
 
-exports.login = async function (user) {
-	await utils.checkIfExist(user.email, "users")
-	const sql = "SELECT * FROM users WHERE email = ?"
-	const queryResult = (await utils.makeDbQueries(sql, [user.email]))[0]
-	const passwordCheck = await bcrypt.compare(
-		user.password,
-		queryResult.password
-	)
-	if (!passwordCheck) throw Error("Wrong password")
+exports.checkPassword = async function (userData) {
+	const isPasswordCorrect =
+		(await utils.comparePassword(userData.email, userData.password)) == Error
+			? false
+			: true
+	return isPasswordCorrect
+}
+
+exports.login = async function (userData) {
+	const user = await utils.comparePassword(userData.email, userData.password)
 	return {
-		user: {
-			email: queryResult.email,
-			firstName: queryResult.first_name,
-			lastName: queryResult.last_name,
-			id: queryResult.id,
-			username: queryResult.username
-		},
-		token: jwt.sign({ userId: queryResult.id }, secretKey, { expiresIn: "24h" })
+		user,
+		token: jwt.sign({ userId: userData.id }, secretKey, { expiresIn: "24h" })
 	}
 }

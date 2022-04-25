@@ -1,10 +1,12 @@
 <script>
 import axios from "../config/axiosConfig"
 import AccountInputVue from "../components/AccountInput.vue"
+import BaseButtonVue from "../components/BaseButton.vue"
 export default {
 	name: "Account",
 	components: {
-		AccountInputVue
+		AccountInputVue,
+		BaseButtonVue
 	},
 	data() {
 		return {
@@ -34,6 +36,8 @@ export default {
 				console.log(error.message)
 			}
 		}
+
+		// async deleteAccount()
 	}
 }
 </script>
@@ -41,25 +45,25 @@ export default {
 <template>
 	<account-input-vue
 		:text="'Userame: ' + this.user.username"
-		@updateChange="handleSubmit($event, 'username')"
+		@sendFormInput="handleSubmit($event, 'username')"
 	/>
 	<account-input-vue
 		:text="'First name: ' + this.user.firstName"
-		@updateChange="handleSubmit($event, 'first_name')"
+		@sendFormInput="handleSubmit($event, 'first_name')"
 	/>
 	<account-input-vue
 		:text="'Last name: ' + this.user.lastName"
-		@updateChange="handleSubmit($event, 'last_name')"
+		@sendFormInput="handleSubmit($event, 'last_name')"
 	/>
 	<account-input-vue
 		:text="'Email: ' + this.user.email"
 		type="email"
-		@updateChange="handleSubmit($event, 'email')"
+		@sendFormInput="handleSubmit($event, 'email')"
 	/>
 	<account-input-vue
 		text="Change password:"
 		type="password"
-		@updateChange="handleSubmit($event, 'password')"
+		@sendFormInput="handleSubmit($event, 'password')"
 	>
 		<template v-slot:label>
 			<p>New password</p>
@@ -69,6 +73,7 @@ export default {
 			<input type="password" v-model="passwordCheck" />
 		</template>
 	</account-input-vue>
+	<base-button-vue text="Delete account" />
 </template>
 
 <style lang="scss" scoped>

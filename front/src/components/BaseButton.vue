@@ -3,7 +3,8 @@ export default {
 	name: "BaseButton",
 	props: {
 		text: {
-			type: String
+			type: String,
+			required: true
 		},
 		type: {
 			type: String,

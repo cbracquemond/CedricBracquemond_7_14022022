@@ -72,3 +72,15 @@ exports.deleteUser = async (req, res) => {
 		return res.status(400).json({ status: 400, message: err.message })
 	}
 }
+
+exports.checkPassword = async (req, res) => {
+	try {
+		await userService.checkPassword(req.body)
+		return res.status(200).json({
+			status: 200,
+			message: "Password correct"
+		})
+	} catch (err) {
+		return res.status(400).json({ status: 400, message: err.message })
+	}
+}

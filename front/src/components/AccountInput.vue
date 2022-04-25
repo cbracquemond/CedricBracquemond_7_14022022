@@ -14,15 +14,15 @@ export default {
 			type: String
 		}
 	},
-	emits: ["updateChange"],
+	emits: ["sendFormInput"],
 	data() {
 		return {
 			input: ""
 		}
 	},
 	methods: {
-		sendData() {
-			this.$emit("updateChange", this.input)
+		sendEvent() {
+			this.$emit("sendFormInput", this.input)
 		}
 	}
 }

@@ -11,5 +11,6 @@ router.get("/", auth, userCtrl.getAllUsers)
 router.get("/:id", auth, userCtrl.getOneUser)
 router.put("/:id", auth, userCtrl.updateUser)
 router.delete("/:id", auth, userCtrl.deleteUser)
+router.post("/check", auth, userCtrl.checkPassword)
 
 module.exports = router

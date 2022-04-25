@@ -1,11 +1,20 @@
 const pool = require("../config/mysql")
+const bcrypt = require("bcrypt")
 
-exports.checkIfPostExist = async function (postId) {
-	const sql = "SELECT * FROM posts WHERE id = " + postId
-	const queryResult = await exports.makeDbQueries(sql)
-	if (queryResult.length === 0 || queryResult.affectedRows === 0) {
-		throw Error("This post doesn't exist")
+exports.comparePassword = async function (userEmail, userPassword) {
+	await exports.checkIfExist(userEmail, "users")
+	const sql = "SELECT * FROM users WHERE email = ?"
+	const queryResult = (await exports.makeDbQueries(sql, [userEmail]))[0]
+	const passwordCheck = await bcrypt.compare(userPassword, queryResult.password)
+	if (!passwordCheck) throw Error("Wrong password")
+	user = {
+		email: queryResult.email,
+		firstName: queryResult.first_name,
+		lastName: queryResult.last_name,
+		id: queryResult.id,
+		username: queryResult.username
 	}
+	return user
 }
 
 exports.checkIfExist = async function (reference, table) {
