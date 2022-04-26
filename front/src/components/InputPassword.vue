@@ -1,7 +1,7 @@
 <script>
 import BaseButtonVue from "./BaseButton.vue"
 export default {
-	name: "PasswordInput",
+	name: "InputPassword",
 	components: {
 		BaseButtonVue
 	},

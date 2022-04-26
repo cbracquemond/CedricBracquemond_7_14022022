@@ -1,14 +1,16 @@
 <script>
 import axios from "../config/axiosConfig"
-import BaseInputVue from "../components/BaseInput.vue"
-import BaseButtonVue from "../components/BaseButton.vue"
-import PasswordInputVue from "../components/PasswordInput.vue"
+import InputBaseVue from "../components/InputBase.vue"
+import InputPasswordVue from "../components/InputPassword.vue"
+import InputDeleteAccountVue from "../components/InputDeleteAccount.vue"
+import { mapMutations } from "vuex"
+
 export default {
 	name: "Account",
 	components: {
-		BaseInputVue,
-		BaseButtonVue,
-		PasswordInputVue
+		InputBaseVue,
+		InputPasswordVue,
+		InputDeleteAccountVue
 	},
 	data() {
 		return {
@@ -16,7 +18,8 @@ export default {
 		}
 	},
 	methods: {
-		async handleSubmit(input, param) {
+		...mapMutations(["logout"]),
+		async handleUpdate(input, param) {
 			try {
 				await axios.put("users/" + this.user.id, {
 					[param]: input
@@ -24,37 +27,57 @@ export default {
 			} catch (error) {
 				console.log(error.message)
 			}
+		},
+		async handleDelete(event) {
+			try {
+				await axios.post("users/check/", {
+					email: this.user.email,
+					password: event
+				})
+			} catch (error) {
+				console.log(error.message)
+				return
+			}
+			try {
+				await axios.delete("users/" + this.user.id)
+			} catch (error) {
+				console.log(error.message)
+			}
+			this.logout()
+			this.$router.push("/login")
 		}
-
-		// async deleteAccount()
 	}
 }
 </script>
 
 <template>
-	<base-input-vue
+	<input-base-vue
 		:text="'Userame: ' + this.user.username"
 		@sendFormInput="handleSubmit($event, 'username')"
 	/>
-	<base-input-vue
+	<input-base-vue
 		:text="'First name: ' + this.user.firstName"
 		@sendFormInput="handleSubmit($event, 'first_name')"
 	/>
-	<base-input-vue
+	<input-base-vue
 		:text="'Last name: ' + this.user.lastName"
 		@sendFormInput="handleSubmit($event, 'last_name')"
 	/>
-	<base-input-vue
+	<input-base-vue
 		:text="'Email: ' + this.user.email"
 		type="email"
 		@sendFormInput="handleSubmit($event, 'email')"
 	/>
-	<password-input-vue
+	<input-password-vue
 		text="Change password:"
 		type="password"
 		@sendFormInput="handleSubmit($event, 'password')"
 	/>
-	<base-button-vue text="Delete account" />
+	<input-delete-account-vue
+		text="Delete account"
+		type="password"
+		@sendFormInput="handleDelete($event)"
+	/>
 </template>
 
 <style lang="scss" scoped>
