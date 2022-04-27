@@ -1,20 +1,14 @@
 const pool = require("../config/mysql")
 const bcrypt = require("bcrypt")
+const fs = require("fs")
 
-exports.comparePassword = async function (userEmail, userPassword) {
-	await exports.checkIfExist(userEmail, "users")
-	const sql = "SELECT * FROM users WHERE email = ?"
-	const queryResult = (await exports.makeDbQueries(sql, [userEmail]))[0]
-	const passwordCheck = await bcrypt.compare(userPassword, queryResult.password)
-	if (!passwordCheck) throw Error("Wrong password")
-	user = {
-		email: queryResult.email,
-		firstName: queryResult.first_name,
-		lastName: queryResult.last_name,
-		id: queryResult.id,
-		username: queryResult.username
+exports.makeDbQueries = async function (sql, params = null) {
+	try {
+		const [queryResult] = await pool.execute(sql, params)
+		return queryResult
+	} catch (err) {
+		throw Error(err)
 	}
-	return user
 }
 
 exports.checkIfExist = async function (reference, table) {
@@ -37,11 +31,27 @@ exports.checkIfOwner = async function (dataToCheckId, userId, table) {
 	if (dataToCheckId != userId) throw Error("Can't touch this")
 }
 
-exports.makeDbQueries = async function (sql, params = null) {
-	try {
-		const [queryResult] = await pool.execute(sql, params)
-		return queryResult
-	} catch (err) {
-		throw Error(err)
+exports.deleteImageFile = async function (id, table) {
+	const sql = "SELECT image_url FROM " + table + " WHERE id = ?"
+	const imageUrl = await exports.makeDbQueries(sql, [id])
+	await fs.unlink(
+		`images/${imageUrl[0].image_url.split("/images/")[1]}`,
+		() => {}
+	)
+}
+
+exports.comparePassword = async function (userEmail, userPassword) {
+	await exports.checkIfExist(userEmail, "users")
+	const sql = "SELECT * FROM users WHERE email = ?"
+	const queryResult = (await exports.makeDbQueries(sql, [userEmail]))[0]
+	const passwordCheck = await bcrypt.compare(userPassword, queryResult.password)
+	if (!passwordCheck) throw Error("Wrong password")
+	user = {
+		email: queryResult.email,
+		firstName: queryResult.first_name,
+		lastName: queryResult.last_name,
+		id: queryResult.id,
+		username: queryResult.username
 	}
+	return user
 }

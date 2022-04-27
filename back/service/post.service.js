@@ -23,7 +23,7 @@ exports.getAllPosts = async function () {
 exports.getOnePost = async function (id) {
 	await utils.checkIfExist(id, "posts")
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.content, posts.likes, posts.dislikes, users.username FROM posts posts LEFT JOIN users users ON posts.user_id = users.id WHERE posts.id = ?"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, posts.dislikes, users.username FROM posts posts LEFT JOIN users users ON posts.user_id = users.id WHERE posts.id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
 	return queryResult
 }
@@ -37,6 +37,7 @@ exports.createPost = async function (post, userId) {
 exports.deletePost = async function (postId, userId) {
 	await utils.checkIfExist(postId, "posts")
 	await utils.checkIfOwner(postId, userId, "posts")
+	await utils.deleteImageFile(postId, "posts")
 	const sql = "DELETE FROM posts WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
 }
