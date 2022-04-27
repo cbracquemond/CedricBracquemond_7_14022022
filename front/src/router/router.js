@@ -26,7 +26,7 @@ const routes = [
 		component: Login
 	},
 	{
-		path: "/post",
+		path: "/post/:id",
 		name: "Post",
 		component: Post,
 		meta: {

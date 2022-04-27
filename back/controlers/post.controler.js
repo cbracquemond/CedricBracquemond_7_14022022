@@ -26,8 +26,13 @@ exports.getOnePost = async (req, res) => {
 }
 
 exports.createPost = async (req, res) => {
+	const post = JSON.parse(req.body.post)
+	if (req.file != undefined)
+		post.image_url = `${req.protocol}://${req.get("host")}/images/${
+			req.file.filename
+		}`
 	try {
-		await postService.createPost(req.body, res.locals.userId)
+		await postService.createPost(post, res.locals.userId)
 		return res.status(201).json({
 			message: "Post Succesfully Created"
 		})

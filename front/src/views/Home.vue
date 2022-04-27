@@ -1,9 +1,11 @@
 <script>
+import InputCreatePostVue from "../components/InputCreatePost.vue"
 import PostCardsVue from "../components/PostCards.vue"
 import axios from "../config/axiosConfig"
 export default {
 	name: "Home",
 	components: {
+		InputCreatePostVue,
 		PostCardsVue
 	},
 	data() {
@@ -21,8 +23,8 @@ export default {
 			return date
 		}
 	},
-	created() {
-		axios
+	async beforeCreate() {
+		await axios
 			.get("posts")
 			.then((response) => {
 				this.posts = response.data.posts
@@ -35,10 +37,9 @@ export default {
 </script>
 
 <template>
-	<router-link to>
+	<input-create-post-vue />
+	<router-link v-for="post in posts" :key="post.id" :to="`/post/` + post.id">
 		<post-cards-vue
-			v-for="post in posts"
-			:key="post.id"
 			:title="post.title"
 			:date="createDateString(post.post_time)"
 			:content="post.content"
