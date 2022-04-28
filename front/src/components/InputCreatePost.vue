@@ -15,16 +15,31 @@ export default {
 	data() {
 		return {
 			title: "",
-			content: ""
+			content: "",
+			image: null
 		}
 	},
 	methods: {
+		bindImage(event) {
+			this.image = event.target.files[0]
+		},
 		async sendEvent() {
-			// this.$emit("sendFormInput", this.input)
+			const post = {
+				title: this.title,
+				content: this.content
+			}
+			const data = new FormData()
+			data.append("post", JSON.stringify(post))
+			data.append("image", this.image)
+			for (let value of data.values()) {
+				console.log(value)
+			}
+
 			try {
-				await axios.post("posts/", {
-					title: this.title,
-					content: this.content
+				await axios.post("posts/", data, {
+					headers: {
+						"Content-Type": "multipart/form-data"
+					}
 				})
 			} catch (error) {
 				console.log(error)
@@ -41,6 +56,8 @@ export default {
 			<input type="text" v-model="title" label="title" />
 			<p>Content</p>
 			<textarea type="text" v-model="content" name="content"></textarea>
+			<p>Image</p>
+			<input type="file" name="image_input" @change="bindImage" />
 			<base-button-vue text="Post" />
 		</form>
 	</div>

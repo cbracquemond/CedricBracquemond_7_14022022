@@ -3,8 +3,7 @@ export default {
 	name: "postCard",
 	props: {
 		title: {
-			type: String,
-			required: true
+			type: String
 		},
 		date: {
 			type: String,
@@ -15,8 +14,10 @@ export default {
 			required: true
 		},
 		content: {
-			type: String,
-			required: true
+			type: String
+		},
+		imageUrl: {
+			type: String
 		}
 	}
 }
@@ -26,6 +27,7 @@ export default {
 		<h2>{{ title }}</h2>
 		<span>Posté le {{ date }} par {{ user }}</span>
 		<p>{{ content }}</p>
+		<img v-if="imageUrl != null" :src="imageUrl" alt="Post image" />
 	</div>
 </template>
 <style></style>

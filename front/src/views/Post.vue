@@ -8,24 +8,33 @@ export default {
 	},
 	data() {
 		return {
-			post: []
+			content: "",
+			date: "",
+			title: "",
+			username: "",
+			imageUrl: ""
 		}
 	},
-	methods: {
-		createDateString(timestamp) {
-			const day = timestamp.slice(8, 10)
-			const month = timestamp.slice(5, 7)
-			const year = timestamp.slice(0, 4)
-			const hour = timestamp.slice(11, 16)
+	computed: {
+		timestampToDateString() {
+			const day = this.date.slice(8, 10)
+			const month = this.date.slice(5, 7)
+			const year = this.date.slice(0, 4)
+			const hour = this.date.slice(11, 16)
 			const date = "le " + day + "/" + month + "/" + year + " à " + hour
 			return date
 		}
 	},
-	async created() {
+	async mounted() {
 		await axios
 			.get("posts/" + this.$route.params.id)
 			.then((response) => {
-				this.post = response.data.post[0]
+				this.content = response.data.post[0].content
+				this.date = response.data.post[0].post_time
+				this.title = response.data.post[0].title
+				this.username = response.data.post[0].username
+				this.imageUrl = response.data.post[0].image_url
+				console.log(response.data.post[0])
 			})
 			.catch((err) => {
 				throw err
@@ -36,10 +45,11 @@ export default {
 
 <template>
 	<post-cards-vue
-		:date="createDateString(this.post.post_time)"
-		:title="this.post.title"
-		:content="this.post.content"
-		:user="this.post.username"
+		:user="this.username"
+		:date="timestampToDateString"
+		:title="this.title"
+		:content="this.content"
+		:imageUrl="this.imageUrl"
 	/>
 </template>
 <style></style>

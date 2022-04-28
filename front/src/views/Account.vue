@@ -29,6 +29,7 @@ export default {
 			}
 		},
 		async handleDelete(event) {
+			console.log(event)
 			try {
 				await axios.post("users/check/", {
 					email: this.user.email,
