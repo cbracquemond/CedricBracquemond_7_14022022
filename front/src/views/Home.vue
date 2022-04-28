@@ -44,6 +44,7 @@ export default {
 			:date="createDateString(post.post_time)"
 			:content="post.content"
 			:user="post.username"
+			:imageUrl="post.image_url"
 		/>
 	</router-link>
 </template>
