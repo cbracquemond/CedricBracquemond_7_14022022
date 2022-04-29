@@ -1,8 +1,13 @@
 const userService = require("../service/user.service")
 
 exports.createUser = async (req, res) => {
+	const user = JSON.parse(req.body.user)
+	if (req.file != undefined)
+		user.image_url = `${req.protocol}://${req.get("host")}/images/${
+			req.file.filename
+		}`
 	try {
-		await userService.createUser(req.body)
+		await userService.createUser(user)
 		return res.status(201).json({
 			message: "User Succesfully Created"
 		})

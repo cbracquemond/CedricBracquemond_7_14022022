@@ -27,7 +27,12 @@ export default {
 		<h2>{{ title }}</h2>
 		<span>Posté le {{ date }} par {{ user }}</span>
 		<p>{{ content }}</p>
-		<img v-if="imageUrl != null" :src="imageUrl" alt="Post image" />
+		<img
+			v-if="imageUrl != null"
+			:src="imageUrl"
+			alt="Post image"
+			class="postcard__image"
+		/>
 	</div>
 </template>
 <style></style>

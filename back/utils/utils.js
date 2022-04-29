@@ -1,6 +1,5 @@
 const pool = require("../config/mysql")
 const bcrypt = require("bcrypt")
-const fs = require("fs")
 
 exports.makeDbQueries = async function (sql, params = null) {
 	try {
@@ -31,13 +30,28 @@ exports.checkIfOwner = async function (dataToCheckId, userId, table) {
 	if (dataToCheckId != userId) throw Error("Can't touch this")
 }
 
-exports.deleteImageFile = async function (id, table) {
+exports.getImageUrl = async function (id, table) {
 	const sql = "SELECT image_url FROM " + table + " WHERE id = ?"
-	const imageUrl = await exports.makeDbQueries(sql, [id])
-	await fs.unlink(
-		`images/${imageUrl[0].image_url.split("/images/")[1]}`,
-		() => {}
-	)
+	const queryResult = await exports.makeDbQueries(sql, [id])
+	const imageUrl = queryResult[0].image_url
+	if (imageUrl != null) return `images/${imageUrl.split("/images/")[1]}`
+}
+
+exports.getAllImagesFromAccount = async function (userId) {
+	const imageUrlList = []
+	//get the url for the profil picture:
+	const sqlUser = "SELECT image_url FROM users WHERE id = ?"
+	const queryResult = await exports.makeDbQueries(sqlUser, [userId])
+	const userImageUrl = queryResult[0].image_url
+	if (userImageUrl != null)
+		imageUrlList.push(`images/${userImageUrl.split("/images/")[1]}`)
+	//get all the urls from the user's posts:
+	const sqlPosts = "SELECT image_url FROM posts WHERE user_id = ?"
+	const postsImageUrls = await exports.makeDbQueries(sqlPosts, [userId])
+	postsImageUrls.forEach((url) => {
+		imageUrlList.push(`images/${url.image_url.split("/images/")[1]}`)
+	})
+	return imageUrlList
 }
 
 exports.comparePassword = async function (userEmail, userPassword) {

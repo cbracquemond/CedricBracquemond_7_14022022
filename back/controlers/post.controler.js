@@ -27,7 +27,6 @@ exports.getOnePost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
 	const post = JSON.parse(req.body.post)
-	console.log(post)
 	if (req.file != undefined)
 		post.image_url = `${req.protocol}://${req.get("host")}/images/${
 			req.file.filename

@@ -1,4 +1,5 @@
 const utils = require("../utils/utils")
+const fs = require("fs")
 
 function makeQueryParams(post, id = null) {
 	const keys = Object.entries(post)
@@ -16,14 +17,14 @@ function makeQueryParams(post, id = null) {
 
 exports.getAllPosts = async function () {
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, posts.dislikes, users.username FROM posts posts LEFT JOIN users users ON posts.user_id = users.id "
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, posts.dislikes, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id ORDER BY posts.post_time DESC"
 	return await utils.makeDbQueries(sql)
 }
 
 exports.getOnePost = async function (id) {
 	await utils.checkIfExist(id, "posts")
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, posts.dislikes, users.username FROM posts posts LEFT JOIN users users ON posts.user_id = users.id WHERE posts.id = ?"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, posts.dislikes, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
 	return queryResult
 }
@@ -37,9 +38,12 @@ exports.createPost = async function (post, userId) {
 exports.deletePost = async function (postId, userId) {
 	await utils.checkIfExist(postId, "posts")
 	await utils.checkIfOwner(postId, userId, "posts")
-	await utils.deleteImageFile(postId, "posts")
+	const imageUrl = await utils.getImageUrl(postId, "posts")
 	const sql = "DELETE FROM posts WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
+	if (imageUrl != null) {
+		fs.unlink(imageUrl, () => {})
+	}
 }
 
 exports.editPost = async function (req, postId, userId) {
