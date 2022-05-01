@@ -17,6 +17,9 @@ export default {
 		}
 	},
 	methods: {
+		bindImage(event) {
+			this.image = event.target.files[0]
+		},
 		checkPassword() {
 			if (this.password != this.passwordCheck) {
 				const warningParent = document.querySelector("#warningParent")
@@ -29,14 +32,29 @@ export default {
 		},
 		async handleSubmit() {
 			this.checkPassword()
-			await axios.post("users", {
+			const user = {
 				first_name: this.firstName,
 				last_name: this.lastName,
 				username: this.username,
 				email: this.email,
 				password: this.password
-			})
-			this.$router.push("/login")
+			}
+			const data = new FormData()
+			data.append("user", JSON.stringify(user))
+			data.append("image", this.image)
+			for (let value of data.values()) {
+				console.log(value)
+			}
+			try {
+				await axios.post("users", data, {
+					headers: {
+						"Content-Type": "multipart/form-data"
+					}
+				})
+				this.$router.push("/login")
+			} catch (error) {
+				console.log(error)
+			}
 		}
 	}
 }
@@ -55,6 +73,7 @@ export default {
 		<input type="password" required v-model="password" />
 		<label id="warningParent">Password confirmation</label>
 		<input type="password" required v-model="passwordCheck" />
+		<input type="file" name="image_input" @change="bindImage" />
 		<base-button-vue text="Validation" />
 	</form>
 </template>

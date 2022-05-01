@@ -47,7 +47,7 @@ exports.deleteUser = async function (accountId, userId) {
 exports.createUser = async function (user) {
 	const params = await makeQueryParams(user)
 	const sql = "INSERT INTO users SET " + params.sql
-	return await utils.makeDbQueries(sql, params.arg)
+	await utils.makeDbQueries(sql, params.arg)
 }
 
 exports.updateUser = async function (newProfile, accountId, userId) {
@@ -69,6 +69,6 @@ exports.checkPassword = async function (userData) {
 exports.login = async function (userData) {
 	const user = await utils.comparePassword(userData.email, userData.password)
 	return {
-		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "24h" })
+		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "99999999h" })
 	}
 }
