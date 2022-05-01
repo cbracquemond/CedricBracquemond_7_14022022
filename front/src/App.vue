@@ -6,12 +6,12 @@ export default {
 		NavBarVue
 	},
 	computed: mapState({
-		userIsIdentified: (state) => state.identified
+		userToken: (state) => state.token
 	})
 }
 </script>
 <template>
-	<nav-bar-vue v-if="userIsIdentified === true" />
+	<nav-bar-vue v-if="userToken != null" />
 	<router-view />
 </template>
 

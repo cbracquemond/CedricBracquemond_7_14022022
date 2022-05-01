@@ -1,7 +1,6 @@
 <script>
 import BaseButtonVue from "../components/BaseButton.vue"
-import axios from "../config/axiosConfig"
-import { mapMutations } from "vuex"
+import { mapActions } from "vuex"
 export default {
 	name: "Login",
 	components: {
@@ -9,31 +8,34 @@ export default {
 	},
 	data() {
 		return {
-			email: "",
-			password: ""
+			credential: {
+				email: "",
+				password: ""
+			}
 		}
 	},
 	methods: {
-		...mapMutations(["login"]),
+		...mapActions(["login"]),
 		async handleSubmit() {
-			try {
-				const response = await axios.post("users/login", {
-					email: this.email,
-					password: this.password
-				})
-				this.login(response.data)
-				this.$router.push("/")
-			} catch (error) {
-				console.log(error.message)
-			}
+			this.login(this.credential)
 		}
 	}
 }
 </script>
 <template>
 	<form class="login_form" @submit.prevent="handleSubmit">
-		<input placeholder="email" type="email" required v-model="email" />
-		<input placeholder="password" type="password" required v-model="password" />
+		<input
+			placeholder="email"
+			type="email"
+			required
+			v-model="credential.email"
+		/>
+		<input
+			placeholder="password"
+			type="password"
+			required
+			v-model="credential.password"
+		/>
 		<base-button-vue text="Log-in" />
 	</form>
 	<router-link to="/signup" class="nav-link">Sign-up </router-link>

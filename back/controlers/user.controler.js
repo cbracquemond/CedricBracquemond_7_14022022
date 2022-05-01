@@ -22,8 +22,7 @@ exports.login = async (req, res) => {
 		if (!queryResult.token) return res.status(401).json({ err })
 		return res.status(200).json({
 			token: queryResult.token,
-			user: queryResult.user,
-			message: "User Succesfully Logged In"
+			message: "Token Succesfully Delivered"
 		})
 	} catch (err) {
 		return res.status(400).json({ status: 400, message: err.message })
@@ -44,7 +43,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getOneUser = async (req, res) => {
 	try {
-		const user = await userService.getOneUser(req.params.id)
+		const user = await userService.getOneUser(res.locals.userId)
 		return res.status(200).json({
 			user,
 			message: "User Succesfully Retrieved"

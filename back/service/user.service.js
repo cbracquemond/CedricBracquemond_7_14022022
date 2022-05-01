@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken")
 const secretKey = process.env.SECRET_KEY
 const utils = require("../utils/utils")
 const fs = require("fs")
-const { url } = require("inspector")
 
 async function makeQueryParams(user, id = null) {
 	if (user.password) user.password = await bcrypt.hash(user.password, 10)
@@ -27,7 +26,7 @@ exports.getAllUsers = async function () {
 }
 
 exports.getOneUser = async function (id) {
-	await utils.checkIfExist(id, "users")
+	await utils.checkIfExist(id.toString(), "users")
 	const sql =
 		"SELECT id, username, first_name, last_name, email, image_url FROM users WHERE id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
@@ -70,7 +69,6 @@ exports.checkPassword = async function (userData) {
 exports.login = async function (userData) {
 	const user = await utils.comparePassword(userData.email, userData.password)
 	return {
-		user,
 		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "24h" })
 	}
 }

@@ -2,12 +2,6 @@
 import { mapMutations } from "vuex"
 export default {
 	name: "NavBar",
-	data() {
-		return {
-			user: this.$store.state.user,
-			userIsIdentified: this.$store.state.identified
-		}
-	},
 	methods: {
 		...mapMutations(["logout"])
 	}

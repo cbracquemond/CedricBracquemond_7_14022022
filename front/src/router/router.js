@@ -50,7 +50,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
-		if (!store.state.identified) {
+		if (store.state.token == null) {
 			next("/login")
 		} else {
 			next()

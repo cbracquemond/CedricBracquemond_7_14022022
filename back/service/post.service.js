@@ -17,14 +17,14 @@ function makeQueryParams(post, id = null) {
 
 exports.getAllPosts = async function () {
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, posts.dislikes, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id ORDER BY posts.post_time DESC"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id ORDER BY posts.post_time DESC"
 	return await utils.makeDbQueries(sql)
 }
 
 exports.getOnePost = async function (id) {
 	await utils.checkIfExist(id, "posts")
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, posts.dislikes, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
 	return queryResult
 }
