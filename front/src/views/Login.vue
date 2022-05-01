@@ -18,6 +18,12 @@ export default {
 		...mapActions(["login"]),
 		async handleSubmit() {
 			this.login(this.credential)
+				.then(() => {
+					this.$router.push("/")
+				})
+				.catch((error) => {
+					console.log(error)
+				})
 		}
 	}
 }

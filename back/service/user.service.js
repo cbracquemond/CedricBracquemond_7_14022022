@@ -30,7 +30,7 @@ exports.getOneUser = async function (id) {
 	const sql =
 		"SELECT id, username, first_name, last_name, email, image_url FROM users WHERE id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
-	return queryResult
+	return queryResult[0]
 }
 
 exports.deleteUser = async function (accountId, userId) {

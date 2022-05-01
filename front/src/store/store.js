@@ -3,40 +3,53 @@ import axios from "../config/axiosConfig"
 
 export default createStore({
 	state: {
-		identified: false,
 		user: null,
 		token: null
 	},
+	getters: {
+		authenticated(state) {
+			if (state.token && state.user) return true
+			return false
+		},
+		user(state) {
+			return state.user
+		}
+	},
+
 	mutations: {
 		SET_TOKEN(state, token) {
-			state.token = "Bearer " + token
+			state.token = token ? "Bearer " + token : null
 		},
-		login(state, response) {
-			if (response) {
-				state.user = response.user
-				state.identified = true
-			}
-		},
-		logout(state) {
-			state.user = null
-			state.token = null
-			state.identified = false
+		SET_USER(state, user) {
+			state.user = user
 		}
 	},
 	actions: {
+		logout({ commit }) {
+			localStorage.removeItem("token")
+			commit("SET_TOKEN", null)
+			commit("SET_USER", null)
+		},
 		async login({ dispatch }, credential) {
-			try {
-				const response = await axios.post("users/login", {
-					email: credential.email,
-					password: credential.password
-				})
-				dispatch("testToken", response.data.token)
-			} catch (error) {
-				console.log(error.message)
-			}
+			const response = await axios.post("users/login", {
+				email: credential.email,
+				password: credential.password
+			})
+			return dispatch("testToken", response.data.token)
 		},
 		async testToken({ commit }, token) {
-			commit("SET_TOKEN", token)
+			if (token) commit("SET_TOKEN", token)
+			if (!this.state.token) return
+			try {
+				const response = await axios.get("users/me")
+				localStorage.setItem("token", token)
+				commit("SET_USER", response.data.user)
+			} catch (error) {
+				console.log(error)
+				localStorage.removeItem("token")
+				commit("SET_TOKEN", null)
+				commit("SET_USER", null)
+			}
 		}
 	},
 	modules: {}

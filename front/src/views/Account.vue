@@ -3,7 +3,8 @@ import axios from "../config/axiosConfig"
 import InputBaseVue from "../components/InputBase.vue"
 import InputPasswordVue from "../components/InputPassword.vue"
 import InputDeleteAccountVue from "../components/InputDeleteAccount.vue"
-import { mapMutations } from "vuex"
+import { mapActions } from "vuex"
+import { mapGetters } from "vuex"
 
 export default {
 	name: "Account",
@@ -17,8 +18,11 @@ export default {
 			user: this.$store.state.user
 		}
 	},
+	computed: {
+		...mapGetters(["user"])
+	},
 	methods: {
-		...mapMutations(["logout"]),
+		...mapActions(["logout"]),
 		async handleUpdate(input, param) {
 			try {
 				await axios.put("users/" + this.user.id, {
@@ -29,7 +33,6 @@ export default {
 			}
 		},
 		async handleDelete(event) {
-			console.log(event)
 			try {
 				await axios.post("users/check/", {
 					email: this.user.email,
@@ -45,7 +48,6 @@ export default {
 				console.log(error.message)
 			}
 			this.logout()
-			this.$router.push("/login")
 		}
 	}
 }
@@ -53,19 +55,19 @@ export default {
 
 <template>
 	<input-base-vue
-		:text="'Userame: ' + this.user.username"
+		:text="'Userame: ' + user.username"
 		@sendFormInput="handleSubmit($event, 'username')"
 	/>
 	<input-base-vue
-		:text="'First name: ' + this.user.firstName"
+		:text="'First name: ' + user.first_name"
 		@sendFormInput="handleSubmit($event, 'first_name')"
 	/>
 	<input-base-vue
-		:text="'Last name: ' + this.user.lastName"
+		:text="'Last name: ' + user.last_name"
 		@sendFormInput="handleSubmit($event, 'last_name')"
 	/>
 	<input-base-vue
-		:text="'Email: ' + this.user.email"
+		:text="'Email: ' + user.email"
 		type="email"
 		@sendFormInput="handleSubmit($event, 'email')"
 	/>

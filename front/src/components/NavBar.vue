@@ -1,9 +1,9 @@
 <script>
-import { mapMutations } from "vuex"
+import { mapActions } from "vuex"
 export default {
 	name: "NavBar",
 	methods: {
-		...mapMutations(["logout"])
+		...mapActions(["logout"])
 	}
 }
 </script>

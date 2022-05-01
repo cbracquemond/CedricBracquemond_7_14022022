@@ -1,17 +1,17 @@
 <script>
 import NavBarVue from "./components/NavBar.vue"
-import { mapState } from "vuex"
+import { mapGetters } from "vuex"
 export default {
 	components: {
 		NavBarVue
 	},
-	computed: mapState({
-		userToken: (state) => state.token
-	})
+	computed: {
+		...mapGetters(["authenticated"])
+	}
 }
 </script>
 <template>
-	<nav-bar-vue v-if="userToken != null" />
+	<nav-bar-vue v-if="authenticated == true" />
 	<router-view />
 </template>
 
