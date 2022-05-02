@@ -52,3 +52,14 @@ exports.editPost = async function (req, postId, userId) {
 	const sql = "UPDATE posts SET content = '" + req.content + "' WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
 }
+
+exports.likePost = async function (postId, userId) {
+	const userIdString = userId.toString()
+	await utils.checkIfExist(postId, "posts")
+	await utils.checkIfExist(userIdString, "users")
+	const alreadyLiked = await utils.checkIfLiked(postId, userId)
+	const sql = alreadyLiked
+		? "DELETE FROM post_liked WHERE post_id = ? and user_id = ?"
+		: "INSERT INTO post_liked SET post_id = ?, user_id = ?"
+	await utils.makeDbQueries(sql, [postId, userIdString])
+}

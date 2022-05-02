@@ -20,6 +20,12 @@ exports.checkIfExist = async function (reference, table) {
 	}
 }
 
+exports.checkIfLiked = async function (postId, userId) {
+	const sql = "SELECT * FROM post_liked WHERE post_id = ? and user_id = ?"
+	const queryResult = await exports.makeDbQueries(sql, [postId, userId])
+	return queryResult.length === 0 ? false : true
+}
+
 exports.checkIfOwner = async function (dataToCheckId, userId, table) {
 	if (table != "users") {
 		const sql = "SELECT user_id FROM " + table + " WHERE id = ?"

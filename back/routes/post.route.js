@@ -10,6 +10,6 @@ router.post("/", auth, multer, postCtrl.createPost)
 router.delete("/:id", auth, postCtrl.deletePost)
 router.get("/:id", auth, postCtrl.getOnePost)
 router.put("/:id", auth, postCtrl.editPost)
-// router.post("/:id/like", auth, postCtrl.likePost)
+router.post("/:id/like", auth, postCtrl.likePost)
 
 module.exports = router

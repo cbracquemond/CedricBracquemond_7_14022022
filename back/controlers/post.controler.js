@@ -70,7 +70,7 @@ exports.editPost = async (req, res) => {
 
 exports.likePost = async (req, res) => {
 	try {
-		await postService.likePost(req.body, req.params.id, res.locals.userId)
+		await postService.likePost(req.params.id, res.locals.userId)
 		return res.status(200).json({
 			message: "Vote Successfully Submited"
 		})
