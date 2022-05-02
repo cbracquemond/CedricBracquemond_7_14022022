@@ -26,11 +26,10 @@ exports.getOnePost = async (req, res) => {
 }
 
 exports.createPost = async (req, res) => {
-	const post = JSON.parse(req.body.post)
-	if (req.file != undefined)
-		post.image_url = `${req.protocol}://${req.get("host")}/images/${
-			req.file.filename
-		}`
+	const post = req.body.post ? JSON.parse(req.body.post) : {}
+	post.image_url = req.file
+		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+		: null
 	try {
 		await postService.createPost(post, res.locals.userId)
 		return res.status(201).json({

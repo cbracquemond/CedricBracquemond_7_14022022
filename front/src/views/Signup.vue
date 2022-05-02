@@ -42,9 +42,6 @@ export default {
 			const data = new FormData()
 			data.append("user", JSON.stringify(user))
 			data.append("image", this.image)
-			for (let value of data.values()) {
-				console.log(value)
-			}
 			try {
 				await axios.post("users", data, {
 					headers: {

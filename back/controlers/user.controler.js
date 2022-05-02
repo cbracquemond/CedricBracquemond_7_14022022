@@ -1,11 +1,10 @@
 const userService = require("../service/user.service")
 
 exports.createUser = async (req, res) => {
-	const user = JSON.parse(req.body.user)
-	if (req.file != undefined)
-		user.image_url = `${req.protocol}://${req.get("host")}/images/${
-			req.file.filename
-		}`
+	const user = req.body.user ? JSON.parse(req.body.user) : {}
+	user.image_url = req.file
+		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+		: null
 	try {
 		await userService.createUser(user)
 		return res.status(201).json({
@@ -54,8 +53,12 @@ exports.getOneUser = async (req, res) => {
 }
 
 exports.updateUser = async (req, res) => {
+	const user = req.body.user ? JSON.parse(req.body.user) : {}
+	user.image_url = req.file
+		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+		: null
 	try {
-		await userService.updateUser(req.body, req.params.id, res.locals.userId)
+		await userService.updateUser(user, req.params.id, res.locals.userId)
 		return res.status(200).json({
 			status: 200,
 			message: "User Succesfully Updated"

@@ -4,7 +4,6 @@ import InputBaseVue from "../components/InputBase.vue"
 import InputPasswordVue from "../components/InputPassword.vue"
 import InputDeleteAccountVue from "../components/InputDeleteAccount.vue"
 import { mapActions } from "vuex"
-import { mapGetters } from "vuex"
 
 export default {
 	name: "Account",
@@ -17,9 +16,6 @@ export default {
 		return {
 			user: this.$store.state.user
 		}
-	},
-	computed: {
-		...mapGetters(["user"])
 	},
 	methods: {
 		...mapActions(["logout"]),
@@ -55,19 +51,19 @@ export default {
 
 <template>
 	<input-base-vue
-		:text="'Userame: ' + user.username"
+		:text="'Userame: ' + this.user.username"
 		@sendFormInput="handleSubmit($event, 'username')"
 	/>
 	<input-base-vue
-		:text="'First name: ' + user.first_name"
+		:text="'First name: ' + this.user.first_name"
 		@sendFormInput="handleSubmit($event, 'first_name')"
 	/>
 	<input-base-vue
-		:text="'Last name: ' + user.last_name"
+		:text="'Last name: ' + this.user.last_name"
 		@sendFormInput="handleSubmit($event, 'last_name')"
 	/>
 	<input-base-vue
-		:text="'Email: ' + user.email"
+		:text="'Email: ' + this.user.email"
 		type="email"
 		@sendFormInput="handleSubmit($event, 'email')"
 	/>

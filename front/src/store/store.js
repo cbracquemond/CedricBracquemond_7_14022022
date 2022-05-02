@@ -10,9 +10,6 @@ export default createStore({
 		authenticated(state) {
 			if (state.token && state.user) return true
 			return false
-		},
-		user(state) {
-			return state.user
 		}
 	},
 
