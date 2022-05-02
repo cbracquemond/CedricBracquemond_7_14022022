@@ -37,7 +37,8 @@ exports.createPost = async function (post, userId) {
 
 exports.deletePost = async function (postId, userId) {
 	await utils.checkIfExist(postId, "posts")
-	await utils.checkIfOwner(postId, userId, "posts")
+	const isModerator = await utils.checkIfModerator(userId)
+	if (!isModerator) await utils.checkIfOwner(postId, userId, "posts")
 	const imageUrl = await utils.getImageUrl(postId, "posts")
 	const sql = "DELETE FROM posts WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
@@ -46,10 +47,11 @@ exports.deletePost = async function (postId, userId) {
 	}
 }
 
-exports.editPost = async function (req, postId, userId) {
+exports.editPost = async function (post, postId, userId) {
 	await utils.checkIfExist(postId, "posts")
-	await utils.checkIfOwner(postId, userId, "posts")
-	const sql = "UPDATE posts SET content = '" + req.content + "' WHERE id = ?"
+	const isModerator = await utils.checkIfModerator(userId)
+	if (!isModerator) await utils.checkIfOwner(postId, userId, "posts")
+	const sql = "UPDATE posts SET content = '" + post.content + "' WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
 }
 

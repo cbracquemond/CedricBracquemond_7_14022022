@@ -56,8 +56,12 @@ exports.deletePost = async (req, res) => {
 }
 
 exports.editPost = async (req, res) => {
+	const post = req.body.post ? JSON.parse(req.body.post) : {}
+	post.image_url = req.file
+		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+		: null
 	try {
-		await postService.editPost(req.body, req.params.id, res.locals.userId)
+		await postService.editPost(post, req.params.id, res.locals.userId)
 		return res.status(200).json({
 			message: "Post Successfully Edited"
 		})

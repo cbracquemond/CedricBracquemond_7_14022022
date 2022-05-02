@@ -25,11 +25,11 @@ exports.getAllUsers = async function () {
 	return await utils.makeDbQueries(sql)
 }
 
-exports.getOneUser = async function (id) {
-	await utils.checkIfExist(id.toString(), "users")
+exports.getOneUser = async function (userId) {
+	await utils.checkIfExist(userId.toString(), "users")
 	const sql =
 		"SELECT id, username, first_name, last_name, email, image_url FROM users WHERE id = ?"
-	const queryResult = await utils.makeDbQueries(sql, [id])
+	const queryResult = await utils.makeDbQueries(sql, [userId])
 	return queryResult[0]
 }
 

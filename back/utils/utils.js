@@ -36,6 +36,12 @@ exports.checkIfOwner = async function (dataToCheckId, userId, table) {
 	if (dataToCheckId != userId) throw Error("Can't touch this")
 }
 
+exports.checkIfModerator = async function (userId) {
+	const sql = "SELECT is_moderator FROM users WHERE id = ?"
+	const queryResult = await exports.makeDbQueries(sql, [userId])
+	return queryResult[0].is_moderator === 1 ? true : false
+}
+
 exports.getImageUrl = async function (id, table) {
 	const sql = "SELECT image_url FROM " + table + " WHERE id = ?"
 	const queryResult = await exports.makeDbQueries(sql, [id])
