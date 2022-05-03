@@ -64,4 +64,5 @@ exports.likePost = async function (postId, userId) {
 		? "DELETE FROM post_liked WHERE post_id = ? and user_id = ?"
 		: "INSERT INTO post_liked SET post_id = ?, user_id = ?"
 	await utils.makeDbQueries(sql, [postId, userIdString])
+	await utils.updateLikes(postId)
 }

@@ -30,20 +30,28 @@ export default {
 </script>
 <template>
 	<form class="login_form" @submit.prevent="handleSubmit">
+		<img
+			src="../assets/icon-above-font.png"
+			alt="Groupomania icon"
+			class="login_form__logo"
+		/>
 		<input
 			placeholder="email"
 			type="email"
 			required
 			v-model="credential.email"
+			class="login_form__input"
 		/>
 		<input
 			placeholder="password"
 			type="password"
 			required
 			v-model="credential.password"
+			class="login_form__input"
 		/>
 		<base-button-vue text="Log-in" />
 	</form>
 	<router-link to="/signup" class="nav-link">Sign-up </router-link>
 </template>
-<style></style>
+
+<style scoped lang="scss"></style>

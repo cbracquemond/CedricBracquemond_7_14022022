@@ -26,6 +26,13 @@ exports.checkIfLiked = async function (postId, userId) {
 	return queryResult.length === 0 ? false : true
 }
 
+exports.updateLikes = async function (postId) {
+	const sqlGetLikes = "SELECT * FROM post_liked WHERE post_id = ?"
+	const likesQuantity = await exports.makeDbQueries(sqlGetLikes, [postId])
+	const sqlUpdatelikes = "UPDATE posts SET likes = ? WHERE id = ?"
+	await exports.makeDbQueries(sqlUpdatelikes, [likesQuantity.length, postId])
+}
+
 exports.checkIfOwner = async function (dataToCheckId, userId, table) {
 	if (table != "users") {
 		const sql = "SELECT user_id FROM " + table + " WHERE id = ?"
