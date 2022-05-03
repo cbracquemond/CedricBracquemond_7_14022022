@@ -34,7 +34,6 @@ export default {
 				this.title = response.data.post[0].title
 				this.username = response.data.post[0].username
 				this.imageUrl = response.data.post[0].image_url
-				console.log(response.data.post[0])
 			})
 			.catch((err) => {
 				throw err

@@ -1,10 +1,10 @@
 <script>
 export default {
-	name: "BaseButton",
+	name: "ButtonBase",
 	props: {
 		text: {
 			type: String,
-			required: true
+			required: false
 		},
 		type: {
 			type: String,

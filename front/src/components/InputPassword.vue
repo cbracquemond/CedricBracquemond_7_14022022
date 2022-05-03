@@ -1,9 +1,9 @@
 <script>
-import BaseButtonVue from "./BaseButton.vue"
+import ButtonBaseVue from "./ButtonBase.vue"
 export default {
 	name: "InputPassword",
 	components: {
-		BaseButtonVue
+		ButtonBaseVue
 	},
 	props: {
 		type: {
@@ -42,13 +42,13 @@ export default {
 <template>
 	<div>
 		<span>{{ text }}</span>
-		<base-button-vue type="button" text="Update" />
+		<button-base-vue type="button" text="Update" />
 		<form class="passwordInput" @submit.prevent="sendEvent">
 			<p>New password</p>
 			<input :type="type" v-model="newPassword" />
 			<p id="warningParent">Confirm password</p>
 			<input type="password" v-model="passwordCheck" />
-			<base-button-vue text="Apply" />
+			<button-base-vue text="Apply" />
 		</form>
 	</div>
 </template>

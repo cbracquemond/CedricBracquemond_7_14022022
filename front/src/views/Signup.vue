@@ -1,10 +1,10 @@
 <script>
-import BaseButtonVue from "../components/BaseButton.vue"
+import ButtonBaseVue from "../components/ButtonBase.vue"
 import axios from "../config/axiosConfig"
 export default {
 	name: "Signup",
 	components: {
-		BaseButtonVue
+		ButtonBaseVue
 	},
 	data() {
 		return {
@@ -71,7 +71,7 @@ export default {
 		<label id="warningParent">Password confirmation</label>
 		<input type="password" required v-model="passwordCheck" />
 		<input type="file" name="image_input" @change="bindImage" />
-		<base-button-vue text="Validation" />
+		<button-base-vue text="Validation" />
 	</form>
 </template>
 

@@ -1,10 +1,10 @@
 <script>
-import BaseButtonVue from "../components/BaseButton.vue"
+import ButtonBaseVue from "../components/ButtonBase.vue"
 import { mapActions } from "vuex"
 export default {
 	name: "Login",
 	components: {
-		BaseButtonVue
+		ButtonBaseVue
 	},
 	data() {
 		return {
@@ -49,7 +49,7 @@ export default {
 			v-model="credential.password"
 			class="login_form__input"
 		/>
-		<base-button-vue text="Log-in" />
+		<button-base-vue text="Log-in" />
 	</form>
 	<router-link to="/signup" class="nav-link">Sign-up </router-link>
 </template>

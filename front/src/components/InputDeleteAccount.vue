@@ -1,9 +1,9 @@
 <script>
-import BaseButtonVue from "./BaseButton.vue"
+import ButtonBaseVue from "./ButtonBase.vue"
 export default {
 	name: "InputDeleteAccount",
 	components: {
-		BaseButtonVue
+		ButtonBaseVue
 	},
 	props: {
 		type: {
@@ -29,10 +29,10 @@ export default {
 </script>
 <template>
 	<div>
-		<base-button-vue text="Delete account" />
+		<button-base-vue text="Delete account" />
 		<form class="baseInput" @submit.prevent="sendEvent">
 			<input :type="type" v-model="input" />
-			<base-button-vue text="Confirm" />
+			<button-base-vue text="Confirm" />
 		</form>
 	</div>
 </template>

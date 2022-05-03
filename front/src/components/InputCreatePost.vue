@@ -1,10 +1,10 @@
 <script>
 import axios from "../config/axiosConfig"
-import BaseButtonVue from "./BaseButton.vue"
+import ButtonBaseVue from "./ButtonBase.vue"
 export default {
 	name: "InputCreatePost",
 	components: {
-		BaseButtonVue
+		ButtonBaseVue
 	},
 	props: {
 		text: {
@@ -58,7 +58,7 @@ export default {
 			<textarea type="text" v-model="content" name="content"></textarea>
 			<p>Image</p>
 			<input type="file" name="image_input" @change="bindImage" />
-			<base-button-vue text="Post" />
+			<button-base-vue text="Post" />
 		</form>
 	</div>
 </template>

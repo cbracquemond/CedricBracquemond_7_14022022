@@ -1,6 +1,11 @@
 <script>
+import ButtonBaseVue from "./ButtonBase.vue"
+import axios from "../config/axiosConfig"
 export default {
 	name: "postCard",
+	components: {
+		ButtonBaseVue
+	},
 	props: {
 		title: {
 			type: String
@@ -18,6 +23,15 @@ export default {
 		},
 		imageUrl: {
 			type: String
+		},
+		postId: {
+			type: Number,
+			required: true
+		}
+	},
+	methods: {
+		async likePost() {
+			await axios.post(`posts/${this.postId}/like`)
 		}
 	}
 }
@@ -33,6 +47,7 @@ export default {
 			alt="Post image"
 			class="postcard__image"
 		/>
+		<button-base-vue class="postCard__button" type="button" @click="likePost" />
 	</div>
 </template>
 <style></style>

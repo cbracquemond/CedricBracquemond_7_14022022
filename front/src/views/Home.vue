@@ -45,6 +45,7 @@ export default {
 			:content="post.content"
 			:user="post.username"
 			:imageUrl="post.image_url"
+			:postId="post.id"
 		/>
 	</router-link>
 </template>

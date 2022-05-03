@@ -1,9 +1,9 @@
 <script>
-import BaseButtonVue from "./BaseButton.vue"
+import ButtonBaseVue from "./ButtonBase.vue"
 export default {
 	name: "InputBase",
 	components: {
-		BaseButtonVue
+		ButtonBaseVue
 	},
 	props: {
 		type: {
@@ -30,10 +30,10 @@ export default {
 <template>
 	<div>
 		<span>{{ text }}</span>
-		<base-button-vue type="button" text="Update" />
+		<button-base-vue type="button" text="Update" />
 		<form class="baseInput" @submit.prevent="sendEvent">
 			<input :type="type" v-model="input" />
-			<base-button-vue text="Apply" />
+			<button-base-vue text="Apply" />
 		</form>
 	</div>
 </template>
