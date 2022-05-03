@@ -31,7 +31,7 @@ export default {
 	},
 	methods: {
 		async likePost() {
-			await axios.post(`posts/${this.postId}/like`)
+			await axios.post(`posts/${this.$props.postId}/like`)
 		}
 	}
 }
@@ -47,7 +47,12 @@ export default {
 			alt="Post image"
 			class="postcard__image"
 		/>
-		<button-base-vue class="postCard__button" type="button" @click="likePost" />
+		<button-base-vue
+			text="like"
+			class="postCard__button"
+			type="button"
+			@click="likePost"
+		/>
 	</div>
 </template>
 <style></style>

@@ -49,6 +49,7 @@ export default {
 		:title="this.title"
 		:content="this.content"
 		:imageUrl="this.imageUrl"
+		:postId="parseInt(this.$route.params.id)"
 	/>
 </template>
 <style></style>
