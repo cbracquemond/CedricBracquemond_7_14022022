@@ -29,10 +29,7 @@ export default {
 				const user = { [param]: input }
 				data.append("user", JSON.stringify(user))
 			}
-			if (typeof input === "object") {
-				console.log(input)
-				data.append("image", input)
-			}
+			if (typeof input === "object") data.append("image", input)
 			try {
 				await axios.put("users/" + this.user.id, data, {
 					headers: {

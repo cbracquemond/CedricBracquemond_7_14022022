@@ -1,9 +1,13 @@
 const commentService = require("../service/comment.service")
 
 exports.createComment = async (req, res) => {
+	const comment = req.body.comment ? JSON.parse(req.body.comment) : {}
+	comment.image_url = req.file
+		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+		: null
 	try {
 		await commentService.createComment(
-			req.body.content,
+			comment,
 			req.params.id,
 			res.locals.userId
 		)

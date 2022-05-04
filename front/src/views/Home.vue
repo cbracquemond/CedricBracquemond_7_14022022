@@ -28,7 +28,7 @@ export default {
 			return date
 		}
 	},
-	async beforeCreate() {
+	async mounted() {
 		await axios
 			.get("posts")
 			.then((response) => {

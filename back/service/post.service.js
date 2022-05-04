@@ -26,12 +26,14 @@ exports.getOnePost = async function (id) {
 	const sql =
 		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, users.username, users.id AS user_id FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
-	return queryResult
+	return queryResult[0]
 }
 
 exports.createPost = async function (post, userId) {
 	const params = await makeQueryParams(post)
+	console.log(params)
 	const sql = "INSERT INTO posts SET user_id = " + userId + "," + params.sql
+	console.log(sql)
 	await utils.makeDbQueries(sql, params.arg)
 }
 

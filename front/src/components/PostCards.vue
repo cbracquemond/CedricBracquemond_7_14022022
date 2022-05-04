@@ -24,7 +24,7 @@ export default {
 </script>
 <template>
 	<div class="post_card">
-		<h2>{{ title }}</h2>
+		<h2 v-if="title != ''">{{ title }}</h2>
 		<span>Posté le {{ date }} par {{ user }}</span>
 		<p>{{ content }}</p>
 		<img
