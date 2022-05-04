@@ -1,12 +1,14 @@
 <script>
+import axios from "../config/axiosConfig"
 import InputCreatePostVue from "../components/InputCreatePost.vue"
 import PostCardsVue from "../components/PostCards.vue"
-import axios from "../config/axiosConfig"
+import ButtonLikeVue from "../components/ButtonLike.vue"
 export default {
 	name: "Home",
 	components: {
 		InputCreatePostVue,
-		PostCardsVue
+		PostCardsVue,
+		ButtonLikeVue
 	},
 	data() {
 		return {
@@ -38,15 +40,17 @@ export default {
 
 <template>
 	<input-create-post-vue />
-	<router-link v-for="post in posts" :key="post.id" :to="`/post/` + post.id">
-		<post-cards-vue
-			:title="post.title"
-			:date="createDateString(post.post_time)"
-			:content="post.content"
-			:user="post.username"
-			:imageUrl="post.image_url"
-			:postId="post.id"
-		/>
-	</router-link>
+	<div class="router_link_countainer" v-for="post in posts" :key="post.id">
+		<router-link :to="`/post/` + post.id">
+			<post-cards-vue
+				:title="post.title"
+				:date="createDateString(post.post_time)"
+				:content="post.content"
+				:user="post.username"
+				:imageUrl="post.image_url"
+			/>
+		</router-link>
+		<button-like-vue :postId="post.id" />
+	</div>
 </template>
 <style></style>

@@ -1,10 +1,12 @@
 <script>
-import PostCardsVue from "../components/PostCards.vue"
 import axios from "../config/axiosConfig"
+import PostCardsVue from "../components/PostCards.vue"
+import ButtonLikeVue from "../components/ButtonLike.vue"
 export default {
 	name: "Post",
 	components: {
-		PostCardsVue
+		PostCardsVue,
+		ButtonLikeVue
 	},
 	data() {
 		return {
@@ -49,7 +51,7 @@ export default {
 		:title="this.title"
 		:content="this.content"
 		:imageUrl="this.imageUrl"
-		:postId="parseInt(this.$route.params.id)"
 	/>
+	<button-like-vue :postId="parseInt(this.$route.params.id)" />
 </template>
 <style></style>
