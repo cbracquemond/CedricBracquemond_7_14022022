@@ -11,7 +11,6 @@ export default {
 			type: String
 		}
 	},
-	emits: ["sendFormInput"],
 	data() {
 		return {
 			title: "",
@@ -23,7 +22,7 @@ export default {
 		bindImage(event) {
 			this.image = event.target.files[0]
 		},
-		async sendEvent() {
+		async sendNewPost() {
 			const post = {
 				title: this.title,
 				content: this.content
@@ -31,10 +30,6 @@ export default {
 			const data = new FormData()
 			data.append("post", JSON.stringify(post))
 			data.append("image", this.image)
-			for (let value of data.values()) {
-				console.log(value)
-			}
-
 			try {
 				await axios.post("posts/", data, {
 					headers: {
@@ -51,7 +46,7 @@ export default {
 <template>
 	<div>
 		<p>Create a post</p>
-		<form class="baseInput" @submit="sendEvent">
+		<form class="baseInput" @submit="sendNewPost">
 			<p>Title</p>
 			<input type="text" v-model="title" label="title" />
 			<p>Content</p>

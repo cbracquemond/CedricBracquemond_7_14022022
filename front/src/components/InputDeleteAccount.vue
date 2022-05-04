@@ -30,7 +30,7 @@ export default {
 <template>
 	<div>
 		<button-base-vue text="Delete account" />
-		<form class="baseInput" @submit.prevent="sendEvent">
+		<form class="baseInput" @submit="sendEvent">
 			<input :type="type" v-model="input" />
 			<button-base-vue text="Confirm" />
 		</form>

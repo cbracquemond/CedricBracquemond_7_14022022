@@ -5,34 +5,26 @@ export default {
 	components: {
 		ButtonBaseVue
 	},
-	props: {
-		type: {
-			type: String,
-			default: "text"
-		},
-		text: {
-			type: String
-		}
-	},
 	emits: ["sendFormInput"],
 	data() {
 		return {
-			input: ""
+			image: null
 		}
 	},
 	methods: {
 		sendEvent() {
-			this.$emit("sendFormInput", this.input)
+			this.$emit("sendFormInput", this.image)
+		},
+		bindImage(event) {
+			this.image = event.target.files[0]
 		}
 	}
 }
 </script>
 <template>
 	<div>
-		<span>{{ text }}</span>
-		<button-base-vue type="button" text="Update" />
-		<form class="baseInput" @submit="sendEvent">
-			<input :type="type" v-model="input" />
+		<form @submit="sendEvent">
+			<input type="file" name="image_input" @change="bindImage" />
 			<button-base-vue text="Apply" />
 		</form>
 	</div>
