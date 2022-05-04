@@ -1,18 +1,27 @@
 <script>
-import PostCardsVue from "../components/PostCards.vue"
 import axios from "../config/axiosConfig"
+import ButtonDeleteVue from "../components/ButtonDelete.vue"
+import ButtonLikeVue from "../components/ButtonLike.vue"
+import PostCardsVue from "../components/PostCards.vue"
 export default {
 	name: "Post",
 	components: {
+		ButtonDeleteVue,
+		ButtonLikeVue,
 		PostCardsVue
 	},
 	data() {
 		return {
-			content: "",
-			date: "",
-			title: "",
-			username: "",
-			imageUrl: "",
+			user: this.$store.state.user,
+			post: {
+				username: "",
+				user_id: 0,
+				title: "",
+				content: "",
+				image_url: "",
+				id: 0
+			},
+			dateString: "",
 			comments: []
 		}
 	},
@@ -30,11 +39,8 @@ export default {
 		await axios
 			.get("posts/" + this.$route.params.id)
 			.then((response) => {
-				this.content = response.data.post.content
-				this.date = this.createDateString(response.data.post.post_time)
-				this.title = response.data.post.title
-				this.username = response.data.post.username
-				this.imageUrl = response.data.post.image_url
+				this.dateString = this.createDateString(response.data.post.post_time)
+				this.post = response.data.post
 			})
 			.catch((err) => {
 				throw err
@@ -48,11 +54,16 @@ export default {
 
 <template>
 	<post-cards-vue
-		:user="this.username"
-		:date="this.date"
-		:title="this.title"
-		:content="this.content"
-		:imageUrl="this.imageUrl"
+		:user="this.post.username"
+		:date="this.dateString"
+		:title="this.post.title"
+		:content="this.post.content"
+		:imageUrl="this.post.image_url"
+	/>
+	<button-like-vue :postId="this.post.id" />
+	<button-delete-vue
+		v-if="post.user_id == this.user.id || this.user.is_moderator == 1"
+		:id="post.id"
 	/>
 	<div v-for="comment in comments" :key="comment.id">
 		<post-cards-vue
@@ -60,6 +71,12 @@ export default {
 			:date="createDateString(comment.date)"
 			:content="comment.content"
 			:imageUrl="comment.image_url"
+		/>
+		<button-delete-vue
+			v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
+			:id="comment.id"
+			table="comments"
+			:postId="this.post.id"
 		/>
 	</div>
 </template>
