@@ -3,16 +3,19 @@ import axios from "../config/axiosConfig"
 import InputCreatePostVue from "../components/InputCreatePost.vue"
 import PostCardsVue from "../components/PostCards.vue"
 import ButtonLikeVue from "../components/ButtonLike.vue"
+import ButtonDeletePostVue from "../components/ButtonDeletePost.vue"
 export default {
 	name: "Home",
 	components: {
 		InputCreatePostVue,
 		PostCardsVue,
-		ButtonLikeVue
+		ButtonLikeVue,
+		ButtonDeletePostVue
 	},
 	data() {
 		return {
-			posts: []
+			posts: [],
+			user: this.$store.state.user
 		}
 	},
 	methods: {
@@ -51,6 +54,10 @@ export default {
 			/>
 		</router-link>
 		<button-like-vue :postId="post.id" />
+		<button-delete-post-vue
+			v-if="post.user_id == this.user.id || this.user.is_moderator == 1"
+			:postId="post.id"
+		/>
 	</div>
 </template>
 <style></style>

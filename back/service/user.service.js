@@ -28,7 +28,7 @@ exports.getAllUsers = async function () {
 exports.getOneUser = async function (userId) {
 	await utils.checkIfExist(userId.toString(), "users")
 	const sql =
-		"SELECT id, username, first_name, last_name, email, image_url FROM users WHERE id = ?"
+		"SELECT id, username, first_name, last_name, email, image_url, is_moderator FROM users WHERE id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [userId])
 	return queryResult[0]
 }

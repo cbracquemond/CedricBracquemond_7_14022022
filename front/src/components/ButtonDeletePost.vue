@@ -1,7 +1,7 @@
 <script>
 import axios from "../config/axiosConfig"
 export default {
-	name: "ButtonLike",
+	name: "ButtonDeletePost",
 	props: {
 		postId: {
 			type: Number,
@@ -9,15 +9,15 @@ export default {
 		}
 	},
 	methods: {
-		async likePost() {
-			await axios.post(`posts/${this.$props.postId}/like`)
+		async deletePost() {
+			await axios.delete(`posts/${this.$props.postId}`)
 		}
 	}
 }
 </script>
 <template>
-	<button @click="likePost" type="button" class="postCard__button--like">
-		Like
+	<button @click="deletePost" type="button" class="postCard__button--delete">
+		Delete
 	</button>
 </template>
 <style></style>

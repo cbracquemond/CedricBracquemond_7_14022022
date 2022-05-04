@@ -51,7 +51,7 @@ export default {
 <template>
 	<div>
 		<p>Create a post</p>
-		<form class="baseInput" @submit.prevent="sendEvent">
+		<form class="baseInput" @submit="sendEvent">
 			<p>Title</p>
 			<input type="text" v-model="title" label="title" />
 			<p>Content</p>
