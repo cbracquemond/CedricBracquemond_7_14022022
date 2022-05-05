@@ -3,6 +3,7 @@ import axios from "../config/axiosConfig"
 import ButtonDeleteVue from "../components/ButtonDelete.vue"
 import ButtonLikeVue from "../components/ButtonLike.vue"
 import InputCreateCommentVue from "../components/InputCreateComment.vue"
+import InputEditCommentVue from "../components/InputEditComment.vue"
 import PostCardsVue from "../components/PostCards.vue"
 export default {
 	name: "Post",
@@ -10,6 +11,7 @@ export default {
 		ButtonDeleteVue,
 		ButtonLikeVue,
 		InputCreateCommentVue,
+		InputEditCommentVue,
 		PostCardsVue
 	},
 	data() {
@@ -74,6 +76,7 @@ export default {
 			:date="createDateString(comment.date)"
 			:content="comment.content"
 		/>
+		<input-edit-comment-vue :comment="comment" />
 		<button-delete-vue
 			v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
 			:id="comment.id"
