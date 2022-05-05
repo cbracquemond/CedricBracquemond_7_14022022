@@ -31,9 +31,7 @@ exports.getOnePost = async function (id) {
 
 exports.createPost = async function (post, userId) {
 	const params = await makeQueryParams(post)
-	console.log(params)
 	const sql = "INSERT INTO posts SET user_id = " + userId + "," + params.sql
-	console.log(sql)
 	await utils.makeDbQueries(sql, params.arg)
 }
 

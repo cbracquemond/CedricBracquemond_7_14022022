@@ -2,12 +2,14 @@
 import axios from "../config/axiosConfig"
 import ButtonDeleteVue from "../components/ButtonDelete.vue"
 import ButtonLikeVue from "../components/ButtonLike.vue"
+import InputCreateCommentVue from "../components/InputCreateComment.vue"
 import PostCardsVue from "../components/PostCards.vue"
 export default {
 	name: "Post",
 	components: {
 		ButtonDeleteVue,
 		ButtonLikeVue,
+		InputCreateCommentVue,
 		PostCardsVue
 	},
 	data() {
@@ -58,9 +60,10 @@ export default {
 		:date="this.dateString"
 		:title="this.post.title"
 		:content="this.post.content"
-		:imageUrl="this.post.image_url"
+		:image-url="this.post.image_url"
 	/>
-	<button-like-vue :postId="this.post.id" />
+	<input-create-comment-vue :post-id="this.post.id" />
+	<button-like-vue :post-id="this.post.id" />
 	<button-delete-vue
 		v-if="post.user_id == this.user.id || this.user.is_moderator == 1"
 		:id="post.id"
@@ -70,13 +73,12 @@ export default {
 			:user="comment.username"
 			:date="createDateString(comment.date)"
 			:content="comment.content"
-			:imageUrl="comment.image_url"
 		/>
 		<button-delete-vue
 			v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
 			:id="comment.id"
 			table="comments"
-			:postId="this.post.id"
+			:post-id="this.post.id"
 		/>
 	</div>
 </template>

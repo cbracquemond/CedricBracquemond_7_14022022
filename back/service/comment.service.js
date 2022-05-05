@@ -1,28 +1,8 @@
 const utils = require("../utils/utils")
 
-function makeQueryParams(comment, id = null) {
-	const keys = Object.entries(comment)
-	const params = {
-		sql: [],
-		arg: []
-	}
-	keys.forEach((key) => {
-		params.sql.push(" " + key[0] + " = ?")
-		params.arg.push(key[1])
-	})
-	return params
-}
-
 exports.createComment = async function (comment, postId, userId) {
-	const params = await makeQueryParams(comment)
-	const sql =
-		"INSERT INTO comments SET post_id = " +
-		postId +
-		", user_id = " +
-		userId +
-		", " +
-		params.sql
-	await utils.makeDbQueries(sql, params.arg)
+	const sql = "INSERT INTO comments SET content = ?, post_id = ?, user_id = ? "
+	await utils.makeDbQueries(sql, [comment, postId, userId])
 }
 
 exports.getAllCommentsFromPost = async function (postId) {

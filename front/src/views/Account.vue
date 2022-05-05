@@ -2,17 +2,17 @@
 import axios from "../config/axiosConfig"
 import store from "../store/store"
 import { mapActions } from "vuex"
+import ButtonBaseVue from "../components/ButtonBase.vue"
 import InputBaseVue from "../components/InputBase.vue"
 import InputImageVue from "../components/InputImage.vue"
-import InputDeleteAccountVue from "../components/InputDeleteAccount.vue"
 import InputPasswordVue from "../components/InputPassword.vue"
 
 export default {
 	name: "Account",
 	components: {
+		ButtonBaseVue,
 		InputBaseVue,
 		InputImageVue,
-		InputDeleteAccountVue,
 		InputPasswordVue
 	},
 	data() {
@@ -67,19 +67,19 @@ export default {
 	<input-image-vue @sendFormInput="handleUpdate($event)" />
 
 	<input-base-vue
-		:text="'Username: ' + this.user.username"
+		:prompt="'Username: ' + this.user.username"
 		@sendFormInput="handleUpdate($event, 'username')"
 	/>
 	<input-base-vue
-		:text="'First name: ' + this.user.first_name"
+		:prompt="'First name: ' + this.user.first_name"
 		@sendFormInput="handleUpdate($event, 'first_name')"
 	/>
 	<input-base-vue
-		:text="'Last name: ' + this.user.last_name"
+		:prompt="'Last name: ' + this.user.last_name"
 		@sendFormInput="handleUpdate($event, 'last_name')"
 	/>
 	<input-base-vue
-		:text="'Email: ' + this.user.email"
+		:prompt="'Email: ' + this.user.email"
 		type="email"
 		@sendFormInput="handleUpdate($event, 'email')"
 	/>
@@ -88,11 +88,15 @@ export default {
 		type="password"
 		@sendFormInput="handleUpdate($event, 'password')"
 	/>
-	<input-delete-account-vue
-		text="Delete account"
+	<input-base-vue
+		button-text="confirm"
 		type="password"
 		@sendFormInput="handleDelete($event)"
-	/>
+	>
+		<slot>
+			<button-base-vue text="Delete account" />
+		</slot>
+	</input-base-vue>
 </template>
 
 <style lang="scss" scoped>

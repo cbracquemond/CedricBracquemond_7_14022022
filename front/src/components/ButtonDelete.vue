@@ -17,7 +17,7 @@ export default {
 	methods: {
 		async deleteCard(table) {
 			await axios.delete(`${table}/${this.$props.id}`)
-			location.reload()
+			table == "comments" ? location.reload() : this.$router.push("/")
 		}
 	}
 }

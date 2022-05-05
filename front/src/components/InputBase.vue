@@ -10,8 +10,12 @@ export default {
 			type: String,
 			default: "text"
 		},
-		text: {
+		prompt: {
 			type: String
+		},
+		buttonText: {
+			type: String,
+			default: "Apply"
 		}
 	},
 	emits: ["sendFormInput"],
@@ -29,11 +33,13 @@ export default {
 </script>
 <template>
 	<div>
-		<span>{{ text }}</span>
-		<button-base-vue type="button" text="Update" />
+		<slot>
+			<span>{{ prompt }}</span>
+			<button-base-vue type="button" text="Update" />
+		</slot>
 		<form class="baseInput" @submit="sendEvent">
 			<input :type="type" v-model="input" />
-			<button-base-vue text="Apply" />
+			<button-base-vue :text="buttonText" />
 		</form>
 	</div>
 </template>
