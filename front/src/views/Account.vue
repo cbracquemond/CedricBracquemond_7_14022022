@@ -31,7 +31,7 @@ export default {
 			}
 			if (typeof input === "object") data.append("image", input)
 			try {
-				await axios.put("users/" + this.user.id, data, {
+				await axios.put("users/", data, {
 					headers: {
 						"Content-Type": "multipart/form-data"
 					}
@@ -52,7 +52,7 @@ export default {
 				return
 			}
 			try {
-				await axios.delete("users/" + this.user.id)
+				await axios.delete("users/")
 			} catch (error) {
 				console.log(error.message)
 			}

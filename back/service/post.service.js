@@ -15,6 +15,26 @@ function makeQueryParams(post, id = null) {
 	return params
 }
 
+async function checkIfLiked(postId, userId) {
+	const sql = "SELECT * FROM post_liked WHERE post_id = ? and user_id = ?"
+	const queryResult = await utils.makeDbQueries(sql, [postId, userId])
+	return queryResult.length === 0 ? false : true
+}
+
+async function updateLikes(postId) {
+	const sqlGetLikes = "SELECT * FROM post_liked WHERE post_id = ?"
+	const likesQuantity = await utils.makeDbQueries(sqlGetLikes, [postId])
+	const sqlUpdatelikes = "UPDATE posts SET likes = ? WHERE id = ?"
+	await utils.makeDbQueries(sqlUpdatelikes, [likesQuantity.length, postId])
+}
+
+async function getImageUrl(id, table) {
+	const sql = "SELECT image_url FROM " + table + " WHERE id = ?"
+	const queryResult = await utils.makeDbQueries(sql, [id])
+	const imageUrl = queryResult[0].image_url
+	if (imageUrl != null) return `images/${imageUrl.split("/images/")[1]}`
+}
+
 exports.getAllPosts = async function () {
 	const sql =
 		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, users.username, users.id AS user_id FROM posts LEFT JOIN users ON posts.user_id = users.id ORDER BY posts.post_time DESC"
@@ -39,7 +59,7 @@ exports.deletePost = async function (postId, userId) {
 	await utils.checkIfExist(postId, "posts")
 	const isModerator = await utils.checkIfModerator(userId)
 	if (!isModerator) await utils.checkIfOwner(postId, userId, "posts")
-	const imageUrl = await utils.getImageUrl(postId, "posts")
+	const imageUrl = await getImageUrl(postId, "posts")
 	const sql = "DELETE FROM posts WHERE id = ?"
 	await utils.makeDbQueries(sql, [postId])
 	if (imageUrl != null) {
@@ -59,10 +79,10 @@ exports.likePost = async function (postId, userId) {
 	const userIdString = userId.toString()
 	await utils.checkIfExist(postId, "posts")
 	await utils.checkIfExist(userIdString, "users")
-	const alreadyLiked = await utils.checkIfLiked(postId, userId)
+	const alreadyLiked = await checkIfLiked(postId, userId)
 	const sql = alreadyLiked
 		? "DELETE FROM post_liked WHERE post_id = ? and user_id = ?"
 		: "INSERT INTO post_liked SET post_id = ?, user_id = ?"
 	await utils.makeDbQueries(sql, [postId, userIdString])
-	await utils.updateLikes(postId)
+	await updateLikes(postId)
 }

@@ -37,7 +37,7 @@ export default {
 			<span>{{ prompt }}</span>
 			<button-base-vue type="button" text="Update" />
 		</slot>
-		<form class="base-input" @submit="sendEvent">
+		<form class="base-input" @submit.prevent="sendEvent">
 			<input :type="type" v-model="input" />
 			<button-base-vue :text="buttonText" />
 		</form>

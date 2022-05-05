@@ -14,14 +14,16 @@ exports.getAllCommentsFromPost = async function (postId) {
 
 exports.editComment = async function (content, commentId, userId) {
 	await utils.checkIfExist(commentId, "comments")
-	await utils.checkIfOwner(commentId, userId, "comments")
+	const isModerator = await utils.checkIfModerator(userId)
+	if (!isModerator) await utils.checkIfOwner(commentId, userId, "comments")
 	const sql = "UPDATE comments SET content = '" + content + "' WHERE id = ?"
 	await utils.makeDbQueries(sql, [commentId])
 }
 
 exports.deleteComment = async function (commentId, userId) {
 	await utils.checkIfExist(commentId, "comments")
-	await utils.checkIfOwner(commentId, userId, "comments")
+	const isModerator = await utils.checkIfModerator(userId)
+	if (!isModerator) await utils.checkIfOwner(commentId, userId, "comments")
 	const sql = "DELETE FROM comments WHERE id = ?"
 	await utils.makeDbQueries(sql, [commentId])
 }

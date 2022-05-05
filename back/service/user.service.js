@@ -19,6 +19,41 @@ async function makeQueryParams(user, id = null) {
 	return params
 }
 
+async function comparePassword(userEmail, userPassword) {
+	await utils.checkIfExist(userEmail, "users")
+	const sql = "SELECT * FROM users WHERE email = ?"
+	const queryResult = (await utils.makeDbQueries(sql, [userEmail]))[0]
+	const passwordCheck = await bcrypt.compare(userPassword, queryResult.password)
+	if (!passwordCheck) throw Error("Wrong password")
+	user = {
+		email: queryResult.email,
+		firstName: queryResult.first_name,
+		lastName: queryResult.last_name,
+		id: queryResult.id,
+		username: queryResult.username
+	}
+	return user
+}
+
+async function getAllImagesFromAccount(userId) {
+	const imageUrlList = []
+
+	//get the url for the profil picture:
+	const sqlUser = "SELECT image_url FROM users WHERE id = ?"
+	const queryResult = await utils.makeDbQueries(sqlUser, [userId])
+	const userImageUrl = queryResult[0].image_url
+	if (userImageUrl != null)
+		imageUrlList.push(`images/${userImageUrl.split("/images/")[1]}`)
+
+	//get all the urls from the user's posts:
+	const sqlPosts = "SELECT image_url FROM posts WHERE user_id = ?"
+	const postsImageUrls = await utils.makeDbQueries(sqlPosts, [userId])
+	postsImageUrls.forEach((url) => {
+		imageUrlList.push(`images/${url.image_url.split("/images/")[1]}`)
+	})
+	return imageUrlList
+}
+
 exports.getAllUsers = async function () {
 	const sql =
 		"SELECT id, username, first_name, last_name, email, image_url FROM users"
@@ -33,12 +68,11 @@ exports.getOneUser = async function (userId) {
 	return queryResult[0]
 }
 
-exports.deleteUser = async function (accountId, userId) {
-	await utils.checkIfExist(accountId, "users")
-	await utils.checkIfOwner(accountId, userId, "users")
-	const imageUrls = await utils.getAllImagesFromAccount(userId)
+exports.deleteUser = async function (userId) {
+	await utils.checkIfExist(userId, "users")
+	const imageUrls = await getAllImagesFromAccount(userId)
 	const sql = "DELETE FROM users WHERE id = ?"
-	await utils.makeDbQueries(sql, [accountId])
+	await utils.makeDbQueries(sql, [userId])
 	imageUrls.forEach((url) => {
 		fs.unlink(url, () => {})
 	})
@@ -50,24 +84,23 @@ exports.createUser = async function (user) {
 	await utils.makeDbQueries(sql, params.arg)
 }
 
-exports.updateUser = async function (newProfile, accountId, userId) {
-	await utils.checkIfExist(accountId, "users")
-	await utils.checkIfOwner(accountId, userId, "users")
-	const params = await makeQueryParams(newProfile, accountId)
+exports.updateUser = async function (newProfile, userId) {
+	await utils.checkIfExist(userId.toString(), "users")
+	const params = await makeQueryParams(newProfile, userId)
 	const sql = "UPDATE users SET " + params.sql + " WHERE id = " + params.id
 	await utils.makeDbQueries(sql, params.arg)
 }
 
 exports.checkPassword = async function (userData) {
 	const isPasswordCorrect =
-		(await utils.comparePassword(userData.email, userData.password)) == Error
+		(await comparePassword(userData.email, userData.password)) == Error
 			? false
 			: true
 	return isPasswordCorrect
 }
 
 exports.login = async function (userData) {
-	const user = await utils.comparePassword(userData.email, userData.password)
+	const user = await comparePassword(userData.email, userData.password)
 	return {
 		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "99999999h" })
 	}

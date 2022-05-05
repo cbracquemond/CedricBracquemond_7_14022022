@@ -58,7 +58,7 @@ exports.updateUser = async (req, res) => {
 		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 		: null
 	try {
-		await userService.updateUser(user, req.params.id, res.locals.userId)
+		await userService.updateUser(user, res.locals.userId)
 		return res.status(200).json({
 			status: 200,
 			message: "User Succesfully Updated"
@@ -70,7 +70,7 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
 	try {
-		await userService.deleteUser(req.params.id, res.locals.userId)
+		await userService.deleteUser(res.locals.userId)
 		return res.status(200).json({
 			status: 200,
 			message: "User Succesfully Deleted"

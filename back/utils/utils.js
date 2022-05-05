@@ -1,5 +1,4 @@
 const pool = require("../config/mysql")
-const bcrypt = require("bcrypt")
 
 exports.makeDbQueries = async function (sql, params = null) {
 	try {
@@ -20,19 +19,6 @@ exports.checkIfExist = async function (reference, table) {
 	}
 }
 
-exports.checkIfLiked = async function (postId, userId) {
-	const sql = "SELECT * FROM post_liked WHERE post_id = ? and user_id = ?"
-	const queryResult = await exports.makeDbQueries(sql, [postId, userId])
-	return queryResult.length === 0 ? false : true
-}
-
-exports.updateLikes = async function (postId) {
-	const sqlGetLikes = "SELECT * FROM post_liked WHERE post_id = ?"
-	const likesQuantity = await exports.makeDbQueries(sqlGetLikes, [postId])
-	const sqlUpdatelikes = "UPDATE posts SET likes = ? WHERE id = ?"
-	await exports.makeDbQueries(sqlUpdatelikes, [likesQuantity.length, postId])
-}
-
 exports.checkIfOwner = async function (dataToCheckId, userId, table) {
 	if (table != "users") {
 		const sql = "SELECT user_id FROM " + table + " WHERE id = ?"
@@ -47,44 +33,4 @@ exports.checkIfModerator = async function (userId) {
 	const sql = "SELECT is_moderator FROM users WHERE id = ?"
 	const queryResult = await exports.makeDbQueries(sql, [userId])
 	return queryResult[0].is_moderator === 1 ? true : false
-}
-
-exports.getImageUrl = async function (id, table) {
-	const sql = "SELECT image_url FROM " + table + " WHERE id = ?"
-	const queryResult = await exports.makeDbQueries(sql, [id])
-	const imageUrl = queryResult[0].image_url
-	if (imageUrl != null) return `images/${imageUrl.split("/images/")[1]}`
-}
-
-exports.getAllImagesFromAccount = async function (userId) {
-	const imageUrlList = []
-	//get the url for the profil picture:
-	const sqlUser = "SELECT image_url FROM users WHERE id = ?"
-	const queryResult = await exports.makeDbQueries(sqlUser, [userId])
-	const userImageUrl = queryResult[0].image_url
-	if (userImageUrl != null)
-		imageUrlList.push(`images/${userImageUrl.split("/images/")[1]}`)
-	//get all the urls from the user's posts:
-	const sqlPosts = "SELECT image_url FROM posts WHERE user_id = ?"
-	const postsImageUrls = await exports.makeDbQueries(sqlPosts, [userId])
-	postsImageUrls.forEach((url) => {
-		imageUrlList.push(`images/${url.image_url.split("/images/")[1]}`)
-	})
-	return imageUrlList
-}
-
-exports.comparePassword = async function (userEmail, userPassword) {
-	await exports.checkIfExist(userEmail, "users")
-	const sql = "SELECT * FROM users WHERE email = ?"
-	const queryResult = (await exports.makeDbQueries(sql, [userEmail]))[0]
-	const passwordCheck = await bcrypt.compare(userPassword, queryResult.password)
-	if (!passwordCheck) throw Error("Wrong password")
-	user = {
-		email: queryResult.email,
-		firstName: queryResult.first_name,
-		lastName: queryResult.last_name,
-		id: queryResult.id,
-		username: queryResult.username
-	}
-	return user
 }

@@ -9,8 +9,8 @@ router.post("/", multer, userCtrl.createUser)
 router.post("/login", userCtrl.login)
 router.get("/", auth, userCtrl.getAllUsers)
 router.get("/me", auth, userCtrl.getOneUser)
-router.put("/:id", auth, multer, userCtrl.updateUser)
-router.delete("/:id", auth, userCtrl.deleteUser)
+router.put("/", auth, multer, userCtrl.updateUser)
+router.delete("/", auth, userCtrl.deleteUser)
 router.post("/check", auth, userCtrl.checkPassword)
 
 module.exports = router

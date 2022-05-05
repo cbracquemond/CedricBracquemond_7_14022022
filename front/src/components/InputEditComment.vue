@@ -26,11 +26,11 @@ export default {
 </script>
 <template>
 	<div>
-		<button-base-vue type="button" text="Edit" />
 		<form class="base-input" @submit="editComment">
 			<textarea name="edit" v-model="input"> </textarea>
 			<button-base-vue text="Save Edits" />
 		</form>
+		<button-base-vue type="button" text="Edit" />
 	</div>
 </template>
 <style></style>
