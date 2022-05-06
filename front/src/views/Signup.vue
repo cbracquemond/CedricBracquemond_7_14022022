@@ -33,8 +33,8 @@ export default {
 		async handleSubmit() {
 			this.checkPassword()
 			const user = {
-				first_name: this.firstName,
-				last_name: this.lastName,
+				firstName: this.firstName,
+				lastName: this.lastName,
 				username: this.username,
 				email: this.email,
 				password: this.password

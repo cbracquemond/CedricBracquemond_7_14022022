@@ -2,7 +2,7 @@ const userService = require("../service/user.service")
 
 exports.createUser = async (req, res) => {
 	const user = req.body.user ? JSON.parse(req.body.user) : {}
-	user.image_url = req.file
+	user.imageUrl = req.file
 		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 		: null
 	try {
@@ -25,18 +25,6 @@ exports.login = async (req, res) => {
 		})
 	} catch (err) {
 		return res.status(400).json({ status: 400, message: err.message })
-	}
-}
-
-exports.getAllUsers = async (req, res) => {
-	try {
-		const users = await userService.getAllUsers()
-		return res.status(200).json({
-			users,
-			message: "Users Succesfully Retrieved"
-		})
-	} catch (err) {
-		return res.status(500).json({ status: 500, message: err.message })
 	}
 }
 

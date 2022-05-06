@@ -10,7 +10,8 @@ exports.makeDbQueries = async function (sql, params = null) {
 }
 
 exports.checkIfExist = async function (reference, table) {
-	const sql = reference.includes("@")
+	const referenceString = reference.toString()
+	const sql = referenceString.includes("@")
 		? "SELECT * FROM " + table + " WHERE email = ?"
 		: "SELECT * FROM " + table + " WHERE id = ?"
 	const queryResult = await exports.makeDbQueries(sql, [reference])

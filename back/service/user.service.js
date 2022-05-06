@@ -4,21 +4,6 @@ const secretKey = process.env.SECRET_KEY
 const utils = require("../utils/utils")
 const fs = require("fs")
 
-async function makeQueryParams(user, id = null) {
-	if (user.password) user.password = await bcrypt.hash(user.password, 10)
-	const keys = Object.entries(user)
-	const params = {
-		sql: [],
-		arg: [],
-		id: [`${id}`]
-	}
-	keys.forEach((key) => {
-		params.sql.push(" " + key[0] + " = ?")
-		params.arg.push(key[1])
-	})
-	return params
-}
-
 async function comparePassword(userEmail, userPassword) {
 	await utils.checkIfExist(userEmail, "users")
 	const sql = "SELECT * FROM users WHERE email = ?"
@@ -54,10 +39,41 @@ async function getAllImagesFromAccount(userId) {
 	return imageUrlList
 }
 
-exports.getAllUsers = async function () {
+async function makeQueryParams(user, id = null) {
+	if (user.password) user.password = await bcrypt.hash(user.password, 10)
+	const keys = Object.entries(user)
+	const params = {
+		sql: [],
+		arg: [],
+		id: [`${id}`]
+	}
+	keys.forEach((key) => {
+		params.sql.push(" " + key[0] + " = ?")
+		params.arg.push(key[1])
+	})
+	return params
+}
+
+async function createFirstAccountAsModerator() {
+	const sql = "SELECT id FROM users"
+	const userList = await utils.makeDbQueries(sql)
+	return userList.length == 0 ? true : false
+}
+
+exports.createUser = async function (user) {
+	user.isModerator = await createFirstAccountAsModerator()
+	user.password = await bcrypt.hash(user.password, 10)
 	const sql =
-		"SELECT id, username, first_name, last_name, email, image_url FROM users"
-	return await utils.makeDbQueries(sql)
+		"INSERT INTO users SET first_name = ?, last_name = ?, username = ?, email = ?, password = ?, image_url = ?, is_moderator = ?"
+	await utils.makeDbQueries(sql, [
+		user.firstName,
+		user.lastName,
+		user.username,
+		user.email,
+		user.password,
+		user.imageUrl,
+		user.isModerator
+	])
 }
 
 exports.getOneUser = async function (userId) {
@@ -66,6 +82,13 @@ exports.getOneUser = async function (userId) {
 		"SELECT id, username, first_name, last_name, email, image_url, is_moderator FROM users WHERE id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [userId])
 	return queryResult[0]
+}
+
+exports.updateUser = async function (newProfile, userId) {
+	await utils.checkIfExist(userId.toString(), "users")
+	const params = await makeQueryParams(newProfile, userId)
+	const sql = "UPDATE users SET " + params.sql + " WHERE id = " + params.id
+	await utils.makeDbQueries(sql, params.arg)
 }
 
 exports.deleteUser = async function (userId) {
@@ -78,29 +101,16 @@ exports.deleteUser = async function (userId) {
 	})
 }
 
-exports.createUser = async function (user) {
-	const params = await makeQueryParams(user)
-	const sql = "INSERT INTO users SET " + params.sql
-	await utils.makeDbQueries(sql, params.arg)
-}
-
-exports.updateUser = async function (newProfile, userId) {
-	await utils.checkIfExist(userId.toString(), "users")
-	const params = await makeQueryParams(newProfile, userId)
-	const sql = "UPDATE users SET " + params.sql + " WHERE id = " + params.id
-	await utils.makeDbQueries(sql, params.arg)
-}
-
-exports.checkPassword = async function (userData) {
+exports.checkPassword = async function (userInput) {
 	const isPasswordCorrect =
-		(await comparePassword(userData.email, userData.password)) == Error
+		(await comparePassword(userInput.email, userInput.password)) == Error
 			? false
 			: true
 	return isPasswordCorrect
 }
 
-exports.login = async function (userData) {
-	const user = await comparePassword(userData.email, userData.password)
+exports.login = async function (userInput) {
+	const user = await comparePassword(userInput.email, userInput.password)
 	return {
 		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "99999999h" })
 	}
