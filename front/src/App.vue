@@ -16,17 +16,29 @@ export default {
 </template>
 
 <style lang="scss">
+body {
+	height: 100%;
+	width: 100%;
+}
+
+html {
+	position: absolute;
+	background-color: #dae0e6;
+	box-sizing: border-box;
+	font-size: 16px;
+	height: 100%;
+	width: 100%;
+}
 #app {
-	background-color: #fff;
+	background-color: #dae0e6;
+	color: #2c3e50;
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-}
-html {
-	box-sizing: border-box;
-	font-size: 16px;
+	position: absolute;
+	margin: 0;
+	height: 100%;
+	width: 100%;
 }
 
 *,
