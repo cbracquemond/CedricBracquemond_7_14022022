@@ -9,44 +9,60 @@ export default {
 </script>
 
 <template>
-	<div class="nav">
-		<ul>
-			<router-link to="/" class="nav__link">
-				<li>Home</li>
+	<ul class="nav">
+		<router-link to="/" class="nav__link">
+			<img src="../assets/icon.svg" alt="" />
+
+			<!-- <li>Home</li> -->
+		</router-link>
+		<div class="nav__container">
+			<router-link to="/account" class="nav__link"
+				><li>Account</li>
 			</router-link>
-			<div>
-				<router-link to="/account" class="nav__link"
-					><li>Account</li>
-				</router-link>
-				<router-link to="/login" @click="logout" class="nav__link">
-					<li>Log Out</li>
-				</router-link>
-			</div>
-		</ul>
-	</div>
+			<router-link to="/login" @click="logout" class="nav__link">
+				<li>Log Out</li>
+			</router-link>
+		</div>
+	</ul>
 </template>
 
 <style lang="scss" scoped>
 .nav {
+	display: flex;
+	justify-content: space-between;
 	background: #fff;
 	height: 60px;
+	width: 100%;
 
 	&__link {
 		color: #000;
 		text-decoration: none;
+		margin: 0 1rem;
+		max-height: 60px;
+		max-width: 120px;
+		overflow: hidden;
+		object-fit: cover;
+		& img {
+			width: 60px;
+			height: 60px;
+			object-fit: cover;
+		}
+	}
+
+	&__container {
+		display: flex;
+		justify-content: space-around;
 	}
 
 	& ul {
-		display: flex;
-		justify-content: space-between;
+		width: 100%;
 	}
 
 	& li {
-		display: inline-block;
 		list-style: none;
 		height: 60px;
 		line-height: 60px;
-		padding: 0 40px;
+		margin: auto;
 
 		&:hover {
 			background: red;

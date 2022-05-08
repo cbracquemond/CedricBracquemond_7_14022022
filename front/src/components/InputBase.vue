@@ -33,13 +33,13 @@ export default {
 </script>
 <template>
 	<div>
-		<slot>
+		<slot class="base-input">
 			<span>{{ prompt }}</span>
-			<button-base-vue type="button" text="Update" />
+			<button-base-vue type="button" class="base-input__button" text="Change" />
 		</slot>
 		<form class="base-input" @submit.prevent="sendEvent">
 			<input :type="type" v-model="input" />
-			<button-base-vue :text="buttonText" />
+			<button-base-vue class="base-input__button--apply" :text="buttonText" />
 		</form>
 	</div>
 </template>

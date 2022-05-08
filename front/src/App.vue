@@ -18,7 +18,7 @@ export default {
 <style lang="scss">
 body {
 	height: 100%;
-	width: 100%;
+	width: 100vw;
 }
 
 html {
@@ -27,7 +27,7 @@ html {
 	box-sizing: border-box;
 	font-size: 16px;
 	height: 100%;
-	width: 100%;
+	width: 100vw;
 }
 #app {
 	background-color: #dae0e6;
