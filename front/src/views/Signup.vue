@@ -54,6 +54,7 @@ export default {
 					}
 				})
 				this.$router.push("/login")
+				alert("Account successfully created, you can now login")
 			} catch (error) {
 				console.log(error)
 			}

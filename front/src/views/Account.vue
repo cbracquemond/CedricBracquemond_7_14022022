@@ -2,7 +2,6 @@
 import axios from "../config/axiosConfig"
 import store from "../store/store"
 import { mapActions } from "vuex"
-import ButtonBaseVue from "../components/ButtonBase.vue"
 import InputBaseVue from "../components/InputBase.vue"
 import InputImageVue from "../components/InputImage.vue"
 import InputPasswordVue from "../components/InputPassword.vue"
@@ -10,7 +9,6 @@ import InputPasswordVue from "../components/InputPassword.vue"
 export default {
 	name: "Account",
 	components: {
-		ButtonBaseVue,
 		InputBaseVue,
 		InputImageVue,
 		InputPasswordVue
@@ -41,22 +39,35 @@ export default {
 				console.log(error.message)
 			}
 		},
-		async handleDelete(event) {
+		displayWarning() {
+			const warningParent = document.querySelector(".delete-input")
+			if (warningParent.querySelectorAll(".warning").length != 0) return
+			const warning = document.createElement("p")
+			warning.innerText = "Incorrect password"
+			warning.classList.add("warning")
+			warningParent.appendChild(warning)
+		},
+		async checkPassword(event) {
 			try {
-				await axios.post("users/check/", {
-					email: this.user.email,
+				const passwordChecked = await axios.post("users/check/", {
 					password: event
 				})
+				console.log(passwordChecked.data.check)
+				passwordChecked.data.check ? this.handleDelete() : this.displayWarning()
 			} catch (error) {
 				console.log(error.message)
 				return
 			}
+		},
+		async handleDelete() {
 			try {
 				await axios.delete("users/")
 			} catch (error) {
 				console.log(error.message)
 			}
 			this.logout()
+			this.$router.push("/login")
+			alert("Account successfully deleted")
 		}
 	}
 }
@@ -89,24 +100,22 @@ export default {
 			type="email"
 			@sendFormInput="handleUpdate($event, 'email')"
 		/>
-		<input-password-vue
-			text="Change password:"
-			type="password"
-			@sendFormInput="handleUpdate($event, 'password')"
-		/>
+		<input-password-vue @sendFormInput="handleUpdate($event, 'password')" />
 		<input-base-vue
-			button-text="confirm"
+			class="delete-input"
+			button-class="base-input__button--delete"
+			first-button-text="Delete account"
+			second-button-text="confirm"
 			type="password"
-			@sendFormInput="handleDelete($event)"
-		>
-			<slot>
-				<button-base-vue text="Delete account" />
-			</slot>
-		</input-base-vue>
+			@sendFormInput="checkPassword($event)"
+		/>
 	</div>
 </template>
 
 <style lang="scss" scoped>
+.warning {
+	color: #fd2d01;
+}
 .account-form {
 	background-color: #fff;
 	display: flex;
@@ -115,5 +124,10 @@ export default {
 	align-items: center;
 	width: 80vw;
 	padding: 1rem;
+}
+.delete-input {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 </style>

@@ -127,29 +127,6 @@ a:active:hover {
 	transition: all 0.2s ease;
 }
 
-button {
-	border: none;
-	display: block;
-	height: 60px;
-	background-color: #fd2d01;
-	border-radius: 16px;
-	color: #fff;
-	font-weight: bold;
-	text-transform: uppercase;
-	text-align: center;
-	font-size: 18px;
-	-webkit-transition: all 0.2s ease;
-	transition: all 0.2s ease;
-	position: relative;
-	cursor: pointer;
-	margin-bottom: 16px;
-
-	&:hover {
-		background-color: #329dd5;
-		-webkit-transition: all 0.2s ease;
-		transition: all 0.2s ease;
-	}
-}
 .login {
 	display: flex;
 	flex-direction: column;
@@ -166,6 +143,16 @@ button {
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
+
+	& button {
+		border: none;
+		background-color: #fd2d01;
+		color: #fff;
+		height: 60px;
+		width: 168px;
+		font-size: 18px;
+		margin-bottom: 16px;
+	}
 
 	&__form {
 		padding: 0 60px;

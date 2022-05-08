@@ -88,22 +88,11 @@ export default {
 		border-radius: 50%;
 	}
 	&__button {
+		margin-top: 8px;
+		background-color: #fd2d01;
 		border: none;
 		display: block;
-		height: 40px;
-		width: 80px;
-		background-color: #fd2d01;
-		border-radius: 16px;
 		color: #fff;
-		font-weight: bold;
-		text-transform: uppercase;
-		text-align: center;
-		font-size: 14px;
-		-webkit-transition: all 0.2s ease;
-		transition: all 0.2s ease;
-		position: relative;
-		cursor: pointer;
-		margin-bottom: 16px;
 	}
 }
 </style>

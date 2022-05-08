@@ -37,7 +37,7 @@ export default {
 	&__link {
 		color: #000;
 		text-decoration: none;
-		margin: 0 1rem;
+		padding: 0 16px;
 		max-height: 60px;
 		max-width: 120px;
 		overflow: hidden;

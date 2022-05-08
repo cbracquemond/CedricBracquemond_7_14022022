@@ -5,18 +5,6 @@ const utils = require("../utils/utils")
 const fs = require("fs")
 
 async function comparePassword(userEmail, userPassword) {
-	await utils.checkIfExist(userEmail, "users")
-	const sql = "SELECT * FROM users WHERE email = ?"
-	const queryResult = (await utils.makeDbQueries(sql, [userEmail]))[0]
-	const passwordCheck = await bcrypt.compare(userPassword, queryResult.password)
-	if (!passwordCheck) throw Error("Wrong password")
-	user = {
-		email: queryResult.email,
-		firstName: queryResult.first_name,
-		lastName: queryResult.last_name,
-		id: queryResult.id,
-		username: queryResult.username
-	}
 	return user
 }
 
@@ -101,16 +89,29 @@ exports.deleteUser = async function (userId) {
 	})
 }
 
-exports.checkPassword = async function (userInput) {
-	const isPasswordCorrect =
-		(await comparePassword(userInput.email, userInput.password)) == Error
-			? false
-			: true
-	return isPasswordCorrect
+exports.checkPassword = async function (userPassword, userId) {
+	const sql = "SELECT password FROM users WHERE id = ?"
+	const queryResult = (await utils.makeDbQueries(sql, [userId]))[0]
+	const passwordCheck = await bcrypt.compare(userPassword, queryResult.password)
+	return passwordCheck
 }
 
 exports.login = async function (userInput) {
-	const user = await comparePassword(userInput.email, userInput.password)
+	await utils.checkIfExist(userInput.email, "users")
+	const sql = "SELECT * FROM users WHERE email = ?"
+	const queryResult = (await utils.makeDbQueries(sql, [userInput.email]))[0]
+	const passwordCheck = await bcrypt.compare(
+		userInput.password,
+		queryResult.password
+	)
+	if (!passwordCheck) throw Error("Wrong password")
+	user = {
+		email: queryResult.email,
+		firstName: queryResult.first_name,
+		lastName: queryResult.last_name,
+		id: queryResult.id,
+		username: queryResult.username
+	}
 	return {
 		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "99999999h" })
 	}
