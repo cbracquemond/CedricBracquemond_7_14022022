@@ -63,49 +63,57 @@ export default {
 </script>
 
 <template>
-	<input-image-vue
-		:src="this.user.image_url"
-		@sendFormInput="handleUpdate($event)"
-	/>
-
-	<input-base-vue
-		:prompt="'Username: ' + this.user.username"
-		@sendFormInput="handleUpdate($event, 'username')"
-	/>
-	<input-base-vue
-		:prompt="'First name: ' + this.user.first_name"
-		@sendFormInput="handleUpdate($event, 'first_name')"
-	/>
-	<input-base-vue
-		:prompt="'Last name: ' + this.user.last_name"
-		@sendFormInput="handleUpdate($event, 'last_name')"
-	/>
-	<input-base-vue
-		:prompt="'Email: ' + this.user.email"
-		type="email"
-		@sendFormInput="handleUpdate($event, 'email')"
-	/>
-	<input-password-vue
-		text="Change password:"
-		type="password"
-		@sendFormInput="handleUpdate($event, 'password')"
-	/>
-	<input-base-vue
-		button-text="confirm"
-		type="password"
-		@sendFormInput="handleDelete($event)"
-	>
-		<slot>
-			<button-base-vue text="Delete account" />
-		</slot>
-	</input-base-vue>
+	<div class="account-form">
+		<input-image-vue
+			:src="this.user.image_url"
+			@sendFormInput="handleUpdate($event)"
+		/>
+		<input-base-vue
+			:text="'Username'"
+			:value="this.user.username"
+			@sendFormInput="handleUpdate($event, 'username')"
+		/>
+		<input-base-vue
+			:text="'First name'"
+			:value="this.user.first_name"
+			@sendFormInput="handleUpdate($event, 'first_name')"
+		/>
+		<input-base-vue
+			:text="'Last name'"
+			:value="this.user.last_name"
+			@sendFormInput="handleUpdate($event, 'last_name')"
+		/>
+		<input-base-vue
+			:text="'Email'"
+			:value="this.user.email"
+			type="email"
+			@sendFormInput="handleUpdate($event, 'email')"
+		/>
+		<input-password-vue
+			text="Change password:"
+			type="password"
+			@sendFormInput="handleUpdate($event, 'password')"
+		/>
+		<input-base-vue
+			button-text="confirm"
+			type="password"
+			@sendFormInput="handleDelete($event)"
+		>
+			<slot>
+				<button-base-vue text="Delete account" />
+			</slot>
+		</input-base-vue>
+	</div>
 </template>
 
 <style lang="scss" scoped>
-.accountInput {
+.account-form {
+	background-color: #fff;
 	display: flex;
 	margin: auto;
 	flex-direction: column;
-	max-width: fit-content;
+	align-items: center;
+	width: 80vw;
+	padding: 1rem;
 }
 </style>

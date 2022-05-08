@@ -43,24 +43,24 @@ export default {
 </script>
 <template>
 	<div>
-		<form class="imgForm" @submit="applyImage">
-			<div class="imgForm__container">
+		<form class="img-form" @submit="applyImage">
+			<div class="img-form__container">
 				<img
 					:src="imagesrc"
 					alt="Profile Picture"
-					class="imgForm__img"
+					class="img-form__img"
 					@click="$refs.file.click()"
 				/>
 			</div>
 			<input
-				class="imgForm__input"
+				class="img-form__input"
 				ref="file"
 				type="file"
 				name="image_input"
 				@change="handleImage"
 			/>
 			<button-base-vue
-				class="imgForm__button"
+				class="img-form__button"
 				v-if="currentRouteName.indexOf('Account') != -1"
 				text="Apply"
 			/>
@@ -68,10 +68,15 @@ export default {
 	</div>
 </template>
 <style lang="scss" scoped>
-.imgForm {
+.img-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
 	&__input {
 		display: none;
 	}
+
 	&__container {
 		width: 150px;
 		height: 150px;
@@ -81,6 +86,24 @@ export default {
 		-ms-border-radius: 50%;
 		-o-border-radius: 50%;
 		border-radius: 50%;
+	}
+	&__button {
+		border: none;
+		display: block;
+		height: 40px;
+		width: 80px;
+		background-color: #fd2d01;
+		border-radius: 16px;
+		color: #fff;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-align: center;
+		font-size: 14px;
+		-webkit-transition: all 0.2s ease;
+		transition: all 0.2s ease;
+		position: relative;
+		cursor: pointer;
+		margin-bottom: 16px;
 	}
 }
 </style>
