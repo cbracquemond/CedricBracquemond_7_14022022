@@ -1,10 +1,11 @@
 const userService = require("../service/user.service")
 
 exports.createUser = async (req, res) => {
+	const defaultPicture = process.env.DEFAULT_PICTURE
 	const user = req.body.user ? JSON.parse(req.body.user) : {}
 	user.imageUrl = req.file
 		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-		: null
+		: `${req.protocol}://${req.get("host")}/images/Default-profile-picture.jpg`
 	try {
 		await userService.createUser(user)
 		return res.status(201).json({

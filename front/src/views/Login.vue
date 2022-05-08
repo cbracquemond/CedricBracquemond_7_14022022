@@ -122,7 +122,7 @@ button {
 	display: block;
 	height: 60px;
 	background-color: #fd2d01;
-	border-radius: 4px;
+	border-radius: 16px;
 	color: #fff;
 	font-weight: bold;
 	text-transform: uppercase;
@@ -141,11 +141,15 @@ button {
 	}
 }
 .login {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	border-radius: 4px;
 	background-color: #fff;
 	box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
 	padding: 20px 0 0 0;
 	margin: auto;
+	height: 80vh;
 	width: 80vw;
 	position: relative;
 	top: 50%;
@@ -154,11 +158,11 @@ button {
 	transform: translateY(-50%);
 
 	&__form {
-		margin: auto;
 		padding: 0 60px;
-
+		height: 100%;
 		display: flex;
 		flex-direction: column;
+		justify-content: space-between;
 
 		&__input {
 			display: block;
@@ -167,12 +171,12 @@ button {
 			width: 100%;
 			outline: none;
 			line-height: 60px;
-			border-radius: 4px;
 			width: 100%;
 			padding: 0 0 0 10px;
 			margin: 0 0 16px;
 			color: #8a8b8e;
-			border: 1px solid #c2c0ca;
+			border: none;
+			border-bottom: 2px solid #b0b3b9;
 			font-style: normal;
 			font-size: 16px;
 			-webkit-appearance: none;

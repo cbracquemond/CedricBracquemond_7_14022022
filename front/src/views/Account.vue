@@ -63,8 +63,10 @@ export default {
 </script>
 
 <template>
-	<img :src="this.user.image_url" alt="Profile Picture" />
-	<input-image-vue @sendFormInput="handleUpdate($event)" />
+	<input-image-vue
+		:src="this.user.image_url"
+		@sendFormInput="handleUpdate($event)"
+	/>
 
 	<input-base-vue
 		:prompt="'Username: ' + this.user.username"
