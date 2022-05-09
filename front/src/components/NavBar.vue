@@ -32,7 +32,8 @@ export default {
 	height: 60px;
 	width: 100%;
 	margin-bottom: 16px;
-	box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
+	position: fixed;
+	top: 0;
 
 	&__link {
 		color: #000;

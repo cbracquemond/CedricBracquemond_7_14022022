@@ -36,7 +36,7 @@ html {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	position: absolute;
-	margin: 0;
+	margin: 76px 0 0;
 	height: 100%;
 	width: 100%;
 }
