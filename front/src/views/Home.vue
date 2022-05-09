@@ -24,6 +24,9 @@ export default {
 			const hour = timestamp.slice(11, 16)
 			const date = "le " + day + "/" + month + "/" + year + " à " + hour
 			return date
+		},
+		handleCommentButton(id) {
+			this.$router.push("/post/" + id + "#button-container")
 		}
 	},
 	async mounted() {
@@ -53,7 +56,10 @@ export default {
 				/>
 			</router-link>
 		</div>
-		<button-container-vue :post="post" />
+		<button-container-vue
+			:post="post"
+			@sendCommentEvent="handleCommentButton(post.id)"
+		/>
 	</div>
 </template>
 <style scoped lang="scss">

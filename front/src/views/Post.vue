@@ -53,6 +53,11 @@ export default {
 		await axios.get("comments/" + this.$route.params.id).then((response) => {
 			this.comments = response.data.comments
 		})
+		const section = this.$router.currentRoute.value.hash.replace("#", "")
+		if (section)
+			this.$nextTick(() =>
+				window.document.getElementById(section).scrollIntoView()
+			)
 	}
 }
 </script>
@@ -67,6 +72,7 @@ export default {
 			:image-url="this.post.image_url"
 		/>
 		<button-container-vue
+			id="button-container"
 			:post="post"
 			@sendCommentEvent="showCreateComment = !showCreateComment"
 		/>
