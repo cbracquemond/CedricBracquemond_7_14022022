@@ -42,13 +42,15 @@ export default {
 		>
 			{{ title }}
 		</h1>
-		<p class="post__content">{{ content }}</p>
-		<img
-			v-if="imageUrl != null"
-			:src="imageUrl"
-			alt="Post image"
-			class="post-card__image"
-		/>
+		<div class="post-card__content">
+			<p v-if="content != ''" class="post-card__article">{{ content }}</p>
+			<img
+				v-if="imageUrl != null"
+				:src="imageUrl"
+				alt="Post image"
+				class="post-card__image"
+			/>
+		</div>
 	</div>
 </template>
 <style scoped lang="scss">
@@ -59,10 +61,17 @@ span {
 
 .post-card {
 	background-color: #fff;
+	&__content {
+		height: 100%;
+	}
 	&__title {
 		font-size: 24px;
 		font-weight: bold;
 		margin: 8px 0;
+	}
+	&__image {
+		height: 100%;
+		width: auto;
 	}
 }
 </style>

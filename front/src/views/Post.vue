@@ -87,10 +87,4 @@ export default {
 		</div>
 	</div>
 </template>
-<style scoped lang="scss">
-.post {
-	&__container {
-		background-color: #fff;
-	}
-}
-</style>
+<style scoped lang="scss"></style>
