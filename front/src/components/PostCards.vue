@@ -28,21 +28,41 @@ export default {
 }
 </script>
 <template>
-	<div class="post_card">
+	<div class="post-card">
 		<span>Posté le {{ date }} par {{ user }}</span>
-		<h2 v-if="title != '' && currentRouteName.indexOf('Post') != 0">
+		<h2
+			v-if="title != '' && currentRouteName.indexOf('Post') != 0"
+			class="post-card__title"
+		>
 			{{ title }}
 		</h2>
-		<h1 v-if="title != '' && currentRouteName.indexOf('Post') != -1">
+		<h1
+			v-if="title != '' && currentRouteName.indexOf('Post') != -1"
+			class="post-card__title"
+		>
 			{{ title }}
 		</h1>
-		<p>{{ content }}</p>
+		<p class="post__content">{{ content }}</p>
 		<img
 			v-if="imageUrl != null"
 			:src="imageUrl"
 			alt="Post image"
-			class="post_card__image"
+			class="post-card__image"
 		/>
 	</div>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+span {
+	color: #787c7e;
+	font-size: 12px;
+}
+
+.post-card {
+	background-color: #fff;
+	&__title {
+		font-size: 24px;
+		font-weight: bold;
+		margin: 8px 0;
+	}
+}
+</style>

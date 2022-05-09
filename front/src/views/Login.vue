@@ -139,7 +139,7 @@ a:active:hover {
 		height: 60px;
 		width: 168px;
 		font-size: 18px;
-		margin-bottom: 16px;
+		margin: 16px 0;
 	}
 
 	&__form {

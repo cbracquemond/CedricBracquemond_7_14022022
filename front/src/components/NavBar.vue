@@ -11,7 +11,7 @@ export default {
 <template>
 	<ul class="nav">
 		<router-link to="/" class="nav__link">
-			<img src="../assets/icon.svg" alt="" />
+			<img src="../assets/icon.svg" alt="Groupomania logo" />
 		</router-link>
 		<div class="nav__container">
 			<router-link to="/account" class="nav__link"

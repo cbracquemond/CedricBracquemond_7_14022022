@@ -32,7 +32,7 @@ html {
 #app {
 	background-color: #dae0e6;
 	color: #2c3e50;
-	font-family: Avenir, Helvetica, Arial, sans-serif;
+	font-family: verdana, arial, helvetica, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	position: absolute;

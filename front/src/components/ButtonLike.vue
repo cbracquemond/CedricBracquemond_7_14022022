@@ -16,8 +16,19 @@ export default {
 }
 </script>
 <template>
-	<button @click="likePost" type="button" class="postCard__button--like">
-		Like
-	</button>
+	<div>
+		<img
+			class="thumbs-up-button"
+			src="../assets/thumbs-up.svg"
+			alt="Like button"
+			@click="likePost"
+		/><span class="button-label">Like</span>
+	</div>
 </template>
-<style></style>
+<style scoped lang="scss">
+.thumbs-up-button {
+	height: 20px;
+	cursor: pointer;
+	// filter: invert(94%) sepia(6%) saturate(2148%) hue-rotate(299deg) brightness(99%) contrast(104%);
+}
+</style>
