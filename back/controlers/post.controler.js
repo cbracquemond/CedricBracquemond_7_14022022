@@ -74,9 +74,13 @@ exports.editPost = async (req, res) => {
 
 exports.likePost = async (req, res) => {
 	try {
-		await postService.likePost(req.params.id, res.locals.userId)
+		const likesCount = await postService.likePost(
+			req.params.id,
+			res.locals.userId
+		)
 		return res.status(200).json({
-			message: "Vote Successfully Submited"
+			message: "Vote Successfully Submited",
+			likesCount: likesCount
 		})
 	} catch (err) {
 		return res.status(400).json({

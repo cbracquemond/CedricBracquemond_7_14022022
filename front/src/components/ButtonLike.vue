@@ -6,11 +6,28 @@ export default {
 		postId: {
 			type: Number,
 			required: true
+		},
+		likesCounter: {
+			type: Number
+		}
+	},
+	data() {
+		return {
+			likesData: this.likesCounter
 		}
 	},
 	methods: {
 		async likePost() {
-			await axios.post(`posts/${this.$props.postId}/like`)
+			axios
+				.post(`posts/${this.$props.postId}/like`)
+				.then((response) => {
+					response.data.likesCount == "+1"
+						? (this.likesData = this.likesData + 1)
+						: (this.likesData = this.likesData - 1)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
 		}
 	}
 }
@@ -21,11 +38,7 @@ export default {
 			class="thumbs-up-button"
 			src="../assets/thumbs-up.svg"
 			alt="Like button"
-		/><span class="button-label">Like</span>
+		/><span class="button-label">Like ({{ this.likesData }}) </span>
 	</div>
 </template>
-<style scoped lang="scss">
-.thumbs-up-button {
-	// filter: invert(94%) sepia(6%) saturate(2148%) hue-rotate(299deg) brightness(99%) contrast(104%);
-}
-</style>
+<style scoped lang="scss"></style>

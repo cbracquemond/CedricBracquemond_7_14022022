@@ -23,12 +23,19 @@ export default {
 		return {
 			user: this.$store.state.user
 		}
+	},
+	mounted() {
+		console.log(this.post)
 	}
 }
 </script>
 <template>
 	<div class="post-button-container">
-		<button-like-vue class="post-button" :postId="post.id" />
+		<button-like-vue
+			class="post-button"
+			:postId="post.id"
+			:likesCounter="post.likes"
+		/>
 		<div class="post-button" @click="commentEvent">
 			<img
 				class="comment-button"

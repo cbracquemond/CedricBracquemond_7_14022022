@@ -23,7 +23,8 @@ export default {
 				title: "",
 				content: "",
 				image_url: "",
-				id: 0
+				id: 0,
+				likes: 0
 			},
 			dateString: "",
 			comments: [],

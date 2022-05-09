@@ -4,10 +4,6 @@ const secretKey = process.env.SECRET_KEY
 const utils = require("../utils/utils")
 const fs = require("fs")
 
-async function comparePassword(userEmail, userPassword) {
-	return user
-}
-
 async function getAllImagesFromAccount(userId) {
 	const imageUrlList = []
 

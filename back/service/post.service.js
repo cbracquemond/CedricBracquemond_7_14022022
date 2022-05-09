@@ -85,4 +85,5 @@ exports.likePost = async function (postId, userId) {
 		: "INSERT INTO post_liked SET post_id = ?, user_id = ?"
 	await utils.makeDbQueries(sql, [postId, userIdString])
 	await updateLikes(postId)
+	return alreadyLiked ? "-1" : "+1"
 }

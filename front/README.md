@@ -1,24 +1,33 @@
 # front
 
 ## Project setup
+
 ```
-npm install
+Run in terminal : npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
-npm run serve
+Run in terminal : "cd front" then "npm run serve"
 ```
 
-### Compiles and minifies for production
+# back
+
+## Project setup
+
 ```
-npm run build
+Run in terminal : npm install
 ```
 
-### Lints and fixes files
+Create a folder named "images" in the root of the backend, and past it the file named "Default-profile-picture" from "front/src/assets/Default-profile-picture"
+
 ```
-npm run lint
+Create a .env file in the root of the backend, and past it the content of the file named "env_exemple.txt" from the root of the
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Complete the .env file with your database credential and a secret key for the jwt generation
+
+### Compiles and run server
+
+Run in terminal "cd back" then "npm start"
