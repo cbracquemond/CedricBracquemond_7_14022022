@@ -57,32 +57,40 @@ export default {
 </script>
 
 <template>
-	<post-cards-vue
-		:user="this.post.username"
-		:date="this.dateString"
-		:title="this.post.title"
-		:content="this.post.content"
-		:image-url="this.post.image_url"
-	/>
-	<input-create-comment-vue :post-id="this.post.id" />
-	<button-like-vue :post-id="this.post.id" />
-	<button-delete-vue
-		v-if="post.user_id == this.user.id || this.user.is_moderator == 1"
-		:id="post.id"
-	/>
-	<div v-for="comment in comments" :key="comment.id">
+	<div class="post__container">
 		<post-cards-vue
-			:user="comment.username"
-			:date="createDateString(comment.date)"
-			:content="comment.content"
+			:user="this.post.username"
+			:date="this.dateString"
+			:title="this.post.title"
+			:content="this.post.content"
+			:image-url="this.post.image_url"
 		/>
-		<input-edit-comment-vue :comment="comment" />
+		<input-create-comment-vue :post-id="this.post.id" />
+		<button-like-vue :post-id="this.post.id" />
 		<button-delete-vue
-			v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
-			:id="comment.id"
-			table="comments"
-			:post-id="this.post.id"
+			v-if="post.user_id == this.user.id || this.user.is_moderator == 1"
+			:id="post.id"
 		/>
+		<div v-for="comment in comments" :key="comment.id">
+			<post-cards-vue
+				:user="comment.username"
+				:date="createDateString(comment.date)"
+				:content="comment.content"
+			/>
+			<input-edit-comment-vue :comment="comment" />
+			<button-delete-vue
+				v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
+				:id="comment.id"
+				table="comments"
+				:post-id="this.post.id"
+			/>
+		</div>
 	</div>
 </template>
-<style></style>
+<style scoped lang="scss">
+.post {
+	&__container {
+		background-color: #fff;
+	}
+}
+</style>

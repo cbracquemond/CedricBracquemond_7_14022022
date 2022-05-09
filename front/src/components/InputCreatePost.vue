@@ -16,10 +16,15 @@ export default {
 			title: "",
 			content: "",
 			image: null,
-			imagesrc: ""
+			imagesrc: "",
+			placeholder: "Create a post"
 		}
 	},
 	methods: {
+		displayCreatePost() {
+			document.querySelector(".tabs__container").style.display = "block"
+			this.placeholder = "Title"
+		},
 		handleImage(event) {
 			const file = event.target.files[0]
 			if (file) {
@@ -71,47 +76,49 @@ export default {
 </script>
 <template>
 	<form class="createPostForm" @submit="sendNewPost">
-		<h1>Create a post</h1>
 		<input
-			placeholder="Title"
+			:placeholder="this.placeholder"
 			class="createPostForm__title"
 			type="text"
 			v-model="title"
 			label="title"
+			@click="displayCreatePost"
 		/>
 
-		<div class="tabs__label__container">
-			<p class="article tabs__label active" @click="handleTabs">Article</p>
-			<p class="image tabs__label" @click="handleTabs">Image</p>
+		<div class="tabs__container">
+			<div class="tabs__label__container">
+				<p class="article tabs__label active" @click="handleTabs">Article</p>
+				<p class="image tabs__label" @click="handleTabs">Image</p>
+			</div>
+			<textarea
+				class="article__tabs tabs"
+				type="text"
+				v-model="content"
+				name="content"
+			></textarea>
+			<div class="image__tabs tabs">
+				<button-base-vue
+					class="image__tabs__button"
+					type="button"
+					text="Upload"
+					@click="$refs.file.click()"
+				/>
+				<img
+					class="image__tabs__img"
+					:src="imagesrc"
+					alt="Post image"
+					@click="$refs.file.click()"
+				/>
+				<input
+					class="image__tabs__input"
+					type="file"
+					ref="file"
+					name="image_input"
+					@change="handleImage"
+				/>
+			</div>
+			<button-base-vue text="Post" />
 		</div>
-		<textarea
-			class="article__tabs tabs"
-			type="text"
-			v-model="content"
-			name="content"
-		></textarea>
-		<div class="image__tabs tabs">
-			<button-base-vue
-				class="image__tabs__button"
-				type="button"
-				text="Upload"
-				@click="$refs.file.click()"
-			/>
-			<img
-				class="image__tabs__img"
-				:src="imagesrc"
-				alt="Post image"
-				@click="$refs.file.click()"
-			/>
-			<input
-				class="image__tabs__input"
-				type="file"
-				ref="file"
-				name="image_input"
-				@change="handleImage"
-			/>
-		</div>
-		<button-base-vue text="Post" />
 	</form>
 </template>
 <style scoped lang="scss">
@@ -133,6 +140,9 @@ h1 {
 	border: 1px solid #edeff1;
 	border-radius: 4px;
 	background-color: #f6f7f8;
+	&__container {
+		display: none;
+	}
 	&__label {
 		cursor: pointer;
 		background-color: #ffd7d7;

@@ -19,13 +19,23 @@ export default {
 		imageUrl: {
 			type: String
 		}
+	},
+	computed: {
+		currentRouteName() {
+			return this.$route.name
+		}
 	}
 }
 </script>
 <template>
 	<div class="post_card">
-		<h2 v-if="title != ''">{{ title }}</h2>
 		<span>Posté le {{ date }} par {{ user }}</span>
+		<h2 v-if="title != '' && currentRouteName.indexOf('Post') != 0">
+			{{ title }}
+		</h2>
+		<h1 v-if="title != '' && currentRouteName.indexOf('Post') != -1">
+			{{ title }}
+		</h1>
 		<p>{{ content }}</p>
 		<img
 			v-if="imageUrl != null"
@@ -35,4 +45,4 @@ export default {
 		/>
 	</div>
 </template>
-<style></style>
+<style scoped lang="scss"></style>
