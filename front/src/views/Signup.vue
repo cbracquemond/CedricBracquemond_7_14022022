@@ -28,15 +28,16 @@ export default {
 		checkPassword() {
 			if (this.password != this.passwordCheck) {
 				const warningParent = document.querySelector("#warningParent")
+				if (warningParent.querySelectorAll(".warning").length != 0) return
 				const warning = document.createElement("p")
 				warning.innerText = "Password does not match"
 				warning.classList.add("warning")
 				warningParent.appendChild(warning)
-				throw Error("Password does not match")
+				return false
 			}
 		},
 		async handleSubmit() {
-			this.checkPassword()
+			if (!this.checkPassword()) return
 			const user = {
 				firstName: this.firstName,
 				lastName: this.lastName,
@@ -63,9 +64,9 @@ export default {
 }
 </script>
 <template>
-	<div class="signup_form__container">
-		<form class="signup_form" @submit.prevent="handleSubmit">
-			<input-image-vue :src="imagesrc" @setImage="bindImage" />
+	<div class="container">
+		<form class="signup_form" id="warningParent" @submit.prevent="handleSubmit">
+			<input-image-vue :src="imagesrc" @sendFormInput="bindImage" />
 			<input
 				class="signup_form__input"
 				placeholder="First Name"
@@ -120,22 +121,12 @@ export default {
 
 <style scoped lang="scss">
 button {
+	background-color: #fd2d01;
 	border: none;
-	display: block;
+	color: #fff;
+	margin-bottom: 16px;
 	width: 70%;
 	height: 60px;
-	background-color: #fd2d01;
-	border-radius: 50px;
-	color: #fff;
-	font-weight: bold;
-	text-transform: uppercase;
-	text-align: center;
-	font-size: 18px;
-	-webkit-transition: all 0.2s ease;
-	transition: all 0.2s ease;
-	position: relative;
-	cursor: pointer;
-	margin-bottom: 16px;
 }
 .image_preview {
 	width: 300px;
@@ -147,28 +138,23 @@ button {
 		width: 100%;
 	}
 }
+
+.container {
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
 .signup_form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	border-radius: 4px;
 	background-color: #fff;
-	box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
 	padding: 20px;
 	width: 100%;
-
-	&__container {
-		margin: auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 80vw;
-		position: relative;
-		top: 50%;
-		-webkit-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		transform: translateY(-50%);
-	}
 
 	&__input {
 		display: block;

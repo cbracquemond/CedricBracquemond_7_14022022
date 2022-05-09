@@ -78,14 +78,15 @@ export default {
 	}
 
 	&__container {
-		width: 150px;
-		height: 150px;
+		width: 115px;
+		height: 115px;
 		overflow: hidden;
 		-webkit-border-radius: 50%;
 		-moz-border-radius: 50%;
 		-ms-border-radius: 50%;
 		-o-border-radius: 50%;
 		border-radius: 50%;
+		cursor: pointer;
 	}
 	&__button {
 		margin-top: 8px;

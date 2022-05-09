@@ -12,8 +12,6 @@ export default {
 	<ul class="nav">
 		<router-link to="/" class="nav__link">
 			<img src="../assets/icon.svg" alt="" />
-
-			<!-- <li>Home</li> -->
 		</router-link>
 		<div class="nav__container">
 			<router-link to="/account" class="nav__link"
@@ -33,6 +31,8 @@ export default {
 	background: #fff;
 	height: 60px;
 	width: 100%;
+	margin-bottom: 16px;
+	box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
 
 	&__link {
 		color: #000;

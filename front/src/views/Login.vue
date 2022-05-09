@@ -111,8 +111,6 @@ a:link,
 a:visited,
 a:active {
 	color: #3ca9e2;
-	-webkit-transition: all 0.2s ease;
-	transition: all 0.2s ease;
 }
 a:focus,
 a:hover,
@@ -123,26 +121,16 @@ a:visited:hover,
 a:active:focus,
 a:active:hover {
 	color: #329dd5;
-	-webkit-transition: all 0.2s ease;
-	transition: all 0.2s ease;
 }
 
 .login {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	border-radius: 4px;
 	background-color: #fff;
-	box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
-	padding: 20px 0 0 0;
 	margin: auto;
-	height: 80vh;
-	width: 80vw;
-	position: relative;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
+	height: 100%;
+	width: 100%;
 
 	& button {
 		border: none;
@@ -160,6 +148,7 @@ a:active:hover {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		align-items: center;
 
 		&__input {
 			display: block;
@@ -168,19 +157,13 @@ a:active:hover {
 			width: 100%;
 			outline: none;
 			line-height: 60px;
-			width: 100%;
-			padding: 0 0 0 10px;
-			margin: 0 0 16px;
 			color: #8a8b8e;
 			border: none;
 			border-bottom: 2px solid #b0b3b9;
-			font-style: normal;
 			font-size: 16px;
 			-webkit-appearance: none;
 			-moz-appearance: none;
 			appearance: none;
-			position: relative;
-			display: inline-block;
 			background: none;
 
 			&:focus {
