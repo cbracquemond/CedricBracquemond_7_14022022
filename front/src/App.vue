@@ -24,7 +24,6 @@ body {
 html {
 	position: absolute;
 	background-color: #dae0e6;
-	box-sizing: border-box;
 	font-size: 16px;
 	height: 100%;
 	width: 100vw;
@@ -44,7 +43,7 @@ html {
 *,
 *:before,
 *:after {
-	box-sizing: inherit;
+	box-sizing: border-box;
 }
 
 body,
@@ -71,6 +70,23 @@ img {
 	max-width: 100%;
 	height: auto;
 }
+
+textarea {
+	height: 160px;
+	width: 100%;
+	margin: 0 0 16px;
+	border: 1px solid #edeff1;
+	border-radius: 4px;
+	background-color: #f6f7f8;
+	resize: none;
+	outline: none;
+	&:hover,
+	&:focus {
+		background-color: #fff;
+		border: 1px solid #fd2d01;
+	}
+}
+
 .button-label {
 	margin: auto 0;
 	height: fit-content;

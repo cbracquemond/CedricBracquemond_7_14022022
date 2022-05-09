@@ -206,7 +206,6 @@ h1 {
 		background-color: #f6f7f8;
 		border-radius: 4px;
 		border: 1px solid #edeff1;
-		box-sizing: border-box;
 		color: #1c1c1c;
 		display: block;
 		height: 40px;

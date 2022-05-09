@@ -45,17 +45,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-textarea {
-	height: 160px;
-	width: 100%;
-	margin: 0 0 16px;
-	border: 1px solid #edeff1;
-	border-radius: 4px;
-	background-color: #f6f7f8;
-	resize: none;
-	outline: none;
-}
-
 button {
 	border: 2px solid #fd2d01;
 	background-color: #fff;

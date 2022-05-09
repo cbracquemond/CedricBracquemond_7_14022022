@@ -27,7 +27,8 @@ export default {
 			},
 			dateString: "",
 			comments: [],
-			showCreateComment: false
+			showCreateComment: false,
+			showEditComment: false
 		}
 	},
 	methods: {
@@ -99,14 +100,23 @@ export default {
 				:date="createDateString(comment.date)"
 				:content="comment.content"
 			/>
-			<button-delete-vue
-				class="comment-container__button"
-				v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
-				:id="comment.id"
-				table="comments"
-				:post-id="this.post.id"
-			/>
-			<input-edit-comment-vue :comment="comment" />
+			<div class="button-container">
+				<div class="edit-button" @click="showEditComment = !showEditComment">
+					<img
+						class="edit-button__img"
+						src="../assets/edit.svg"
+						alt="edit button"
+					/><span class="button-label">Edit</span>
+				</div>
+				<button-delete-vue
+					class="comment-container__button"
+					v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
+					:id="comment.id"
+					table="comments"
+					:post-id="this.post.id"
+				/>
+			</div>
+			<input-edit-comment-vue v-show="showEditComment" :comment="comment" />
 		</div>
 	</div>
 </template>
@@ -121,8 +131,23 @@ export default {
 	&__button {
 		height: 20px;
 		cursor: pointer;
-		margin: 0 16px 0 8px;
 		display: flex;
+	}
+}
+.button-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.edit-button {
+	height: 20px;
+	display: flex;
+	margin-right: 16px;
+	cursor: pointer;
+	&__img {
+		height: 100%;
+		width: auto;
 	}
 }
 </style>

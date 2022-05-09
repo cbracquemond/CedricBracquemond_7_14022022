@@ -158,7 +158,6 @@ button {
 
 	&__input {
 		display: block;
-		box-sizing: border-box;
 		height: 60px;
 		width: 70%;
 		outline: none;

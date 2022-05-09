@@ -152,7 +152,6 @@ a:active:hover {
 
 		&__input {
 			display: block;
-			box-sizing: border-box;
 			height: 60px;
 			width: 100%;
 			outline: none;
