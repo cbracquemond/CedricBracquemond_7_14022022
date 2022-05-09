@@ -39,7 +39,8 @@ export default {
 			class="trashcan-button"
 			src="../assets/trashcan.svg"
 			alt="Delete button"
-		/><span class="button-label">Delete</span>
+		/>
+		<span class="button-label">Delete</span>
 	</div>
 </template>
 <style scoped lang="scss"></style>

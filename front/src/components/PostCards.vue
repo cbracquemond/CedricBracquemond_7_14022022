@@ -73,5 +73,8 @@ span {
 		height: 100%;
 		width: auto;
 	}
+	&__article {
+		margin: 16px 0;
+	}
 }
 </style>

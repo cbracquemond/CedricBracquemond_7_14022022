@@ -53,11 +53,18 @@ export default {
 		await axios.get("comments/" + this.$route.params.id).then((response) => {
 			this.comments = response.data.comments
 		})
+
+		/**
+		 * Scroll to and display the createComment input if the comment button if
+		 * the user came by clicking the comment button
+		 */
 		const section = this.$router.currentRoute.value.hash.replace("#", "")
-		if (section)
+		if (section) {
 			this.$nextTick(() =>
 				window.document.getElementById(section).scrollIntoView()
 			)
+			this.showCreateComment = true
+		}
 	}
 }
 </script>
@@ -82,19 +89,24 @@ export default {
 			class="createComment"
 			:post-id="this.post.id"
 		/>
-		<div v-for="comment in comments" :key="comment.id">
+		<div
+			class="comment-container"
+			v-for="comment in comments"
+			:key="comment.id"
+		>
 			<post-cards-vue
 				:user="comment.username"
 				:date="createDateString(comment.date)"
 				:content="comment.content"
 			/>
-			<input-edit-comment-vue :comment="comment" />
 			<button-delete-vue
+				class="comment-container__button"
 				v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
 				:id="comment.id"
 				table="comments"
 				:post-id="this.post.id"
 			/>
+			<input-edit-comment-vue :comment="comment" />
 		</div>
 	</div>
 </template>
@@ -103,5 +115,14 @@ export default {
 .post-container {
 	background-color: #fff;
 	padding: 8px;
+}
+
+.comment-container {
+	&__button {
+		height: 20px;
+		cursor: pointer;
+		margin: 0 16px 0 8px;
+		display: flex;
+	}
 }
 </style>

@@ -30,7 +30,13 @@ export default {
 			<textarea name="edit" v-model="input"> </textarea>
 			<button-base-vue text="Save Edits" />
 		</form>
-		<button-base-vue type="button" text="Edit" />
 	</div>
 </template>
-<style></style>
+<style scoped lang="scss">
+button {
+	border: 2px solid #fd2d01;
+	background-color: #fff;
+	color: #fd2d01;
+	width: auto;
+}
+</style>

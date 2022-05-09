@@ -71,4 +71,11 @@ img {
 	max-width: 100%;
 	height: auto;
 }
+.button-label {
+	margin: auto 0;
+	height: fit-content;
+	font-size: 12px;
+	font-weight: bold;
+	color: #878a8c;
+}
 </style>

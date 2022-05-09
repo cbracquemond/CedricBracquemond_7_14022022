@@ -47,11 +47,12 @@ export default {
 .post-button-container {
 	display: flex;
 	align-items: center;
+	margin: 16px 0 8px;
 }
 .post-button {
 	height: 20px;
 	cursor: pointer;
-	margin: 0 16px 0 8px;
 	display: flex;
+	margin-right: 16px;
 }
 </style>
