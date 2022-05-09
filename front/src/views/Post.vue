@@ -1,15 +1,15 @@
 <script>
 import axios from "../config/axiosConfig"
+import ButtonContainerVue from "../components/ButtonContainer.vue"
 import ButtonDeleteVue from "../components/ButtonDelete.vue"
-import ButtonLikeVue from "../components/ButtonLike.vue"
 import InputCreateCommentVue from "../components/InputCreateComment.vue"
 import InputEditCommentVue from "../components/InputEditComment.vue"
 import PostCardsVue from "../components/PostCards.vue"
 export default {
 	name: "Post",
 	components: {
+		ButtonContainerVue,
 		ButtonDeleteVue,
-		ButtonLikeVue,
 		InputCreateCommentVue,
 		InputEditCommentVue,
 		PostCardsVue
@@ -26,7 +26,8 @@ export default {
 				id: 0
 			},
 			dateString: "",
-			comments: []
+			comments: [],
+			showCreateComment: false
 		}
 	},
 	methods: {
@@ -57,7 +58,7 @@ export default {
 </script>
 
 <template>
-	<div class="post__container">
+	<div class="post-container">
 		<post-cards-vue
 			:user="this.post.username"
 			:date="this.dateString"
@@ -65,11 +66,15 @@ export default {
 			:content="this.post.content"
 			:image-url="this.post.image_url"
 		/>
-		<input-create-comment-vue :post-id="this.post.id" />
-		<button-like-vue :post-id="this.post.id" />
-		<button-delete-vue
-			v-if="post.user_id == this.user.id || this.user.is_moderator == 1"
-			:id="post.id"
+		<button-container-vue
+			:post="post"
+			@sendCommentEvent="showCreateComment = !showCreateComment"
+		/>
+
+		<input-create-comment-vue
+			v-show="showCreateComment"
+			class="createComment"
+			:post-id="this.post.id"
 		/>
 		<div v-for="comment in comments" :key="comment.id">
 			<post-cards-vue
@@ -87,4 +92,10 @@ export default {
 		</div>
 	</div>
 </template>
-<style scoped lang="scss"></style>
+
+<style scoped lang="scss">
+.post-container {
+	background-color: #fff;
+	padding: 8px;
+}
+</style>

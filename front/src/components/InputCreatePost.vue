@@ -134,7 +134,7 @@ h1 {
 }
 
 .tabs {
-	height: 10rem;
+	height: 160px;
 	width: 100%;
 	margin: 0 0 16px;
 	border: 1px solid #edeff1;
