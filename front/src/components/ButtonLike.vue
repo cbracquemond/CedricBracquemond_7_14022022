@@ -16,7 +16,11 @@ export default {
 			likesModifier: 0
 		}
 	},
-
+	computed: {
+		likeTotal() {
+			return this.$props.likesCounter + this.likesModifier
+		}
+	},
 	methods: {
 		async likePost() {
 			axios
@@ -39,9 +43,7 @@ export default {
 			class="thumbs-up-button"
 			src="../assets/thumbs-up.svg"
 			alt="Like button"
-		/><span class="button-label"
-			>Like ({{ likesCounter + this.likesModifier }})
-		</span>
+		/><span class="button-label">Like ({{ likeTotal }}) </span>
 	</div>
 </template>
 <style scoped lang="scss"></style>

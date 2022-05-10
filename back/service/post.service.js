@@ -21,13 +21,6 @@ async function checkIfLiked(postId, userId) {
 	return queryResult.length === 0 ? false : true
 }
 
-async function updateLikes(postId) {
-	const sqlGetLikes = "SELECT * FROM post_liked WHERE post_id = ?"
-	const likesQuantity = await utils.makeDbQueries(sqlGetLikes, [postId])
-	const sqlUpdatelikes = "UPDATE posts SET likes = ? WHERE id = ?"
-	await utils.makeDbQueries(sqlUpdatelikes, [likesQuantity.length, postId])
-}
-
 async function getImageUrl(id, table) {
 	const sql = "SELECT image_url FROM " + table + " WHERE id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
@@ -37,14 +30,14 @@ async function getImageUrl(id, table) {
 
 exports.getAllPosts = async function () {
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, users.username, users.id AS user_id FROM posts LEFT JOIN users ON posts.user_id = users.id ORDER BY posts.post_time DESC"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, users.username, users.id AS user_id , COUNT(post_liked.post_id) AS likes FROM posts JOIN users ON posts.user_id = users.id JOIN post_liked ON posts.id = post_liked.post_id ORDER BY posts.post_time DESC;"
 	return await utils.makeDbQueries(sql)
 }
 
 exports.getOnePost = async function (id) {
 	await utils.checkIfExist(id, "posts")
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, posts.likes, users.username, users.id AS user_id FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, users.username, users.id AS user_id, COUNT(post_liked.post_id) AS likes FROM posts JOIN users ON posts.user_id = users.id JOIN post_liked ON posts.id = post_liked.post_id WHERE posts.id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
 	return queryResult[0]
 }
@@ -84,6 +77,5 @@ exports.likePost = async function (postId, userId) {
 		? "DELETE FROM post_liked WHERE post_id = ? and user_id = ?"
 		: "INSERT INTO post_liked SET post_id = ?, user_id = ?"
 	await utils.makeDbQueries(sql, [postId, userIdString])
-	await updateLikes(postId)
 	return alreadyLiked ? "-1" : "+1"
 }

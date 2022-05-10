@@ -42,22 +42,24 @@ export default {
 			return date
 		}
 	},
-	beforeRouteEnter(to, from, next) {
-		next((vm) => {
-			const fetchData = async () => {
-				const post = await axios.get("posts/" + to.params.id)
-				const commentArray = await axios.get("comments/" + to.params.id)
-				vm.comments = commentArray.data.comments
-				vm.post = post.data.post
-				vm.dateString = vm.createDateString(post.data.post.post_time)
-			}
-			try {
-				fetchData()
-			} catch (error) {
+	mounted() {
+		axios
+			.get("posts/" + this.$route.params.id)
+			.then((response) => {
+				this.post = response.data.post
+				this.dateString = this.createDateString(response.data.post.post_time)
+			})
+			.catch((error) => {
 				console.log(error)
-			}
-		})
-
+			})
+		axios
+			.get("comments/" + this.$route.params.id)
+			.then((response) => {
+				this.comments = response.data.comments
+			})
+			.catch((error) => {
+				console.log(error)
+			})
 		/**
 		 * Scroll to and display the createComment input if the comment button if
 		 * the user came by clicking the comment button

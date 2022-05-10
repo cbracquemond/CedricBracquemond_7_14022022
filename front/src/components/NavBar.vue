@@ -1,9 +1,14 @@
 <script>
-import { mapActions } from "vuex"
+import store from "../store/store"
+
 export default {
 	name: "NavBar",
 	methods: {
-		...mapActions(["logout"])
+		logout() {
+			localStorage.removeItem("token")
+			store.commit("SET_TOKEN", null)
+			store.commit("SET_USER", null)
+		}
 	}
 }
 </script>
@@ -17,7 +22,7 @@ export default {
 			<router-link to="/account" class="nav__link"
 				><li>Account</li>
 			</router-link>
-			<router-link to="/login" @click="logout" class="nav__link">
+			<router-link to="/login" @click="this.logout" class="nav__link">
 				<li>Log Out</li>
 			</router-link>
 		</div>

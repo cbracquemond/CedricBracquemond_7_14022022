@@ -22,11 +22,6 @@ export default createStore({
 		}
 	},
 	actions: {
-		logout({ commit }) {
-			localStorage.removeItem("token")
-			commit("SET_TOKEN", null)
-			commit("SET_USER", null)
-		},
 		async login({ dispatch }, credential) {
 			const response = await axios.post("users/login", {
 				email: credential.email,

@@ -109,6 +109,6 @@ exports.login = async function (userInput) {
 		username: queryResult.username
 	}
 	return {
-		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "99999999h" })
+		token: jwt.sign({ userId: user.id }, secretKey, { expiresIn: "24h" })
 	}
 }
