@@ -52,7 +52,6 @@ export default {
 				const passwordChecked = await axios.post("users/check/", {
 					password: event
 				})
-				console.log(passwordChecked.data.check)
 				passwordChecked.data.check ? this.handleDelete() : this.displayWarning()
 			} catch (error) {
 				console.log(error.message)

@@ -35,6 +35,7 @@ export default {
 				warningParent.appendChild(warning)
 				return false
 			}
+			return true
 		},
 		async handleSubmit() {
 			if (!this.checkPassword()) return

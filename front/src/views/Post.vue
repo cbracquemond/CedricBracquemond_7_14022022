@@ -42,18 +42,20 @@ export default {
 			return date
 		}
 	},
-	async mounted() {
-		await axios
-			.get("posts/" + this.$route.params.id)
-			.then((response) => {
-				this.dateString = this.createDateString(response.data.post.post_time)
-				this.post = response.data.post
-			})
-			.catch((err) => {
-				throw err
-			})
-		await axios.get("comments/" + this.$route.params.id).then((response) => {
-			this.comments = response.data.comments
+	beforeRouteEnter(to, from, next) {
+		next((vm) => {
+			const fetchData = async () => {
+				const post = await axios.get("posts/" + to.params.id)
+				const commentArray = await axios.get("comments/" + to.params.id)
+				vm.comments = commentArray.data.comments
+				vm.post = post.data.post
+				vm.dateString = vm.createDateString(post.data.post.post_time)
+			}
+			try {
+				fetchData()
+			} catch (error) {
+				console.log(error)
+			}
 		})
 
 		/**

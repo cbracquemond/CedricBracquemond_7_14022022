@@ -1,10 +1,11 @@
 const userService = require("../service/user.service")
 
 exports.createUser = async (req, res) => {
+	const defaultImage = process.env.DEFAULT_IMAGE
 	const user = req.body.user ? JSON.parse(req.body.user) : {}
 	user.imageUrl = req.file
 		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-		: `${req.protocol}://${req.get("host")}/images/Default-profile-picture.jpg`
+		: `${req.protocol}://${req.get("host")}/images/${defaultImage}`
 	try {
 		await userService.createUser(user)
 		return res.status(201).json({
@@ -70,7 +71,6 @@ exports.deleteUser = async (req, res) => {
 
 exports.checkPassword = async (req, res) => {
 	try {
-		console.log(req.body)
 		const passwordChecked = await userService.checkPassword(
 			req.body.password,
 			res.locals.userId

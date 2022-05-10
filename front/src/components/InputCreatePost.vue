@@ -201,6 +201,7 @@ h1 {
 .createPostForm {
 	background-color: #fff;
 	padding: 16px;
+	min-height: 40px;
 
 	&__title {
 		background-color: #f6f7f8;

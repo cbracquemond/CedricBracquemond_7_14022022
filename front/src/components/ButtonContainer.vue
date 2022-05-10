@@ -23,9 +23,6 @@ export default {
 		return {
 			user: this.$store.state.user
 		}
-	},
-	mounted() {
-		console.log(this.post)
 	}
 }
 </script>

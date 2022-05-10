@@ -29,8 +29,8 @@ export default {
 			this.$router.push("/post/" + id + "#button-container")
 		}
 	},
-	async mounted() {
-		await axios
+	mounted() {
+		axios
 			.get("posts")
 			.then((response) => {
 				this.posts = response.data.posts
