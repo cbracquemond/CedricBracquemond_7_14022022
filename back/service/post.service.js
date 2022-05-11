@@ -30,14 +30,14 @@ async function getImageUrl(id, table) {
 
 exports.getAllPosts = async function () {
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, users.username, users.id AS user_id , COUNT(post_liked.post_id) AS likes FROM posts JOIN users ON posts.user_id = users.id JOIN post_liked ON posts.id = post_liked.post_id ORDER BY posts.post_time DESC;"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, users.username, users.id AS user_id , COUNT(post_liked.post_id) AS likes FROM posts JOIN users ON posts.user_id = users.id LEFT JOIN post_liked ON posts.id = post_liked.post_id ORDER BY posts.post_time DESC;"
 	return await utils.makeDbQueries(sql)
 }
 
 exports.getOnePost = async function (id) {
 	await utils.checkIfExist(id, "posts")
 	const sql =
-		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, users.username, users.id AS user_id, COUNT(post_liked.post_id) AS likes FROM posts JOIN users ON posts.user_id = users.id JOIN post_liked ON posts.id = post_liked.post_id WHERE posts.id = ?"
+		"SELECT posts.id, posts.post_time, posts.title, posts.image_url, posts.content, users.username, users.id AS user_id, COUNT(post_liked.post_id) AS likes FROM posts JOIN users ON posts.user_id = users.id LEFT JOIN post_liked ON posts.id = post_liked.post_id WHERE posts.id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [id])
 	return queryResult[0]
 }
