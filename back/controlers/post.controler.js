@@ -3,7 +3,6 @@ const postService = require("../service/post.service")
 exports.getAllPosts = async (req, res) => {
 	try {
 		const posts = await postService.getAllPosts()
-		console.log(posts)
 		return res
 			.status(200)
 			.json({ posts, message: "Posts Succesfully Retrieved" })
