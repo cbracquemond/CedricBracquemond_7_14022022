@@ -18,12 +18,14 @@ export default {
 	},
 	methods: {
 		createDateString(timestamp) {
-			const day = timestamp.slice(8, 10)
-			const month = timestamp.slice(5, 7)
-			const year = timestamp.slice(0, 4)
-			const hour = timestamp.slice(11, 16)
-			const date = "le " + day + "/" + month + "/" + year + " à " + hour
-			return date
+			if (timestamp != null) {
+				const day = timestamp.slice(8, 10)
+				const month = timestamp.slice(5, 7)
+				const year = timestamp.slice(0, 4)
+				const hour = timestamp.slice(11, 16)
+				const date = "le " + day + "/" + month + "/" + year + " à " + hour
+				return date
+			}
 		},
 		handleCommentButton(id) {
 			this.$router.push("/post/" + id + "#button-container")

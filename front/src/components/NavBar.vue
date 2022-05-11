@@ -8,6 +8,7 @@ export default {
 			localStorage.removeItem("token")
 			store.commit("SET_TOKEN", null)
 			store.commit("SET_USER", null)
+			this.$router.push("login")
 		}
 	}
 }
