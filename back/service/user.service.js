@@ -17,8 +17,10 @@ async function getAllImagesFromAccount(userId) {
 	//get all the urls from the user's posts:
 	const sqlPosts = "SELECT image_url FROM posts WHERE user_id = ?"
 	const postsImageUrls = await utils.makeDbQueries(sqlPosts, [userId])
+	console.log(postsImageUrls)
 	postsImageUrls.forEach((url) => {
-		imageUrlList.push(`images/${url.image_url.split("/images/")[1]}`)
+		if (url.image_url)
+			imageUrlList.push(`images/${url.image_url.split("/images/")[1]}`)
 	})
 	return imageUrlList
 }
