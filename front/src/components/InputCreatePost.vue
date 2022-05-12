@@ -68,7 +68,7 @@ export default {
 					}
 				})
 			} catch (error) {
-				console.log(error)
+				console.log(error.response.data.message)
 			}
 		}
 	}
@@ -82,13 +82,21 @@ export default {
 			type="text"
 			v-model="title"
 			label="title"
-			@click="displayCreatePost"
+			@focus="displayCreatePost"
 		/>
 
 		<div class="tabs__container">
 			<div class="tabs__label__container">
-				<p class="article tabs__label active" @click="handleTabs">Article</p>
-				<p class="image tabs__label" @click="handleTabs">Image</p>
+				<button
+					type="button"
+					class="article tabs__label active"
+					@click="handleTabs"
+				>
+					Article
+				</button>
+				<button type="button" class="image tabs__label" @click="handleTabs">
+					Image
+				</button>
 			</div>
 			<textarea
 				class="article__tabs tabs"

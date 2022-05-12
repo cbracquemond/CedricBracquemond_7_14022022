@@ -21,14 +21,27 @@ export default {
 		}
 	},
 	methods: {
+		handleDuplicata(message) {
+			console.log(message)
+			const input = message.split("'")[3].split("_").pop()
+			const warningParent = document.getElementById("warningParent")
+			const warning = document.createElement("p")
+			warning.innerText = `This ${input} is already used`
+			warning.classList.add("warning")
+			warningParent.appendChild(warning)
+		},
+
 		bindImage(event) {
 			this.image = event
 		},
 
 		checkPassword() {
+			const allWarning = document.querySelectorAll(".warning")
+			allWarning.forEach((warning) => {
+				warning.remove()
+			})
 			if (this.password != this.passwordCheck) {
-				const warningParent = document.querySelector("#warningParent")
-				if (warningParent.querySelectorAll(".warning").length != 0) return
+				const warningParent = document.getElementById("warningParent")
 				const warning = document.createElement("p")
 				warning.innerText = "Password does not match"
 				warning.classList.add("warning")
@@ -37,6 +50,7 @@ export default {
 			}
 			return true
 		},
+
 		async handleSubmit() {
 			if (!this.checkPassword()) return
 			const user = {
@@ -58,7 +72,8 @@ export default {
 				this.$router.push("/login")
 				alert("Account successfully created, you can now login")
 			} catch (error) {
-				console.log(error)
+				this.handleDuplicata(error.response.data.message)
+				console.log(error.response.data.message)
 			}
 		}
 	}
@@ -83,6 +98,7 @@ export default {
 				v-model="lastName"
 			/>
 			<input
+				id="warningUsername"
 				class="signup_form__input"
 				placeholder="Username"
 				type="text"
@@ -90,6 +106,7 @@ export default {
 				v-model="username"
 			/>
 			<input
+				id="warningEmail"
 				class="signup_form__input"
 				placeholder="Email"
 				type="email"
@@ -110,7 +127,7 @@ export default {
 				required
 				v-model="passwordCheck"
 			/>
-			<button-base-vue text="Confirm" />
+			<button-base-vue class="full-button" text="Confirm" />
 		</form>
 		<div class="signup_form__nav-link">
 			<p>Already a member?</p>
@@ -121,23 +138,13 @@ export default {
 </template>
 
 <style scoped lang="scss">
-button {
+.full-button {
 	background-color: #fd2d01;
 	border: none;
 	color: #fff;
 	margin-bottom: 16px;
 	width: 70%;
 	height: 60px;
-}
-.image_preview {
-	width: 300px;
-	min-height: 100px;
-	border: 2px solid lightgray;
-	margin-top: 15px;
-
-	&__image {
-		width: 100%;
-	}
 }
 
 .container {

@@ -67,7 +67,7 @@ ul {
 }
 
 img {
-	max-width: 100%;
+	width: 100%;
 	height: auto;
 }
 
@@ -87,11 +87,26 @@ textarea {
 	}
 }
 
+.warning {
+	color: #fd2d01;
+	font-weight: bold;
+}
+
 .button-label {
 	margin: auto 0;
 	height: fit-content;
 	font-size: 12px;
 	font-weight: bold;
 	color: #878a8c;
+}
+
+a:focus-visible {
+	outline: black auto 1px;
+	filter: brightness(85%);
+}
+
+button:focus-visible {
+	outline: black auto 1px;
+	filter: brightness(85%);
 }
 </style>

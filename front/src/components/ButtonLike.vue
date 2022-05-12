@@ -31,19 +31,33 @@ export default {
 						: (this.likesModifier = this.likesModifier - 1)
 				})
 				.catch((error) => {
-					console.log(error)
+					console.log(error.response.data.message)
 				})
 		}
 	}
 }
 </script>
 <template>
-	<div @click="likePost">
+	<button type="button" @click="likePost">
 		<img
 			class="thumbs-up-button"
 			src="../assets/thumbs-up.svg"
 			alt="Like button"
-		/><span class="button-label">Like ({{ likeTotal }}) </span>
-	</div>
+		/>
+		<p class="button-label">Like ({{ likeTotal }})</p>
+	</button>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+button {
+	height: 20px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-right: 16px;
+	border: none;
+	background-color: #fff;
+	& img {
+		height: 100%;
+	}
+}
+</style>

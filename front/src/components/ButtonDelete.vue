@@ -34,13 +34,26 @@ export default {
 }
 </script>
 <template>
-	<div @click="deleteCard(this.table)">
+	<button type="button" @click="deleteCard(this.table)">
 		<img
 			class="trashcan-button"
 			src="../assets/trashcan.svg"
 			alt="Delete button"
 		/>
 		<span class="button-label">Delete</span>
-	</div>
+	</button>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+button {
+	height: 20px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-right: 16px;
+	border: none;
+	background-color: #fff;
+	& img {
+		height: 100%;
+	}
+}
+</style>

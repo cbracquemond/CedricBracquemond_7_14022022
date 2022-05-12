@@ -15,19 +15,21 @@ export default {
 </script>
 
 <template>
-	<ul class="nav">
-		<router-link to="/" class="nav__link">
-			<img src="../assets/groupomania-logo.svg" alt="Groupomania logo" />
-		</router-link>
-		<div class="nav__container">
-			<router-link to="/account" class="nav__link"
-				><li>Account</li>
+	<header>
+		<ul class="nav">
+			<router-link to="/" class="nav__link">
+				<img src="../assets/groupomania-logo.svg" alt="Groupomania logo" />
 			</router-link>
-			<router-link to="/login" @click="this.logout" class="nav__link">
-				<li>Log Out</li>
-			</router-link>
-		</div>
-	</ul>
+			<div class="nav__container">
+				<router-link to="/account" class="nav__link"
+					><li>Account</li>
+				</router-link>
+				<router-link to="/login" @click="this.logout" class="nav__link">
+					<li>Log Out</li>
+				</router-link>
+			</div>
+		</ul>
+	</header>
 </template>
 
 <style lang="scss" scoped>

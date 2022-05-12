@@ -16,13 +16,27 @@ export default {
 	},
 	methods: {
 		...mapActions(["login"]),
+
+		handleFailedLogin() {
+			const allWarning = document.querySelectorAll(".warning")
+			allWarning.forEach((warning) => {
+				warning.remove()
+			})
+			const warningParent = document.getElementById("warningParent")
+			const warning = document.createElement("p")
+			warning.innerText = "Email or Password invalid"
+			warning.classList.add("warning")
+			warningParent.appendChild(warning)
+		},
+
 		async handleSubmit() {
 			this.login(this.credential)
 				.then(() => {
 					this.$router.push("/")
 				})
 				.catch((error) => {
-					console.log(error)
+					this.handleFailedLogin()
+					console.log(error.response.data.message)
 				})
 		}
 	}
@@ -30,7 +44,7 @@ export default {
 </script>
 <template>
 	<div class="login">
-		<form class="login__form" @submit.prevent="handleSubmit">
+		<form class="login__form" id="warningParent" @submit.prevent="handleSubmit">
 			<svg
 				data-v-1084b650=""
 				xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +91,6 @@ export default {
 					</svg>
 				</g>
 			</svg>
-
 			<input
 				placeholder="email"
 				type="email"
@@ -104,23 +117,6 @@ export default {
 <style scoped lang="scss">
 svg {
 	border-radius: 1rem;
-}
-
-a,
-a:link,
-a:visited,
-a:active {
-	color: #3ca9e2;
-}
-a:focus,
-a:hover,
-a:link:focus,
-a:link:hover,
-a:visited:focus,
-a:visited:hover,
-a:active:focus,
-a:active:hover {
-	color: #329dd5;
 }
 
 .login {

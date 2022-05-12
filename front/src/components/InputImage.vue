@@ -44,14 +44,14 @@ export default {
 <template>
 	<div>
 		<form class="img-form" @submit="applyImage">
-			<div class="img-form__container">
+			<button type="button" class="img-form__container">
 				<img
 					:src="imagesrc"
 					alt="Profile Picture"
 					class="img-form__img"
 					@click="$refs.file.click()"
 				/>
-			</div>
+			</button>
 			<input
 				class="img-form__input"
 				ref="file"
@@ -72,7 +72,6 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
 	&__input {
 		display: none;
 	}
@@ -86,14 +85,16 @@ export default {
 		-ms-border-radius: 50%;
 		-o-border-radius: 50%;
 		border-radius: 50%;
-		cursor: pointer;
+		border: none;
+		padding: 0;
+		background-color: #fff;
 	}
 	&__button {
 		margin-top: 8px;
 		background-color: #fd2d01;
 		border: none;
-		display: block;
 		color: #fff;
+		display: block;
 	}
 }
 </style>

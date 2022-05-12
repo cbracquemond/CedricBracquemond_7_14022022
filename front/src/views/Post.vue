@@ -52,7 +52,7 @@ export default {
 				this.dateString = this.createDateString(response.data.post.post_time)
 			})
 			.catch((error) => {
-				console.log(error)
+				console.log(error.response.data.message)
 			})
 		axios
 			.get("comments/" + this.$route.params.id)
@@ -60,7 +60,7 @@ export default {
 				this.comments = response.data.comments
 			})
 			.catch((error) => {
-				console.log(error)
+				console.log(error.response.data.message)
 			})
 		/**
 		 * Scroll to and display the createComment input if the comment button if
@@ -108,13 +108,17 @@ export default {
 				:content="comment.content"
 			/>
 			<div class="button-container">
-				<div class="edit-button" @click="showEditComment = !showEditComment">
+				<button
+					type="button"
+					class="edit-button"
+					@click="showEditComment = !showEditComment"
+				>
 					<img
 						class="edit-button__img"
 						src="../assets/edit.svg"
 						alt="edit button"
 					/><span class="button-label">Edit</span>
-				</div>
+				</button>
 				<button-delete-vue
 					class="comment-container__button"
 					v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
@@ -151,7 +155,8 @@ export default {
 	height: 20px;
 	display: flex;
 	margin-right: 16px;
-	cursor: pointer;
+	border: none;
+	background-color: #fff;
 	&__img {
 		height: 100%;
 		width: auto;

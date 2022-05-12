@@ -37,7 +37,7 @@ export default createStore({
 				localStorage.setItem("token", token)
 				commit("SET_USER", response.data.user)
 			} catch (error) {
-				console.log(error)
+				console.log(error.response.data.message)
 				localStorage.removeItem("token")
 				commit("SET_TOKEN", null)
 				commit("SET_USER", null)

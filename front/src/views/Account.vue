@@ -35,8 +35,9 @@ export default {
 					}
 				})
 				await store.dispatch("testToken", localStorage.getItem("token"))
+				location.reload()
 			} catch (error) {
-				console.log(error.message)
+				console.log(error.response.data.message)
 			}
 		},
 		displayWarning() {
@@ -54,7 +55,7 @@ export default {
 				})
 				passwordChecked.data.check ? this.handleDelete() : this.displayWarning()
 			} catch (error) {
-				console.log(error.message)
+				console.log(error.response.data.message)
 				return
 			}
 		},
@@ -62,7 +63,7 @@ export default {
 			try {
 				await axios.delete("users/")
 			} catch (error) {
-				console.log(error.message)
+				console.log(error.response.data.message)
 			}
 			this.logout()
 			this.$router.push("/login")

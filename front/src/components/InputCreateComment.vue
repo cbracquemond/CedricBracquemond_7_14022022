@@ -23,7 +23,7 @@ export default {
 				await axios.post("comments/" + this.postId, { content: this.content })
 				location.reload()
 			} catch (error) {
-				console.log(error)
+				console.log(error.response.data.message)
 			}
 		}
 	}

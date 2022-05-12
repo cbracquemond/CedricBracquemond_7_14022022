@@ -67,11 +67,6 @@ export default {
 	</div>
 </template>
 <style scoped lang="scss">
-.warning {
-	color: #fd2d01;
-	font-weight: bold;
-}
-
 p {
 	font-weight: bold;
 }

@@ -33,13 +33,12 @@ export default {
 			:postId="post.id"
 			:likesCounter="post.likes"
 		/>
-		<div class="post-button" @click="commentEvent">
-			<img
-				class="comment-button"
-				src="../assets/comment.svg"
-				alt="Like button"
-			/><span class="button-label">Comment</span>
-		</div>
+		<button type="button" class="post-button" @click="commentEvent">
+			<img src="../assets/comment.svg" alt="Like button" /><span
+				class="button-label"
+				>Comment</span
+			>
+		</button>
 		<button-delete-vue
 			class="post-button"
 			v-if="post.user_id == this.user.id || this.user.is_moderator == 1"
@@ -55,8 +54,14 @@ export default {
 }
 .post-button {
 	height: 20px;
-	cursor: pointer;
 	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 	margin-right: 16px;
+	border: none;
+	background-color: #fff;
+	& img {
+		height: 100%;
+	}
 }
 </style>
