@@ -91,7 +91,7 @@ export default {
 	}
 	&__button {
 		margin-top: 8px;
-		background-color: #fd2d01;
+		background-color: #da3338;
 		border: none;
 		color: #fff;
 		display: block;

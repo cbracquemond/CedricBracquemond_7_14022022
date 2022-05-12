@@ -81,8 +81,8 @@ p {
 	margin: 8px 0;
 
 	& button {
-		border: 2px solid #fd2d01;
-		color: #fd2d01;
+		border: 2px solid #da3338;
+		color: #da3338;
 		display: block;
 		height: 40px;
 		width: 80px;
@@ -95,7 +95,7 @@ p {
 	flex-direction: column;
 	align-items: center;
 	&__button {
-		background-color: #fd2d01;
+		background-color: #da3338;
 		border: none;
 		color: #fff;
 	}
@@ -104,7 +104,7 @@ p {
 		border: 1px solid #edeff1;
 		margin-bottom: 8px;
 		&:focus {
-			border-color: #fd2d01;
+			border-color: #da3338;
 			&-visible {
 				outline: none;
 			}

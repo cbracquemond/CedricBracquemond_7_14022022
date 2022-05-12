@@ -43,7 +43,7 @@ export default {
 }
 </script>
 <template>
-	<div class="login">
+	<main class="login">
 		<form class="login__form" id="warningParent" @submit.prevent="handleSubmit">
 			<svg
 				data-v-1084b650=""
@@ -65,7 +65,7 @@ export default {
 				<g
 					data-v-1084b650=""
 					id="7e319840-739a-a0f1-f316-ea813584ba79"
-					fill="#FD2D01"
+					fill="#DA3338"
 					transform="matrix(2.8,0,0,2.8,30.62199562788011,167.12059412002563)"
 				>
 					<path
@@ -111,7 +111,7 @@ export default {
 			<p>Not a member?</p>
 			<router-link to="/signup">Create an Account </router-link>
 		</div>
-	</div>
+	</main>
 </template>
 
 <style scoped lang="scss">
@@ -130,7 +130,7 @@ svg {
 
 	& button {
 		border: none;
-		background-color: #fd2d01;
+		background-color: #da3338;
 		color: #fff;
 		height: 60px;
 		width: 168px;
@@ -162,7 +162,7 @@ svg {
 			background: none;
 
 			&:focus {
-				border-color: #fd2d01;
+				border-color: #da3338;
 			}
 		}
 
@@ -170,7 +170,7 @@ svg {
 			display: flex;
 			flex-direction: column;
 			background-color: #eeedf1;
-			color: #8a8b8e;
+			color: #000;
 			font-size: 14px;
 			width: 100%;
 			padding: 10px 0;

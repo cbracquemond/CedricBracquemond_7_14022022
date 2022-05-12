@@ -34,9 +34,9 @@ export default {
 </template>
 <style scoped lang="scss">
 button {
-	border: 2px solid #fd2d01;
+	border: 2px solid #da3338;
 	background-color: #fff;
-	color: #fd2d01;
+	color: #da3338;
 	width: auto;
 }
 </style>

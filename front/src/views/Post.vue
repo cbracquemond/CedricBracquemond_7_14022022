@@ -116,7 +116,7 @@ export default {
 					<img
 						class="edit-button__img"
 						src="../assets/edit.svg"
-						alt="edit button"
+						alt="edit comment button"
 					/><span class="button-label">Edit</span>
 				</button>
 				<button-delete-vue

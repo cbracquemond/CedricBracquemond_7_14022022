@@ -131,9 +131,9 @@ export default {
 </template>
 <style scoped lang="scss">
 button {
-	border: 2px solid #fd2d01;
+	border: 2px solid #da3338;
 	background-color: #fff;
-	color: #fd2d01;
+	color: #da3338;
 }
 
 h1 {
@@ -159,6 +159,7 @@ h1 {
 		line-height: 40px;
 		width: 80px;
 		text-align: center;
+		color: #1c1c1c;
 		&__container {
 			display: flex;
 			flex-direction: row;
@@ -167,7 +168,7 @@ h1 {
 	&:hover,
 	&:focus {
 		background-color: #ffffff;
-		border: 1px solid #fd2d01;
+		border: 1px solid #da3338;
 	}
 }
 .article {
@@ -226,7 +227,7 @@ h1 {
 		&:hover,
 		&:focus {
 			background-color: #fff;
-			border: 1px solid #fd2d01;
+			border: 1px solid #da3338;
 		}
 	}
 	&__image-input {
@@ -235,7 +236,7 @@ h1 {
 }
 
 .active {
-	background-color: #fd2d01;
+	background-color: #da3338;
 	color: #fff;
 }
 </style>

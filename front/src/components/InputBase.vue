@@ -78,7 +78,7 @@ input {
 	height: 40px;
 	border: 1px solid #edeff1;
 	&:focus {
-		border-color: #fd2d01;
+		border-color: #da3338;
 		&-visible {
 			outline: none;
 		}
@@ -107,21 +107,21 @@ input {
 	}
 	&__value {
 		font-size: 14px;
-		color: #7c7c7c;
+		color: #000;
 	}
 	&__button {
-		border: 2px solid #fd2d01;
+		border: 2px solid #da3338;
 		background-color: #fff;
-		color: #fd2d01;
+		color: #da3338;
 
 		&--apply {
-			background-color: #fd2d01;
+			background-color: #da3338;
 			border: none;
 			color: #fff;
 		}
 		&--delete {
 			width: 168px;
-			background-color: #fd2d01;
+			background-color: #da3338;
 			border: none;
 			color: #fff;
 		}

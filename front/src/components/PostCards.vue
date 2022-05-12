@@ -31,13 +31,13 @@ export default {
 	<div class="post-card">
 		<span>Posté le {{ date }} par {{ user }}</span>
 		<h2
-			v-if="title != '' && currentRouteName.indexOf('Post') != 0"
+			v-if="title != undefined && currentRouteName.indexOf('Post') != 0"
 			class="post-card__title"
 		>
 			{{ title }}
 		</h2>
 		<h1
-			v-if="title != '' && currentRouteName.indexOf('Post') != -1"
+			v-if="title != undefined && currentRouteName.indexOf('Post') != -1"
 			class="post-card__title"
 		>
 			{{ title }}
@@ -55,7 +55,7 @@ export default {
 </template>
 <style scoped lang="scss">
 span {
-	color: #787c7e;
+	color: #000;
 	font-size: 12px;
 }
 

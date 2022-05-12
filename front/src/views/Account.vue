@@ -114,7 +114,7 @@ export default {
 
 <style lang="scss" scoped>
 .warning {
-	color: #fd2d01;
+	color: #da3338;
 }
 .account-form {
 	background-color: #fff;

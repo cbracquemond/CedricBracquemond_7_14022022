@@ -139,7 +139,7 @@ export default {
 
 <style scoped lang="scss">
 .full-button {
-	background-color: #fd2d01;
+	background-color: #da3338;
 	border: none;
 	color: #fff;
 	margin-bottom: 16px;
@@ -184,7 +184,7 @@ export default {
 		background: none;
 
 		&:focus {
-			border-color: #fd2d01;
+			border-color: #da3338;
 		}
 	}
 	&__nav-link {

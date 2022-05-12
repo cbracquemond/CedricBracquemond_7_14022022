@@ -83,12 +83,12 @@ textarea {
 	&:hover,
 	&:focus {
 		background-color: #fff;
-		border: 1px solid #fd2d01;
+		border: 1px solid #da3338;
 	}
 }
 
 .warning {
-	color: #fd2d01;
+	color: #da3338;
 	font-weight: bold;
 }
 
@@ -97,7 +97,7 @@ textarea {
 	height: fit-content;
 	font-size: 12px;
 	font-weight: bold;
-	color: #878a8c;
+	color: #000;
 }
 
 a:focus-visible {

@@ -19,6 +19,7 @@ export default {
 		<ul class="nav">
 			<router-link to="/" class="nav__link">
 				<img src="../assets/groupomania-logo.svg" alt="Groupomania logo" />
+				<h1>Groupomania</h1>
 			</router-link>
 			<div class="nav__container">
 				<router-link to="/account" class="nav__link"
@@ -44,17 +45,23 @@ export default {
 	top: 0;
 
 	&__link {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 		color: #000;
 		text-decoration: none;
 		padding: 0 16px;
 		max-height: 60px;
-		max-width: 120px;
+		max-width: 200px;
 		overflow: hidden;
 		object-fit: cover;
 		& img {
 			width: 60px;
 			height: 60px;
 			object-fit: cover;
+		}
+		& h1 {
+			font-size: 18px;
 		}
 	}
 

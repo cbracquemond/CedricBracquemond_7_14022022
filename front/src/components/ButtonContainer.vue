@@ -34,7 +34,7 @@ export default {
 			:likesCounter="post.likes"
 		/>
 		<button type="button" class="post-button" @click="commentEvent">
-			<img src="../assets/comment.svg" alt="Like button" /><span
+			<img src="../assets/comment.svg" alt="Comment button" /><span
 				class="button-label"
 				>Comment</span
 			>
