@@ -68,11 +68,14 @@ export default {
 a {
 	text-decoration: none;
 	color: #000;
+	height: 100%;
+	max-height: 280px;
 }
 .post-card-container {
 	margin: 16px 0;
 	padding: 8px;
 	background-color: #fff;
+	max-height: 280px;
 }
 .router-link-container {
 	max-height: 280px;

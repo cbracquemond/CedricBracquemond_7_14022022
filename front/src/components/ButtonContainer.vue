@@ -33,6 +33,18 @@ export default {
 			:postId="post.id"
 			:likesCounter="post.likes"
 		/>
+		<button
+			type="button"
+			class="edit-button"
+			@click="showEditPost = !showEditPost"
+			v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
+		>
+			<img
+				class="edit-button__img"
+				src="../assets/edit.svg"
+				alt="edit comment button"
+			/><span class="button-label">Edit</span>
+		</button>
 		<button type="button" class="post-button" @click="commentEvent">
 			<img src="../assets/comment.svg" alt="Comment button" /><span
 				class="button-label"
@@ -47,6 +59,17 @@ export default {
 	</div>
 </template>
 <style scoped lang="scss">
+.edit-button {
+	height: 20px;
+	display: flex;
+	margin-right: 16px;
+	border: none;
+	background-color: #fff;
+	&__img {
+		height: 100%;
+		width: auto;
+	}
+}
 .post-button-container {
 	display: flex;
 	align-items: center;

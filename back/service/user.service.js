@@ -24,21 +24,6 @@ async function getAllImagesFromAccount(userId) {
 	return imageUrlList
 }
 
-async function makeQueryParams(user, id = null) {
-	if (user.password) user.password = await bcrypt.hash(user.password, 10)
-	const keys = Object.entries(user)
-	const params = {
-		sql: [],
-		arg: [],
-		id: [`${id}`]
-	}
-	keys.forEach((key) => {
-		params.sql.push(" " + key[0] + " = ?")
-		params.arg.push(key[1])
-	})
-	return params
-}
-
 async function createFirstAccountAsModerator() {
 	const sql = "SELECT id FROM users"
 	const userList = await utils.makeDbQueries(sql)
@@ -69,10 +54,25 @@ exports.getOneUser = async function (userId) {
 	return queryResult[0]
 }
 
+async function makeQueryParams(user, id = null) {
+	if (user.password) user.password = await bcrypt.hash(user.password, 10)
+	const keys = Object.entries(user)
+	const params = {
+		sql: [],
+		arg: []
+	}
+	keys.forEach((key) => {
+		params.sql.push(" " + key[0] + " = ?")
+		params.arg.push(key[1])
+	})
+	params.arg.push(id)
+	return params
+}
+
 exports.updateUser = async function (newProfile, userId) {
 	await utils.checkIfExist(userId.toString(), "users")
 	const params = await makeQueryParams(newProfile, userId)
-	const sql = "UPDATE users SET " + params.sql + " WHERE id = " + params.id
+	const sql = `UPDATE users SET ${params.sql} WHERE id = ?`
 	await utils.makeDbQueries(sql, params.arg)
 }
 

@@ -56,7 +56,7 @@ exports.deletePost = async (req, res) => {
 }
 
 exports.editPost = async (req, res) => {
-	const post = req.body.post ? JSON.parse(req.body.post) : {}
+	const post = req.body.post ? JSON.parse(req.body.post) : { content: "" }
 	post.image_url = req.file
 		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 		: null

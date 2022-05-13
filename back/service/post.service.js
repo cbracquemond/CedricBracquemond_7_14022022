@@ -1,20 +1,6 @@
 const utils = require("../utils/utils")
 const fs = require("fs")
 
-function makeQueryParams(post, id = null) {
-	const keys = Object.entries(post)
-	const params = {
-		sql: [],
-		arg: [],
-		id: [`${id}`]
-	}
-	keys.forEach((key) => {
-		params.sql.push(" " + key[0] + " = ?")
-		params.arg.push(key[1])
-	})
-	return params
-}
-
 async function checkIfLiked(postId, userId) {
 	const sql = "SELECT * FROM post_liked WHERE post_id = ? and user_id = ?"
 	const queryResult = await utils.makeDbQueries(sql, [postId, userId])
@@ -22,7 +8,7 @@ async function checkIfLiked(postId, userId) {
 }
 
 async function getImageUrl(id, table) {
-	const sql = "SELECT image_url FROM " + table + " WHERE id = ?"
+	const sql = `SELECT image_url FROM ${table} WHERE id = ?`
 	const queryResult = await utils.makeDbQueries(sql, [id])
 	const imageUrl = queryResult[0].image_url
 	if (imageUrl != null) return `images/${imageUrl.split("/images/")[1]}`
@@ -43,9 +29,14 @@ exports.getOnePost = async function (id) {
 }
 
 exports.createPost = async function (post, userId) {
-	const params = await makeQueryParams(post)
-	const sql = "INSERT INTO posts SET user_id = " + userId + "," + params.sql
-	await utils.makeDbQueries(sql, params.arg)
+	const sql =
+		"INSERT INTO posts SET user_id = ?, title = ?, content = ?, image_url = ?"
+	await utils.makeDbQueries(sql, [
+		userId,
+		post.title,
+		post.content,
+		post.image_url
+	])
 }
 
 exports.deletePost = async function (postId, userId) {
@@ -64,8 +55,8 @@ exports.editPost = async function (post, postId, userId) {
 	await utils.checkIfExist(postId, "posts")
 	const isModerator = await utils.checkIfModerator(userId)
 	if (!isModerator) await utils.checkIfOwner(postId, userId, "posts")
-	const sql = "UPDATE posts SET content = '" + post.content + "' WHERE id = ?"
-	await utils.makeDbQueries(sql, [postId])
+	const sql = "UPDATE posts SET content = ?, image_url = ? WHERE id = ?"
+	await utils.makeDbQueries(sql, [post.content, post.image_url, postId])
 }
 
 exports.likePost = async function (postId, userId) {

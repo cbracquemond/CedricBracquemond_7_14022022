@@ -16,8 +16,8 @@ exports.editComment = async function (content, commentId, userId) {
 	await utils.checkIfExist(commentId, "comments")
 	const isModerator = await utils.checkIfModerator(userId)
 	if (!isModerator) await utils.checkIfOwner(commentId, userId, "comments")
-	const sql = "UPDATE comments SET content = '" + content + "' WHERE id = ?"
-	await utils.makeDbQueries(sql, [commentId])
+	const sql = "UPDATE comments SET content = ? WHERE id = ?"
+	await utils.makeDbQueries(sql, [content, commentId])
 }
 
 exports.deleteComment = async function (commentId, userId) {

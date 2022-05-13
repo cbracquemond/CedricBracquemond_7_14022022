@@ -43,9 +43,8 @@ exports.getOneUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
 	const user = req.body.user ? JSON.parse(req.body.user) : {}
-	user.image_url = req.file
-		? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-		: null
+	if (req.file)
+		`${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 	try {
 		await userService.updateUser(user, res.locals.userId)
 		return res.status(200).json({

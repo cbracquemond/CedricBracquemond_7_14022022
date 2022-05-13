@@ -112,6 +112,7 @@ export default {
 					type="button"
 					class="edit-button"
 					@click="showEditComment = !showEditComment"
+					v-if="comment.user_id == this.user.id || this.user.is_moderator == 1"
 				>
 					<img
 						class="edit-button__img"
